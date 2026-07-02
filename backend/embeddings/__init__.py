@@ -1,0 +1,1 @@
+# Embeddings generator package marker
