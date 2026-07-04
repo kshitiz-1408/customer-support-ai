@@ -1,12 +1,14 @@
 from datetime import datetime, timezone
 from typing import List, Optional
-from models.kb import KBArticle, KBArticleCreate, KBArticleUpdate, KBSearchResult
+from models.kb import KBArticle, KBArticleCreate, KBArticleUpdate, KBSearchResult, KBChunk
 
 
 class KBService:
     # Class-level mock database
     _db: List[KBArticle] = []
     _counter: int = 0
+    _chunks: List[KBChunk] = []
+    _chunk_counter: int = 0
 
     @classmethod
     def create(cls, article_in: KBArticleCreate) -> KBArticle:
@@ -114,3 +116,36 @@ KBService.create(
         tags=["developer", "api", "webhooks", "integration"]
     )
 )
+
+
+# Chunk Operations Integration
+def add_chunks_to_service(cls, chunks_in: List[dict]) -> List[KBChunk]:
+    added = []
+    for chunk_data in chunks_in:
+        cls._chunk_counter += 1
+        chunk = KBChunk(
+            id=cls._chunk_counter,
+            content=chunk_data["content"],
+            metadata=chunk_data["metadata"]
+        )
+        cls._chunks.append(chunk)
+        added.append(chunk)
+    return added
+
+
+def get_chunks_from_service(cls) -> List[KBChunk]:
+    from rag.rag_pipeline import vector_store
+    added = []
+    for vector_id, chunk_data in vector_store._metadata_store.items():
+        added.append(KBChunk(
+            id=int(vector_id),
+            content=chunk_data["content"],
+            metadata=chunk_data["metadata"]
+        ))
+    return added
+
+
+# Dynamically attach classmethods to class to avoid complex indentation refactoring
+KBService.add_chunks = classmethod(add_chunks_to_service)
+KBService.get_chunks = classmethod(get_chunks_from_service)
+

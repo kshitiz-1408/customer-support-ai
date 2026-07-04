@@ -8,6 +8,7 @@ from utils.logging import logger
 from models.chat import ChatQuery, ChatResponse
 from agents.intent_detector import detect_intent
 from agents.router import route_query
+from rag.rag_pipeline import initialize_rag_pipeline
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -15,6 +16,18 @@ app = FastAPI(
     version=settings.VERSION,
     debug=settings.DEBUG,
 )
+
+@app.on_event("startup")
+def startup_event():
+    """
+    Triggers RAG pipeline initialization on app startup.
+    Loads persisted vector store caches or builds them from scratch.
+    """
+    try:
+        initialize_rag_pipeline()
+    except Exception as e:
+        logger.error(f"Error during startup RAG pipeline initialization: {str(e)}", exc_info=True)
+
 
 # Initialize CORS configuration
 if settings.ALLOWED_ORIGINS:

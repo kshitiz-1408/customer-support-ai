@@ -37,3 +37,15 @@ class KBArticle(KBArticleInDBBase):
 class KBSearchResult(BaseModel):
     article: KBArticle
     score: float
+
+
+class KBChunk(BaseModel):
+    id: int
+    content: str
+    metadata: dict  # source, page, type
+
+
+class KBSearchQuery(BaseModel):
+    query: str = Field(..., min_length=1, max_length=500, description="The query string to search.")
+    top_k: int = Field(4, ge=1, le=20, description="The maximum number of matching segments to return.")
+

@@ -32,6 +32,13 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str = "sqlite:///./customer_support.db"
 
+    # Embedding Model Name
+    EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
+
+    # FAISS Persistence Paths
+    VECTOR_INDEX_PATH: str = "knowledge_base/faiss_index.bin"
+    VECTOR_METADATA_PATH: str = "knowledge_base/faiss_metadata.json"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
