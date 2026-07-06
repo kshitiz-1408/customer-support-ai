@@ -1,9 +1,6 @@
-"""
-Complaint & Escalation Agent Module.
-"""
-
-def process_query(query: str) -> str:
+def process_query(query: str) -> dict:
     """
-    Processes a customer complaint query and returns a placeholder response.
+    Processes a customer complaint query using RAG + Gemini.
     """
-    return "This is a placeholder response from the Complaint Agent."
+    from agents.router import process_agent_query
+    return process_agent_query("Complaint Agent", query)

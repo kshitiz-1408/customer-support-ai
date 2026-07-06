@@ -1,9 +1,6 @@
-"""
-FAQ Agent Module.
-"""
-
-def process_query(query: str) -> str:
+def process_query(query: str) -> dict:
     """
-    Processes a general FAQ support query and returns a placeholder response.
+    Processes a general FAQ support query using RAG + Gemini.
     """
-    return "This is a placeholder response from the FAQ Agent."
+    from agents.router import process_agent_query
+    return process_agent_query("FAQ Agent", query)

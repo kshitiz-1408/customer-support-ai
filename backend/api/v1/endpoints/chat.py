@@ -28,7 +28,9 @@ def process_chat(query: ChatQuery):
                 message="Please clarify your question."
             )
             
-        agent_response = route_query(intent, query.message)
+        routing_result = route_query(intent, query.message)
+        response_text = routing_result.get("response")
+        sources_list = routing_result.get("sources")
         
         agent_names = {
             "billing": "Billing Agent",
@@ -43,7 +45,8 @@ def process_chat(query: ChatQuery):
         return ChatResponse(
             intent=intent,
             agent=agent_name,
-            response=agent_response
+            response=response_text,
+            sources=sources_list
         )
     except Exception as e:
         logger.error(f"Internal exception during v1 chat routing: {str(e)}", exc_info=True)

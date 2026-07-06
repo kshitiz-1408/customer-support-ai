@@ -1,9 +1,6 @@
-"""
-Billing Agent Module.
-"""
-
-def process_query(query: str) -> str:
+def process_query(query: str) -> dict:
     """
-    Processes a billing support query and returns a placeholder response.
+    Processes a billing support query using RAG + Gemini.
     """
-    return "This is a placeholder response from the Billing Agent."
+    from agents.router import process_agent_query
+    return process_agent_query("Billing Agent", query)

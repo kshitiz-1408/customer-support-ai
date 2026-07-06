@@ -1,9 +1,6 @@
-"""
-Technical Support Agent Module.
-"""
-
-def process_query(query: str) -> str:
+def process_query(query: str) -> dict:
     """
-    Processes a technical support query and returns a placeholder response.
+    Processes a technical support query using RAG + Gemini.
     """
-    return "This is a placeholder response from the Technical Agent."
+    from agents.router import process_agent_query
+    return process_agent_query("Technical Agent", query)

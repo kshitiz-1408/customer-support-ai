@@ -1,5 +1,5 @@
 import json
-from typing import List, Union
+from typing import List, Union, Optional
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -38,6 +38,17 @@ class Settings(BaseSettings):
     # FAISS Persistence Paths
     VECTOR_INDEX_PATH: str = "knowledge_base/faiss_index.bin"
     VECTOR_METADATA_PATH: str = "knowledge_base/faiss_metadata.json"
+
+    # Gemini API Credentials
+    GEMINI_API_KEY: Optional[str] = None
+    GEMINI_MODEL_NAME: Optional[str] = "gemini-2.5-flash"
+
+    @field_validator("GEMINI_API_KEY")
+    @classmethod
+    def validate_gemini_key(cls, v: Optional[str]) -> Optional[str]:
+        if not v or v.strip() == "" or v == "PASTE_YOUR_ACTUAL_API_KEY_HERE":
+            raise ValueError("GEMINI_API_KEY environment variable is missing or has not been configured in your .env file.")
+        return v
 
     model_config = SettingsConfigDict(
         env_file=".env",

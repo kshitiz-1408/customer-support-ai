@@ -132,7 +132,9 @@ def detect_intent(query: str) -> dict:
         "how do i",
         "how to",
         "where is",
-        "what is"
+        "what is",
+        "warranty",
+        "warranties"
     ]
 
     # Classify the intent by matching query terms against keyword lists using clean any() checks

@@ -1,31 +1,124 @@
-# Knowledge Base: Sample Support Documentation
+# TechMart Electronics - Knowledge Base and Support Documentation
 
-This directory contains markdown files containing support documentation. These files will be indexed by the Customer Support AI to retrieve context for answering customer tickets.
-
-## Article: Password Reset Issues
-**Category**: Account
-**Tags**: password, reset, login
-
-### Symptoms
-- User does not receive the reset link email.
-- The reset link returns "expired".
-
-### Resolution Steps
-1. **Check Spam/Junk Folder**: Ensure the email didn't end up in the junk folder.
-2. **Whitelist Domains**: Ensure mail servers accept messages from `@example.com`.
-3. **Link Expiry**: Password reset links expire exactly after 15 minutes. If it expires, please initiate a new password request.
+This document contains the comprehensive, authoritative knowledge base for TechMart Electronics. It serves as the primary data reference for RAG-based support search queries, troubleshooting steps, company policies, and support guides.
 
 ---
 
-## Article: Billing Invoices
+## 1. Company Overview
+TechMart Electronics is a premier provider of smart home appliances, personal electronics, and premium consumer devices. Established with the goal of delivering high-quality, interconnected tech to consumers worldwide, TechMart designs and distributes smart thermostats, wireless security cameras, audio headsets, and connected home hubs. Our operations center, design lab, and headquarters are located at 100 TechMart Parkway, Suite 500, Austin, TX 78701.
+
+---
+
+## 2. FAQ (Frequently Asked Questions)
+* **What payment methods does TechMart accept?** We accept all major credit cards (Visa, MasterCard, American Express, Discover), PayPal, and Apple Pay.
+* **Can I update my order after placing it?** Order details cannot be modified online once the order enters the "Processing" stage (typically 2 hours after check-out).
+* **Do you ship internationally?** Yes, we ship to over 50 countries. International shipping rates are calculated at check-out based on delivery destination and weight.
+* **Are smart hubs required for wireless cameras?** No, all TechMart smart cameras connect directly to your local 2.4GHz or 5GHz Wi-Fi network without requiring a physical hub.
+
+---
+
+## 3. Refund Policy
+TechMart Electronics offers a complete, hassle-free refund on all purchases if returned within our strict **refund deadline of 45 days** from the original purchase date. To be eligible for a refund, the product must be in its original packaging, include all accessories, and be free from visible physical damage. 
+Once our warehouse inspects the returned item, we will process your refund. The standard **refund processing time is 7 to 10 business days** for the credit to appear on the original payment method. Original shipping charges are non-refundable.
+
+---
+
+## 4. Return Policy
+If you miss the 45-day refund window, you may still return products within 90 days of purchase for store credit or product exchange. Returns of open-box items or items showing minor wear are subject to a 15% restocking fee. Returns must be accompanied by an official Return Merchandise Authorization (RMA) number, which can be generated online through your TechMart Account Dashboard. 
+Customers are responsible for return shipping costs unless the return is due to a verified manufacturer defect or shipping error.
+
+---
+
+## 5. Shipping Policy
+TechMart Electronics handles domestic orders using leading parcel carriers. We offer two main shipping tiers:
+* **Standard Ground Shipping**: Delivery takes **3 to 5 business days** and is free for orders totaling $50 or more. A flat rate of $5.99 applies for orders under $50.
+* **Express Shipping**: Delivery takes **1 to 2 business days**. Express rates start at $14.99 and vary based on destination and package dimensions.
+All orders placed before 2:00 PM CST are dispatched from our warehouse on the same business day.
+
+---
+
+## 6. Warranty Policy
+All TechMart brand devices are protected by a standard **2-Year Limited Manufacturer Warranty**. This warranty covers defects in materials, hardware malfunctions, and assembly craftsmanship under normal usage. It does not cover accidental damage, water exposure, cosmetic wear, or unauthorized device modifications. 
+For extra peace of mind, customers can purchase our **Extended Warranty Plan**, which extends coverage by an **additional 3 years** (providing a total of 5 years of hardware protection).
+
+---
+
+## 7. Pricing and Subscription Plans
+TechMart devices can be paired with optional subscription tiers for enhanced cloud storage and automation features:
+* **Basic Plan**: Free. Includes 24-hour video storage history for 1 security camera and standard mobile alerts.
+* **Plus Plan**: $4.99 per month or $49.99 annually. Expands storage history to 14 days and supports up to 3 cameras.
+* **Premium Plan**: Priced at **$19.99 per month** or **$199.99 when billed annually**. Offers unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup.
+
+---
+
+## 8. Product Information
+Our primary product lines include:
+* **TechMart Smart Camera Pro**: Captures 4K video, features colored night vision, and includes two-way audio. Requires a continuous Wi-Fi connection.
+* **TechMart Wave Headset**: High-fidelity wireless headphones with active noise cancellation (ANC), supporting up to 30 hours of continuous battery playback.
+* **TechMart Nest Hub**: A centralized touch-screen display console designed to monitor and automate all smart home accessories.
+
+---
+
+## 9. Installation Guide
+Setting up your TechMart Smart Camera Pro:
+1. **Unbox & Charge**: Plug the device into a wall outlet using the provided micro-USB cable for at least 4 hours.
+2. **Mount Bracket**: Secure the wall mount plate to your desired location using the included screws.
+3. **Attach Camera**: Slide the camera module into the slot until it clicks securely into place.
+4. **App Setup**: Open the TechMart app, select "Add Device", and scan the QR code located on the bottom of the camera shell.
+
+---
+
+## 10. User Manual and Basic Usage
+* **Powering On/Off**: Hold the circular button on the side of your Wave Headset for 3 seconds to toggle power. A voice prompt will announce the battery state.
+* **Wi-Fi Syncing**: To connect your smart camera to a new router, press and hold the pinhole reset button for 10 seconds. The indicator LED will flash yellow to signify pairing mode.
+* **Checking Status**: Double-tap the touch sensor on the Nest Hub display to refresh connected accessory statuses.
+
+---
+
+## 11. Technical Support
+Troubleshooting smart camera offline issues:
+* **Check Router Signal**: Ensure the camera is within 30 feet of your router. Concrete walls and metal doors can degrade signals.
+* **Reboot Device**: Power cycle the device by disconnecting the power cable for 20 seconds.
+* **Verify Wi-Fi Bands**: TechMart smart cameras require a 2.4GHz Wi-Fi band for setup and cannot connect to 5GHz-only networks.
+
+---
+
+## 12. Account and Login Help
+### Article: Password Reset Issues
+**Category**: Account
+**Tags**: password, reset, login, credentials
+If you are locked out of your account or forgot your credentials:
+1. Navigate to the TechMart Login portal and click **Forgot Password**.
+2. Input your registered email. An email containing a password reset link will be sent.
+3. **Link Expiry**: Password reset links expire exactly after **15 minutes** for security. If the link expires, you must request a new code.
+4. **Email Issues**: If you do not receive the email, verify your spam/junk folders or whitelist our domain `@techmart.com` inside your email client settings.
+
+---
+
+## 13. Payment and Billing
+### Article: Billing Invoices
 **Category**: Billing
-**Tags**: invoice, billing, payment
+**Tags**: invoice, billing, payment, subscriptions
+Accessing invoices and managing subscriptions:
+1. Log in and navigate to **Settings > Billing** in your console dashboard.
+2. Invoices are generated on the 1st of every month and are downloadable as PDF files under billing history.
+3. **Card Updates**: Credit cards must be updated at least 48 hours prior to the billing cycle date to prevent subscription cancellation.
+4. If the billing portal returns error codes or fails to load, email billing-support@techmart.com directly.
 
-### Symptoms
-- Invoice downloads are failing with error codes.
-- Credit cards cannot be updated.
+---
 
-### Resolution Steps
-1. Navigate to **Settings > Billing** in your console.
-2. Ensure you have administrator privilege to retrieve billing details.
-3. If the portal crashes with a 500 error, contact billing-support@example.com directly.
+## 14. Contact Information
+For assistance with order updates, hardware support, or billing queries, contact our customer success team:
+* **Support Email**: support@techmart.com
+* **Billing Support Email**: billing-support@techmart.com
+* **Toll-Free Phone**: **1-800-555-TMRT (1-800-555-8678)**. Representatives are available Monday through Friday from 8:00 AM to 8:00 PM EST.
+* **Headquarters Mailing Address**: TechMart Electronics, 100 TechMart Parkway, Suite 500, Austin, TX 78701.
+
+---
+
+## 15. Complaint and Escalation Process
+We strive to resolve all issues promptly. If your problem is not resolved:
+1. **Tier-1 Support**: All inquiries are handled by Tier-1 agents.
+2. **Team Lead Escalation**: If unresolved after 48 hours, request the agent route your ticket to a Team Lead.
+3. **Supervisor Escalation**: If still unresolved after an additional 24 hours, request to speak with a Support Supervisor.
+4. **Manager Review**: For critical complaints or grievances, you may request a formal review by the Support Manager by writing directly to manager-support@techmart.com.
