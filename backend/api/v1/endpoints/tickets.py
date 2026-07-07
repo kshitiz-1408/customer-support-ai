@@ -19,36 +19,59 @@ def list_tickets(status: Optional[TicketStatus] = Query(None, description="Filte
 
 
 @router.get("/{ticket_id}", response_model=Ticket)
-def get_ticket(ticket_id: int):
-    """Retrieve details for a specific support ticket."""
-    ticket = TicketService.get(ticket_id)
+def get_ticket(ticket_id: str):
+    """Retrieve details for a specific support ticket by integer ID or string ticket_id."""
+    try:
+        val = int(ticket_id)
+        ticket = TicketService.get(val)
+    except ValueError:
+        ticket = TicketService.get_by_ticket_id(ticket_id)
+        
     if not ticket:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Ticket with ID {ticket_id} not found"
+            detail=f"Ticket with ID '{ticket_id}' not found"
         )
     return ticket
 
 
 @router.put("/{ticket_id}", response_model=Ticket)
-def update_ticket(ticket_id: int, ticket_update: TicketUpdate):
-    """Update fields on a support ticket."""
-    ticket = TicketService.update(ticket_id, ticket_update)
+def update_ticket(ticket_id: str, ticket_update: TicketUpdate):
+    """Update fields on a support ticket by integer ID or string ticket_id."""
+    try:
+        val = int(ticket_id)
+        ticket = TicketService.update(val, ticket_update)
+    except ValueError:
+        t = TicketService.get_by_ticket_id(ticket_id)
+        if t:
+            ticket = TicketService.update(t.id, ticket_update)
+        else:
+            ticket = None
+            
     if not ticket:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Ticket with ID {ticket_id} not found"
+            detail=f"Ticket with ID '{ticket_id}' not found"
         )
     return ticket
 
 
 @router.delete("/{ticket_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_ticket(ticket_id: int):
-    """Permanently delete a support ticket."""
-    deleted = TicketService.delete(ticket_id)
+def delete_ticket(ticket_id: str):
+    """Permanently delete a support ticket by integer ID or string ticket_id."""
+    try:
+        val = int(ticket_id)
+        deleted = TicketService.delete(val)
+    except ValueError:
+        t = TicketService.get_by_ticket_id(ticket_id)
+        if t:
+            deleted = TicketService.delete(t.id)
+        else:
+            deleted = False
+            
     if not deleted:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"Ticket with ID {ticket_id} not found"
+            detail=f"Ticket with ID '{ticket_id}' not found"
         )
     return None

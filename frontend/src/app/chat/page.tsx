@@ -7,7 +7,7 @@ import ChatWindow from "@/components/chat/ChatWindow";
 import { useChat } from "@/hooks/useChat";
 
 export default function ChatPage() {
-  const { messages, loading, sendMessage } = useChat();
+  const { messages, loading, sendMessage, clearChat } = useChat();
 
   return (
     <div className="min-h-screen bg-zinc-950 flex flex-col selection:bg-indigo-500/30">
@@ -24,6 +24,7 @@ export default function ChatPage() {
             messages={messages} 
             loading={loading} 
             onSendMessage={sendMessage} 
+            onClearChat={clearChat}
           />
         </main>
       </div>

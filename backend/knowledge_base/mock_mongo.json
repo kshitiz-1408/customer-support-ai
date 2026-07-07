@@ -1,0 +1,608 @@
+{
+  "conversations": [
+    {
+      "conversation_id": "2520da7bd55b472bba01c4c9e786aa85",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 16:59:27.669692+00:00",
+      "updated_at": "2026-07-07 16:59:37.027071+00:00"
+    },
+    {
+      "conversation_id": "de954a5f678c4964ad5fcab082774707",
+      "user_id": null,
+      "session_id": null,
+      "title": "what does the premium plan include?",
+      "created_at": "2026-07-07 17:11:22.497372+00:00",
+      "updated_at": "2026-07-07 17:13:00.396036+00:00"
+    },
+    {
+      "conversation_id": "22de4fcf62cd44dcaccaac24273f26f7",
+      "user_id": null,
+      "session_id": null,
+      "title": "hello",
+      "created_at": "2026-07-07 17:14:27.073915+00:00",
+      "updated_at": "2026-07-07 17:15:18.622582+00:00"
+    },
+    {
+      "conversation_id": "8188a31daefe44d89c84a3254617e8fe",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 17:55:27.491300+00:00",
+      "updated_at": "2026-07-07 17:55:39.479737+00:00"
+    },
+    {
+      "conversation_id": "fdf8026d95c94ae99241ee8eb9d85b40",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 18:42:37.563893+00:00",
+      "updated_at": "2026-07-07 18:42:37.565164+00:00"
+    },
+    {
+      "conversation_id": "a162cd4d257b4fd987d8d9f0b7c9748a",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 18:48:31.143376+00:00",
+      "updated_at": "2026-07-07 18:48:31.144724+00:00"
+    },
+    {
+      "conversation_id": "1aa08b8786b64883b40be5c7cc657128",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 18:49:01.954349+00:00",
+      "updated_at": "2026-07-07 18:49:07.845329+00:00"
+    },
+    {
+      "conversation_id": "eb39d13160b9429ab54ee82dd1bb77ce",
+      "user_id": null,
+      "session_id": null,
+      "title": "How much does standard shipping take?",
+      "created_at": "2026-07-07 18:49:07.877869+00:00",
+      "updated_at": "2026-07-07 18:49:07.925885+00:00"
+    },
+    {
+      "conversation_id": "6f87e122a65a430c898091dd226e714d",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 18:49:34.454999+00:00",
+      "updated_at": "2026-07-07 18:49:40.310996+00:00"
+    },
+    {
+      "conversation_id": "267d6f44855c4593a13aa1260a8bbf76",
+      "user_id": null,
+      "session_id": null,
+      "title": "How much does standard shipping take?",
+      "created_at": "2026-07-07 18:49:40.343666+00:00",
+      "updated_at": "2026-07-07 18:49:40.389719+00:00"
+    },
+    {
+      "conversation_id": "5c17d0da9ab74d0fb2be0c8d28f5173a",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-07 18:50:15.703593+00:00",
+      "updated_at": "2026-07-07 18:50:21.684851+00:00"
+    },
+    {
+      "conversation_id": "85c32ff2d8f849d9a969a5d072526bdb",
+      "user_id": null,
+      "session_id": null,
+      "title": "How much does standard shipping take?",
+      "created_at": "2026-07-07 18:50:21.718138+00:00",
+      "updated_at": "2026-07-07 18:50:21.767293+00:00"
+    }
+  ],
+  "messages": [
+    {
+      "message_id": "38b782d8621d4ab98d5ccf54898e6b94",
+      "conversation_id": "2520da7bd55b472bba01c4c9e786aa85",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 16:59:27.671097+00:00"
+    },
+    {
+      "message_id": "e0600ccabd87439b9dcaf797170a1fbb",
+      "conversation_id": "2520da7bd55b472bba01c4c9e786aa85",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 16:59:37.027071+00:00"
+    },
+    {
+      "message_id": "bdfb39900f6c4ce6871aacba74ff5670",
+      "conversation_id": "de954a5f678c4964ad5fcab082774707",
+      "role": "user",
+      "content": "what does the premium plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:11:22.499437+00:00"
+    },
+    {
+      "message_id": "d91fa2e9bbc544e68718329468b46b33",
+      "conversation_id": "de954a5f678c4964ad5fcab082774707",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 17:11:32.740485+00:00"
+    },
+    {
+      "message_id": "599d4cc9aa9840a3944945626ebe3469",
+      "conversation_id": "de954a5f678c4964ad5fcab082774707",
+      "role": "user",
+      "content": "how much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:12:58.268051+00:00"
+    },
+    {
+      "message_id": "d67b62bcd3644546be649f96c8586f73",
+      "conversation_id": "de954a5f678c4964ad5fcab082774707",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 17:13:00.396036+00:00"
+    },
+    {
+      "message_id": "82044c87de144a508df15c408e858c68",
+      "conversation_id": "22de4fcf62cd44dcaccaac24273f26f7",
+      "role": "user",
+      "content": "hello",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:14:27.076192+00:00"
+    },
+    {
+      "message_id": "557acc3a755a40d495fe346499c06a76",
+      "conversation_id": "22de4fcf62cd44dcaccaac24273f26f7",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:14:27.120230+00:00"
+    },
+    {
+      "message_id": "e4dc631df2554e6289997e27419a99f2",
+      "conversation_id": "22de4fcf62cd44dcaccaac24273f26f7",
+      "role": "user",
+      "content": "what is the shipping duration?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:15:16.505019+00:00"
+    },
+    {
+      "message_id": "08e912e605124c1eb6fc736ff8a1f6af",
+      "conversation_id": "22de4fcf62cd44dcaccaac24273f26f7",
+      "role": "assistant",
+      "content": "TechMart Electronics offers two main shipping tiers with different durations:\n*   **Standard Ground Shipping**: Delivery takes 3 to 5 business days.\n*   **Express Shipping**: Delivery takes 1 to 2 business days.\n\nAll orders placed before 2:00 PM CST are dispatched from our warehouse on the same business day.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 17:15:18.622582+00:00"
+    },
+    {
+      "message_id": "978cf089c2f34229bdaec0adc6c7f351",
+      "conversation_id": "8188a31daefe44d89c84a3254617e8fe",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:55:27.493862+00:00"
+    },
+    {
+      "message_id": "5fb9890feeee44f29bffa2a2e2389820",
+      "conversation_id": "8188a31daefe44d89c84a3254617e8fe",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 17:55:36.143983+00:00"
+    },
+    {
+      "message_id": "517b482cfb70446b847c1946c6b57fff",
+      "conversation_id": "8188a31daefe44d89c84a3254617e8fe",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 17:55:38.184519+00:00"
+    },
+    {
+      "message_id": "878c9fcd491e490589b2850c31e7c866",
+      "conversation_id": "8188a31daefe44d89c84a3254617e8fe",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 17:55:39.479737+00:00"
+    },
+    {
+      "message_id": "514b2208947648d29506677ad9c81a08",
+      "conversation_id": "fdf8026d95c94ae99241ee8eb9d85b40",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:42:37.565164+00:00"
+    },
+    {
+      "message_id": "e6980ea4e4cc46dab4a092f19d971352",
+      "conversation_id": "a162cd4d257b4fd987d8d9f0b7c9748a",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:48:31.144724+00:00"
+    },
+    {
+      "message_id": "103269dd63164db7829498c94b238114",
+      "conversation_id": "1aa08b8786b64883b40be5c7cc657128",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:49:01.955468+00:00"
+    },
+    {
+      "message_id": "71263b4836744e6f88a268753d0ed393",
+      "conversation_id": "1aa08b8786b64883b40be5c7cc657128",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:49:07.782169+00:00"
+    },
+    {
+      "message_id": "72c9550bf9b14b8491cdce3fdbc4612e",
+      "conversation_id": "1aa08b8786b64883b40be5c7cc657128",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:49:07.810713+00:00"
+    },
+    {
+      "message_id": "f4227f9d82534d958e0f38d7ae858c7d",
+      "conversation_id": "1aa08b8786b64883b40be5c7cc657128",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:49:07.845329+00:00"
+    },
+    {
+      "message_id": "5b3db5574a594270adb2c1bb03b0be4f",
+      "conversation_id": "eb39d13160b9429ab54ee82dd1bb77ce",
+      "role": "user",
+      "content": "How much does standard shipping take?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:49:07.879538+00:00"
+    },
+    {
+      "message_id": "d2054aebed5e41f3a882c77ccd3f2c66",
+      "conversation_id": "eb39d13160b9429ab54ee82dd1bb77ce",
+      "role": "assistant",
+      "content": "Standard Ground Shipping takes 3 to 5 business days for delivery.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:49:07.925885+00:00"
+    },
+    {
+      "message_id": "3c1361586c3949f1b87f90f8f2609cd1",
+      "conversation_id": "6f87e122a65a430c898091dd226e714d",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:49:34.456429+00:00"
+    },
+    {
+      "message_id": "c0e695ca72334ba78d0b7707e5157155",
+      "conversation_id": "6f87e122a65a430c898091dd226e714d",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:49:40.243892+00:00"
+    },
+    {
+      "message_id": "c81335e02e4343cab6b151004af5156a",
+      "conversation_id": "6f87e122a65a430c898091dd226e714d",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:49:40.277593+00:00"
+    },
+    {
+      "message_id": "c48cacb97a214bb09feb83c8413963e6",
+      "conversation_id": "6f87e122a65a430c898091dd226e714d",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:49:40.310996+00:00"
+    },
+    {
+      "message_id": "33d16bd733d04a42b242a566d531dd91",
+      "conversation_id": "267d6f44855c4593a13aa1260a8bbf76",
+      "role": "user",
+      "content": "How much does standard shipping take?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:49:40.345890+00:00"
+    },
+    {
+      "message_id": "098897d2e0ee4e60a1d1d84d8fc338b1",
+      "conversation_id": "267d6f44855c4593a13aa1260a8bbf76",
+      "role": "assistant",
+      "content": "Standard Ground Shipping takes 3 to 5 business days for delivery.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:49:40.389719+00:00"
+    },
+    {
+      "message_id": "0433296b9c2d479b8353ce509468e952",
+      "conversation_id": "5c17d0da9ab74d0fb2be0c8d28f5173a",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:50:15.705091+00:00"
+    },
+    {
+      "message_id": "74273184b9f246aba70bd5585f560566",
+      "conversation_id": "5c17d0da9ab74d0fb2be0c8d28f5173a",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:50:21.614898+00:00"
+    },
+    {
+      "message_id": "10ea8979c6174303bf2e6928a426d1cc",
+      "conversation_id": "5c17d0da9ab74d0fb2be0c8d28f5173a",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:50:21.648932+00:00"
+    },
+    {
+      "message_id": "59dfe39e5fb44ca7a593b3b3bd33a602",
+      "conversation_id": "5c17d0da9ab74d0fb2be0c8d28f5173a",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:50:21.684851+00:00"
+    },
+    {
+      "message_id": "0f15ee627eeb4f9995f3f2dce97282ab",
+      "conversation_id": "85c32ff2d8f849d9a969a5d072526bdb",
+      "role": "user",
+      "content": "How much does standard shipping take?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-07 18:50:21.720146+00:00"
+    },
+    {
+      "message_id": "a78a90c0223a45f3ac2b8ee5f39c9092",
+      "conversation_id": "85c32ff2d8f849d9a969a5d072526bdb",
+      "role": "assistant",
+      "content": "Standard Ground Shipping takes 3 to 5 business days for delivery.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-07 18:50:21.767293+00:00"
+    }
+  ],
+  "tickets": [
+    {
+      "id": 1,
+      "ticket_id": "TKT-0001",
+      "customer_name": "Alice Johnson",
+      "customer_email": "alice@example.com",
+      "subject": "Unable to access billing history",
+      "description": "Every time I click on 'Billing History', the app crashes with a 500 error page. Please help.",
+      "priority": "high",
+      "category": "billing",
+      "status": "open",
+      "created_at": "2026-07-07 17:00:06.069577+00:00",
+      "updated_at": "2026-07-07 17:00:06.069577+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    },
+    {
+      "id": 2,
+      "ticket_id": "TKT-0002",
+      "customer_name": "Bob Smith",
+      "customer_email": "bob@example.com",
+      "subject": "Request for custom API integration documentation",
+      "description": "We are looking to integrate the customer-support dashboard with our internal logging system. Is there a webhooks specification available?",
+      "priority": "medium",
+      "category": "technical",
+      "status": "open",
+      "created_at": "2026-07-07 17:00:06.069577+00:00",
+      "updated_at": "2026-07-07 17:00:06.069577+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    },
+    {
+      "id": 3,
+      "ticket_id": "TKT-0003",
+      "customer_name": "Charlie Brown",
+      "customer_email": "charlie@example.com",
+      "subject": "Password reset link not arriving",
+      "description": "I have requested a password reset link three times but it has not arrived in my inbox or spam folder.",
+      "priority": "urgent",
+      "category": "account",
+      "status": "open",
+      "created_at": "2026-07-07 17:00:06.069577+00:00",
+      "updated_at": "2026-07-07 17:00:06.069577+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    },
+    {
+      "id": 4,
+      "ticket_id": "TKT-0004",
+      "customer_name": "John Doe",
+      "customer_email": "john@example.com",
+      "subject": "Lost package support",
+      "description": "My shipment TKT-9999 has not arrived after 10 days.",
+      "priority": "high",
+      "category": "general",
+      "status": "open",
+      "created_at": "2026-07-07 17:00:06.100773+00:00",
+      "updated_at": "2026-07-07 17:00:06.100773+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    }
+  ],
+  "counters": [
+    {
+      "_id": "ticket_id",
+      "seq": 9
+    }
+  ]
+}

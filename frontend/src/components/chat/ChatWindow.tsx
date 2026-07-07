@@ -10,9 +10,10 @@ interface ChatWindowProps {
   messages: ChatMessage[];
   loading: boolean;
   onSendMessage: (text: string) => void;
+  onClearChat?: () => void;
 }
 
-export default function ChatWindow({ messages, loading, onSendMessage }: ChatWindowProps) {
+export default function ChatWindow({ messages, loading, onSendMessage, onClearChat }: ChatWindowProps) {
   const listRef = useRef<HTMLDivElement>(null);
 
   // Auto scroll to bottom
@@ -26,14 +27,25 @@ export default function ChatWindow({ messages, loading, onSendMessage }: ChatWin
     <div className="flex-1 flex flex-col bg-zinc-950 border border-zinc-900 rounded-xl overflow-hidden shadow-2xl relative h-[calc(100vh-105px)]">
       
       {/* Upper header */}
-      <div className="p-4 border-b border-zinc-900 flex items-center gap-3 bg-zinc-950">
-        <div className="h-8 w-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400">
-          <MessageSquare className="h-4 w-4" />
+      <div className="p-4 border-b border-zinc-900 flex items-center justify-between bg-zinc-950">
+        <div className="flex items-center gap-3">
+          <div className="h-8 w-8 rounded-lg bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400">
+            <MessageSquare className="h-4 w-4" />
+          </div>
+          <div>
+            <h2 className="text-xs font-bold text-zinc-100">AI Customer Support</h2>
+            <p className="text-[9px] text-zinc-500 font-bold">Latency diagnostics enabled</p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-xs font-bold text-zinc-100">AI Customer Support</h2>
-          <p className="text-[9px] text-zinc-500 font-bold">Latency diagnostics enabled</p>
-        </div>
+
+        {onClearChat && (
+          <button
+            onClick={onClearChat}
+            className="px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800 hover:text-white text-[11px] font-bold text-zinc-400 transition-all cursor-pointer flex items-center gap-1.5 active:scale-95"
+          >
+            New Chat
+          </button>
+        )}
       </div>
 
       {/* Main chat messages log */}

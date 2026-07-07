@@ -43,6 +43,10 @@ class Settings(BaseSettings):
     GEMINI_API_KEY: Optional[str] = None
     GEMINI_MODEL_NAME: Optional[str] = "gemini-2.5-flash"
 
+    # MongoDB Credentials
+    MONGODB_URI: Optional[str] = None
+    MONGODB_DB_NAME: str = "customer_support_ai"
+
     @field_validator("GEMINI_API_KEY")
     @classmethod
     def validate_gemini_key(cls, v: Optional[str]) -> Optional[str]:

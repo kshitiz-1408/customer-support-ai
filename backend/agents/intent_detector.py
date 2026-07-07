@@ -134,7 +134,15 @@ def detect_intent(query: str) -> dict:
         "where is",
         "what is",
         "warranty",
-        "warranties"
+        "warranties",
+        "shipping",
+        "shipment",
+        "delivery",
+        "delivered",
+        "tracking",
+        "track",
+        "status",
+        "package"
     ]
 
     # Classify the intent by matching query terms against keyword lists using clean any() checks
