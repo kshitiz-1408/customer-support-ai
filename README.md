@@ -192,6 +192,45 @@ python -m pytest tests/ -v
 
 ---
 
+## 🔍 Observability, Request Tracing, & Resilience
+
+- **Request ID Tracking**: Every API request is correlated using a unique `request_id` passed via the `X-Request-ID` HTTP header and isolated per-request via Python context variables.
+- **Structured Logging**: Clean, JSON-formatted structured logging with automatic regex-based credential redaction (`MONGODB_URI`, `GEMINI_API_KEY` placeholders).
+- **Latency Instrumentation**: Detailed pipeline stage measurements (`intent_detection`, `history_loading`, `rag_retrieval`, `llm_generation`, `history_persistence`) logged to track bottleneck and execution flow performance.
+- **Bounded Failover & Retries**: Automatic exponential backoff retries with jitter for transient dependencies (Gemini rate-limit 429 errors) and isolated FAISS/MongoDB fallback bounds to guarantee graceful service degradation.
+
+---
+
+## 📊 Quality Evaluation & Benchmarking Suites
+
+The repository contains three reproducible quality benchmarking modules located under `backend/evaluation/`:
+
+### 1. Vector Retrieval Evaluation (Task 7)
+Measures the vector similarity search performance against a labeled search set:
+```bash
+cd backend
+python -m evaluation.evaluate_retrieval
+```
+*Outputs baseline retrieval stats (Hit@5, Recall@5, MRR, nDCG@5).*
+
+### 2. Answer Quality & Hallucination Evaluation (Task 8)
+Assesses claim support and hallucination rate of generated LLM assistant answers:
+```bash
+cd backend
+python -m evaluation.evaluate_answers
+```
+*Evaluates claims groundedness against retrieved context articles.*
+
+### 3. Intent Detection & Agent Routing Evaluation (Task 9)
+Measures accuracy and macro F1 metrics of the query classification engine:
+```bash
+cd backend
+python -m evaluation.evaluate_intents
+```
+*Runs offline experiments (regex word boundary matching, precedence swaps) to optimize query classification.*
+
+---
+
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

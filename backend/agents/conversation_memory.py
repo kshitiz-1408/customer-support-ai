@@ -1,8 +1,11 @@
 import uuid
 import logging
+import time
 from datetime import datetime, timezone
 from typing import List, Optional
 from database.database import get_conversations_collection, get_messages_collection
+from utils.tracing import pipeline_tracker_var
+from utils.resilience import retry_mongodb_read
 
 logger = logging.getLogger("customer_support_backend")
 
@@ -11,6 +14,7 @@ class ConversationMemory:
     @classmethod
     def create_conversation(cls, session_id: Optional[str] = None, user_id: Optional[str] = None, title: Optional[str] = None) -> dict:
         """Create a new conversation thread document in MongoDB."""
+        start_time = time.perf_counter()
         conv_id = uuid.uuid4().hex
         now = datetime.now(timezone.utc)
         doc = {
@@ -23,17 +27,60 @@ class ConversationMemory:
         }
         try:
             get_conversations_collection().insert_one(doc)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            
+            tracker = pipeline_tracker_var.get()
+            if tracker:
+                tracker.db_conversation_creation_ms = duration_ms
+                
+            logger.info({
+                "event": "conversation_created",
+                "conversation_id": conv_id,
+                "duration_ms": int(duration_ms)
+            })
         except Exception as e:
-            logger.error(f"MongoDB create_conversation failed: {str(e)}", exc_info=True)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.error({
+                "event": "persistence_failed",
+                "operation": "create_conversation",
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": int(duration_ms)
+            })
         return doc
 
     @classmethod
     def get_conversation(cls, conversation_id: str) -> Optional[dict]:
         """Fetch a single conversation by its ID."""
+        start_time = time.perf_counter()
         try:
-            return get_conversations_collection().find_one({"conversation_id": conversation_id}, {"_id": 0})
+            res = retry_mongodb_read(
+                get_conversations_collection().find_one,
+                {"conversation_id": conversation_id},
+                {"_id": 0}
+            )
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            
+            tracker = pipeline_tracker_var.get()
+            if tracker:
+                tracker.db_conversation_lookup_ms = duration_ms
+                
+            logger.debug({
+                "event": "conversation_loaded",
+                "conversation_id": conversation_id,
+                "duration_ms": int(duration_ms)
+            })
+            return res
         except Exception as e:
-            logger.error(f"MongoDB get_conversation failed: {str(e)}", exc_info=True)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.error({
+                "event": "persistence_failed",
+                "operation": "get_conversation",
+                "conversation_id": conversation_id,
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": int(duration_ms)
+            })
             return None
 
     @classmethod
@@ -44,34 +91,73 @@ class ConversationMemory:
             if conv:
                 return conversation_id
                 
-        # If no conversation_id but session_id is provided, find the latest conversation for that session
         if session_id and session_id.strip():
+            start_time = time.perf_counter()
             try:
-                latest = get_conversations_collection().find_one(
+                latest = retry_mongodb_read(
+                    get_conversations_collection().find_one,
                     {"session_id": session_id},
                     sort=[("updated_at", -1)]
                 )
+                duration_ms = (time.perf_counter() - start_time) * 1000.0
+                
+                tracker = pipeline_tracker_var.get()
+                if tracker:
+                    tracker.db_conversation_lookup_ms = duration_ms
+                    
+                logger.debug({
+                    "event": "conversation_session_lookup",
+                    "session_id": session_id,
+                    "found": latest is not None,
+                    "duration_ms": int(duration_ms)
+                })
                 if latest:
                     return latest["conversation_id"]
             except Exception as e:
-                logger.error(f"MongoDB get_or_create_conversation search failed: {str(e)}", exc_info=True)
+                duration_ms = (time.perf_counter() - start_time) * 1000.0
+                logger.error({
+                    "event": "persistence_failed",
+                    "operation": "get_or_create_conversation_lookup",
+                    "session_id": session_id,
+                    "exception_type": type(e).__name__,
+                    "error_detail": str(e),
+                    "duration_ms": int(duration_ms)
+                })
                 
-        # Fallback to creating a new conversation thread
         new_conv = cls.create_conversation(session_id=session_id, user_id=user_id)
         return new_conv["conversation_id"]
 
     @classmethod
     def list_conversations(cls, user_id: Optional[str] = None, session_id: Optional[str] = None) -> List[dict]:
         """List conversation threads filtered by user_id or session_id."""
+        start_time = time.perf_counter()
         query = {}
         if user_id:
             query["user_id"] = user_id
         if session_id:
             query["session_id"] = session_id
         try:
-            return list(get_conversations_collection().find(query, {"_id": 0}).sort("updated_at", -1))
+            def run_query():
+                return list(get_conversations_collection().find(query, {"_id": 0}).sort("updated_at", -1))
+                
+            res = retry_mongodb_read(run_query)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.info({
+                "event": "conversations_listed",
+                "query_keys": list(query.keys()),
+                "result_count": len(res),
+                "duration_ms": int(duration_ms)
+            })
+            return res
         except Exception as e:
-            logger.error(f"MongoDB list_conversations failed: {str(e)}", exc_info=True)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.error({
+                "event": "persistence_failed",
+                "operation": "list_conversations",
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": int(duration_ms)
+            })
             return []
 
     @classmethod
@@ -82,12 +168,36 @@ class ConversationMemory:
         """
         if not conversation_id:
             return []
+        start_time = time.perf_counter()
         try:
-            docs = list(get_messages_collection().find({"conversation_id": conversation_id}, {"_id": 0}).sort("created_at", -1).limit(limit))
+            def run_history_query():
+                return list(get_messages_collection().find({"conversation_id": conversation_id}, {"_id": 0}).sort("created_at", -1).limit(limit))
+                
+            docs = retry_mongodb_read(run_history_query)
             docs.reverse()
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            
+            tracker = pipeline_tracker_var.get()
+            if tracker:
+                tracker.db_history_query_ms = duration_ms
+                
+            logger.info({
+                "event": "history_loaded",
+                "conversation_id": conversation_id,
+                "message_count": len(docs),
+                "duration_ms": int(duration_ms)
+            })
             return docs
         except Exception as e:
-            logger.error(f"MongoDB get_conversation_history failed: {str(e)}", exc_info=True)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.error({
+                "event": "persistence_failed",
+                "operation": "get_conversation_history",
+                "conversation_id": conversation_id,
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": int(duration_ms)
+            })
             return []
 
     @classmethod
@@ -98,8 +208,10 @@ class ConversationMemory:
         """
         if not session_id or not session_id.strip():
             return []
+        start_time = time.perf_counter()
         try:
-            latest = get_conversations_collection().find_one(
+            latest = retry_mongodb_read(
+                get_conversations_collection().find_one,
                 {"session_id": session_id},
                 sort=[("updated_at", -1)]
             )
@@ -108,12 +220,21 @@ class ConversationMemory:
             history_msgs = cls.get_conversation_history(latest["conversation_id"], limit=limit)
             return [{"role": m["role"], "content": m["content"]} for m in history_msgs]
         except Exception as e:
-            logger.error(f"MongoDB get_history failed: {str(e)}", exc_info=True)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.error({
+                "event": "persistence_failed",
+                "operation": "get_history",
+                "session_id": session_id,
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": int(duration_ms)
+            })
             return []
 
     @classmethod
     def add_message(cls, conversation_id: str, role: str, content: str, intent: Optional[str] = None, agent: Optional[str] = None, sources: Optional[List[dict]] = None) -> dict:
         """Persist a message and update the parent conversation's timestamp."""
+        start_time = time.perf_counter()
         msg_id = uuid.uuid4().hex
         now = datetime.now(timezone.utc)
         
@@ -139,7 +260,7 @@ class ConversationMemory:
         }
         
         try:
-            # Insert message
+            # Insert message (Write: Do NOT retry writes)
             get_messages_collection().insert_one(doc)
             
             # Update parent conversation's updated_at timestamp & add title if missing
@@ -153,6 +274,33 @@ class ConversationMemory:
                 {"conversation_id": conversation_id},
                 {"$set": update_fields}
             )
+            
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            
+            tracker = pipeline_tracker_var.get()
+            if tracker:
+                if role == "user":
+                    tracker.db_user_message_insert_ms = duration_ms
+                else:
+                    tracker.db_assistant_message_insert_ms = duration_ms
+                    
+            logger.info({
+                "event": "message_persisted",
+                "conversation_id": conversation_id,
+                "role": role,
+                "intent": intent,
+                "agent": agent,
+                "duration_ms": int(duration_ms)
+            })
         except Exception as e:
-            logger.error(f"MongoDB add_message failed: {str(e)}", exc_info=True)
+            duration_ms = (time.perf_counter() - start_time) * 1000.0
+            logger.error({
+                "event": "persistence_failed",
+                "operation": "add_message",
+                "conversation_id": conversation_id,
+                "role": role,
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": int(duration_ms)
+            })
         return doc

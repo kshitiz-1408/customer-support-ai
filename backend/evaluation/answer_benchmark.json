@@ -1,0 +1,534 @@
+[
+  {
+    "id": "pricing_001",
+    "query": "What does the Premium Plan include?",
+    "category": "product",
+    "expected_topic": "premium_plan",
+    "reference_facts": [
+      {
+        "fact_id": "premium_fact_1",
+        "fact": "Unlimited camera support.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      },
+      {
+        "fact_id": "premium_fact_2",
+        "fact": "60-day storage history.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      },
+      {
+        "fact_id": "premium_fact_3",
+        "fact": "Advanced AI detection rules and cellular backup.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "pricing_002",
+    "query": "How much does the Premium Plan cost?",
+    "category": "product",
+    "expected_topic": "premium_plan",
+    "reference_facts": [
+      {
+        "fact_id": "premium_cost_1",
+        "fact": "Premium Plan is priced at $19.99 per month or $199.99 when billed annually.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "pricing_003",
+    "query": "What is the annual billing rate for the Premium Plan?",
+    "category": "product",
+    "expected_topic": "premium_plan",
+    "reference_facts": [
+      {
+        "fact_id": "premium_annual_1",
+        "fact": "Premium Plan costs $199.99 when billed annually.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "pricing_004",
+    "query": "How much is the Plus Plan per month?",
+    "category": "product",
+    "expected_topic": "plus_plan",
+    "reference_facts": [
+      {
+        "fact_id": "plus_cost_1",
+        "fact": "Plus Plan is $4.99 per month.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "pricing_005",
+    "query": "What are your prices?",
+    "category": "product",
+    "expected_topic": "pricing_general",
+    "reference_facts": [
+      {
+        "fact_id": "plus_general_cost",
+        "fact": "Plus Plan is $4.99 per month or $49.99 annually.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      },
+      {
+        "fact_id": "premium_general_cost",
+        "fact": "Premium Plan is $19.99 per month or $199.99 when billed annually.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "pricing_006",
+    "query": "How much does it cost annually?",
+    "category": "product",
+    "expected_topic": "pricing_general",
+    "reference_facts": [
+      {
+        "fact_id": "plus_annual_cost",
+        "fact": "Plus Plan is $49.99 annually.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      },
+      {
+        "fact_id": "premium_annual_cost",
+        "fact": "Premium Plan is $199.99 when billed annually.",
+        "source": "sample_kb.md",
+        "section": "Pricing and Subscription Plans"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "shipping_001",
+    "query": "How long does standard shipping take?",
+    "category": "faq",
+    "expected_topic": "shipping_standard",
+    "reference_facts": [
+      {
+        "fact_id": "shipping_standard_duration",
+        "fact": "Standard Ground Shipping delivery takes 3 to 5 business days.",
+        "source": "sample_kb.md",
+        "section": "Shipping Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "shipping_002",
+    "query": "What is the delivery time for express shipping?",
+    "category": "faq",
+    "expected_topic": "shipping_express",
+    "reference_facts": [
+      {
+        "fact_id": "shipping_express_duration",
+        "fact": "Express Shipping delivery takes 1 to 2 business days.",
+        "source": "sample_kb.md",
+        "section": "Shipping Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "shipping_003",
+    "query": "Is standard shipping free?",
+    "category": "faq",
+    "expected_topic": "shipping_free",
+    "reference_facts": [
+      {
+        "fact_id": "shipping_free_threshold",
+        "fact": "Standard Ground Shipping is free for orders totaling $50 or more.",
+        "source": "sample_kb.md",
+        "section": "Shipping Policy"
+      },
+      {
+        "fact_id": "shipping_under_50_cost",
+        "fact": "A flat rate of $5.99 applies for standard shipping on orders under $50.",
+        "source": "sample_kb.md",
+        "section": "Shipping Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "shipping_004",
+    "query": "Do you ship internationally?",
+    "category": "faq",
+    "expected_topic": "shipping_international",
+    "reference_facts": [
+      {
+        "fact_id": "shipping_international_countries",
+        "fact": "TechMart ships internationally to over 50 countries.",
+        "source": "sample_kb.md",
+        "section": "FAQ (Frequently Asked Questions)"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "shipping_005",
+    "query": "What time do I need to order for same-day dispatch?",
+    "category": "faq",
+    "expected_topic": "shipping_dispatch",
+    "reference_facts": [
+      {
+        "fact_id": "shipping_dispatch_cutoff",
+        "fact": "Orders placed before 2:00 PM CST are dispatched on the same business day.",
+        "source": "sample_kb.md",
+        "section": "Shipping Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "refund_001",
+    "query": "What is your refund policy?",
+    "category": "billing",
+    "expected_topic": "refund_policy",
+    "reference_facts": [
+      {
+        "fact_id": "refund_policy_deadline",
+        "fact": "Refund window is within 45 days from original purchase date.",
+        "source": "sample_kb.md",
+        "section": "Refund Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "refund_002",
+    "query": "How long does it take to get a refund?",
+    "category": "billing",
+    "expected_topic": "refund_processing",
+    "reference_facts": [
+      {
+        "fact_id": "refund_processing_duration",
+        "fact": "Standard refund processing time is 7 to 10 business days.",
+        "source": "sample_kb.md",
+        "section": "Refund Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "refund_003",
+    "query": "How many days for refund processing?",
+    "category": "billing",
+    "expected_topic": "refund_processing",
+    "reference_facts": [
+      {
+        "fact_id": "refund_days_duration",
+        "fact": "Refund processing time is 7 to 10 business days.",
+        "source": "sample_kb.md",
+        "section": "Refund Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "refund_004",
+    "query": "What condition must returned items be in to get a refund?",
+    "category": "billing",
+    "expected_topic": "refund_eligibility",
+    "reference_facts": [
+      {
+        "fact_id": "refund_item_condition",
+        "fact": "Product must be in its original packaging, include all accessories, and be free from visible physical damage.",
+        "source": "sample_kb.md",
+        "section": "Refund Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "return_001",
+    "query": "What is the return window if I miss the refund deadline?",
+    "category": "billing",
+    "expected_topic": "return_window",
+    "reference_facts": [
+      {
+        "fact_id": "return_policy_window",
+        "fact": "Return products within 90 days of purchase for store credit or exchange.",
+        "source": "sample_kb.md",
+        "section": "Return Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "return_002",
+    "query": "Is there a restocking fee for open-box returns?",
+    "category": "billing",
+    "expected_topic": "return_restocking",
+    "reference_facts": [
+      {
+        "fact_id": "return_restocking_pct",
+        "fact": "Returns of open-box items or items showing minor wear are subject to a 15% restocking fee.",
+        "source": "sample_kb.md",
+        "section": "Return Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "return_003",
+    "query": "How do I get an RMA number for a return?",
+    "category": "billing",
+    "expected_topic": "return_rma",
+    "reference_facts": [
+      {
+        "fact_id": "return_rma_generation",
+        "fact": "RMA number can be generated online through your TechMart Account Dashboard.",
+        "source": "sample_kb.md",
+        "section": "Return Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "warranty_001",
+    "query": "How long is the standard warranty on devices?",
+    "category": "faq",
+    "expected_topic": "warranty_standard",
+    "reference_facts": [
+      {
+        "fact_id": "warranty_standard_duration",
+        "fact": "Protected by a standard 2-Year Limited Manufacturer Warranty.",
+        "source": "sample_kb.md",
+        "section": "Warranty Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "warranty_002",
+    "query": "How many extra years of coverage does the Extended Warranty Plan add?",
+    "category": "faq",
+    "expected_topic": "warranty_extended",
+    "reference_facts": [
+      {
+        "fact_id": "warranty_extended_years",
+        "fact": "Extended Warranty Plan extends coverage by an additional 3 years.",
+        "source": "sample_kb.md",
+        "section": "Warranty Policy"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "product_001",
+    "query": "Does the Wave Headset support active noise cancellation?",
+    "category": "faq",
+    "expected_topic": "product_headphones",
+    "reference_facts": [
+      {
+        "fact_id": "product_headset_anc",
+        "fact": "TechMart Wave Headset features active noise cancellation (ANC).",
+        "source": "sample_kb.md",
+        "section": "Product Information"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "product_002",
+    "query": "What is the battery playback time of the wireless Wave Headset?",
+    "category": "faq",
+    "expected_topic": "product_headphones",
+    "reference_facts": [
+      {
+        "fact_id": "product_headset_battery",
+        "fact": "Supports up to 30 hours of continuous battery playback.",
+        "source": "sample_kb.md",
+        "section": "Product Information"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "product_003",
+    "query": "Are smart hubs required for wireless cameras?",
+    "category": "faq",
+    "expected_topic": "product_cameras",
+    "reference_facts": [
+      {
+        "fact_id": "product_cameras_hub",
+        "fact": "All TechMart smart cameras connect directly to Wi-Fi without requiring a physical hub.",
+        "source": "sample_kb.md",
+        "section": "FAQ (Frequently Asked Questions)"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "tech_001",
+    "query": "My smart camera keeps going offline, what should I check?",
+    "category": "technical",
+    "expected_topic": "tech_offline",
+    "reference_facts": [
+      {
+        "fact_id": "tech_offline_distance",
+        "fact": "Ensure the camera is within 30 feet of your router.",
+        "source": "sample_kb.md",
+        "section": "Technical Support"
+      },
+      {
+        "fact_id": "tech_offline_walls",
+        "fact": "Concrete walls and metal doors can degrade signals.",
+        "source": "sample_kb.md",
+        "section": "Technical Support"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "tech_002",
+    "query": "Does the Smart Camera Pro support 5GHz Wi-Fi networks during setup?",
+    "category": "technical",
+    "expected_topic": "tech_wifi",
+    "reference_facts": [
+      {
+        "fact_id": "tech_wifi_band",
+        "fact": "TechMart smart cameras require a 2.4GHz Wi-Fi band for setup and cannot connect to 5GHz-only networks.",
+        "source": "sample_kb.md",
+        "section": "Technical Support"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "tech_003",
+    "query": "How do I turn on the Wave Headset?",
+    "category": "technical",
+    "expected_topic": "tech_headphones",
+    "reference_facts": [
+      {
+        "fact_id": "tech_headset_power",
+        "fact": "Hold the circular button on the side of your Wave Headset for 3 seconds to power on/off.",
+        "source": "sample_kb.md",
+        "section": "User Manual and Basic Usage"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "account_001",
+    "query": "How long before the password reset link expires?",
+    "category": "technical",
+    "expected_topic": "account_reset",
+    "reference_facts": [
+      {
+        "fact_id": "account_reset_expiry",
+        "fact": "Password reset links expire exactly after 15 minutes.",
+        "source": "sample_kb.md",
+        "section": "Account and Login Help"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "account_002",
+    "query": "What domain should I whitelist if I do not receive my reset password email?",
+    "category": "technical",
+    "expected_topic": "account_whitelist",
+    "reference_facts": [
+      {
+        "fact_id": "account_whitelist_domain",
+        "fact": "Whitelist our domain @techmart.com inside your email client settings.",
+        "source": "sample_kb.md",
+        "section": "Account and Login Help"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "complaint_001",
+    "query": "How do I request a formal review of my complaint by the Support Manager?",
+    "category": "complaint",
+    "expected_topic": "complaint_review",
+    "reference_facts": [
+      {
+        "fact_id": "complaint_manager_email",
+        "fact": "Request formal review by the Support Manager by writing directly to manager-support@techmart.com.",
+        "source": "sample_kb.md",
+        "section": "Complaint and Escalation Process"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "complaint_002",
+    "query": "When can I request escalation to a Support Supervisor?",
+    "category": "complaint",
+    "expected_topic": "complaint_escalation",
+    "reference_facts": [
+      {
+        "fact_id": "complaint_escalate_lead",
+        "fact": "If unresolved after 48 hours, request route to Team Lead.",
+        "source": "sample_kb.md",
+        "section": "Complaint and Escalation Process"
+      },
+      {
+        "fact_id": "complaint_escalate_supervisor",
+        "fact": "If still unresolved after an additional 24 hours, request to speak with a Support Supervisor.",
+        "source": "sample_kb.md",
+        "section": "Complaint and Escalation Process"
+      }
+    ],
+    "answerable": true
+  },
+  {
+    "id": "unanswerable_001",
+    "query": "Can you ship packages via autonomous drone delivery?",
+    "category": "faq",
+    "expected_topic": null,
+    "reference_facts": [],
+    "answerable": false
+  },
+  {
+    "id": "unanswerable_002",
+    "query": "How do I buy shares of TechMart stock?",
+    "category": "faq",
+    "expected_topic": null,
+    "reference_facts": [],
+    "answerable": false
+  },
+  {
+    "id": "unanswerable_003",
+    "query": "Do you sell smart light bulbs?",
+    "category": "faq",
+    "expected_topic": null,
+    "reference_facts": [],
+    "answerable": false
+  },
+  {
+    "id": "unanswerable_004",
+    "query": "Can I buy a camera using Bitcoin or other crypto?",
+    "category": "faq",
+    "expected_topic": null,
+    "reference_facts": [],
+    "answerable": false
+  },
+  {
+    "id": "unanswerable_005",
+    "query": "What is the repair guide for replacing the battery in the Wave Headset?",
+    "category": "faq",
+    "expected_topic": null,
+    "reference_facts": [],
+    "answerable": false
+  }
+]

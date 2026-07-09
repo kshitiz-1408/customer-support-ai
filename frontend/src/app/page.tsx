@@ -8,7 +8,6 @@ import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { 
   Search, 
-  PlusCircle, 
   Loader2, 
   CheckCircle2, 
   Clock, 
@@ -58,29 +57,9 @@ export default function SupportDashboard() {
   const [inspectorAgent, setInspectorAgent] = useState<string>("");
   const [updatingTicketId, setUpdatingTicketId] = useState<number | null>(null);
 
-  // Load tickets on mount
-  useEffect(() => {
-    fetchTickets();
-    fetchKB();
-  }, []);
 
-  // Search KB when query changes
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      fetchKB(kbQuery);
-    }, 300);
 
-    return () => clearTimeout(delayDebounceFn);
-  }, [kbQuery]);
 
-  // Sync inspector inputs when selected ticket changes
-  useEffect(() => {
-    if (selectedTicket) {
-      setInspectorNotes(selectedTicket.resolution_notes || "");
-      setInspectorStatus(selectedTicket.status);
-      setInspectorAgent(selectedTicket.assigned_agent || "");
-    }
-  }, [selectedTicket]);
 
   const fetchTickets = async (statusFilter?: string) => {
     try {
@@ -101,6 +80,7 @@ export default function SupportDashboard() {
           setSelectedTicket(null);
         }
       }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setTicketsError(err.message || "Failed to load tickets");
     } finally {
@@ -120,6 +100,35 @@ export default function SupportDashboard() {
       setKbLoading(false);
     }
   };
+
+  // Load tickets on mount
+  useEffect(() => {
+    setTimeout(() => {
+      fetchTickets();
+      fetchKB();
+    }, 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Search KB when query changes
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchKB(kbQuery);
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [kbQuery]);
+
+  // Sync inspector inputs when selected ticket changes
+  useEffect(() => {
+    if (selectedTicket) {
+      setTimeout(() => {
+        setInspectorNotes(selectedTicket.resolution_notes || "");
+        setInspectorStatus(selectedTicket.status);
+        setInspectorAgent(selectedTicket.assigned_agent || "");
+      }, 0);
+    }
+  }, [selectedTicket]);
 
   const handleFilterChange = (filter: string) => {
     setTicketsFilter(filter);
@@ -143,6 +152,7 @@ export default function SupportDashboard() {
       });
       setIsModalOpen(false);
       fetchTickets(ticketsFilter);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setFormError(err.message || "Failed to create ticket.");
     } finally {
@@ -162,6 +172,7 @@ export default function SupportDashboard() {
       const response = await api.put<Ticket>(`/tickets/${id}`, updateData);
       setTickets(prev => prev.map(t => t.id === id ? response.data : t));
       setSelectedTicket(response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       alert(`Update failed: ${err.message}`);
     } finally {
@@ -178,6 +189,7 @@ export default function SupportDashboard() {
         setSelectedTicket(null);
       }
       setTickets(prev => prev.filter(t => t.id !== id));
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       alert(`Delete failed: ${err.message}`);
     }
@@ -602,6 +614,12 @@ export default function SupportDashboard() {
                   </select>
                 </div>
               </div>
+
+              {formError && (
+                <div className="p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-450 text-[10px] font-bold">
+                  {formError}
+                </div>
+              )}
 
               <div className="flex gap-2 pt-3 border-t border-zinc-800">
                 <button

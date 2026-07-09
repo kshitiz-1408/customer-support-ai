@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 from agents import (
     billing_agent,
     technical_agent,
@@ -6,10 +7,10 @@ from agents import (
     complaint_agent,
     faq_agent,
 )
+from utils.tracing import trace_stage
 
 logger = logging.getLogger("customer_support_backend")
 
-from typing import Optional
 
 def process_agent_query(agent_name: str, query: str, conversation_id: Optional[str] = None, session_id: Optional[str] = None) -> dict:
     """
@@ -22,32 +23,34 @@ def process_agent_query(agent_name: str, query: str, conversation_id: Optional[s
     
     # 1. Retrieve RAG Chunks
     try:
-        logger.info(f"{agent_name}: Querying RAG knowledge base similarity index...")
-        kb_context = query_kb(query, top_k=4)
+        with trace_stage("rag_retrieval"):
+            logger.info(f"{agent_name}: Querying RAG knowledge base similarity index...")
+            kb_context = query_kb(query, top_k=4)
     except Exception as e:
         logger.error(f"{agent_name}: RAG retrieval failed: {str(e)}", exc_info=True)
         kb_context = []
         
-    # 2. Extract and deduplicate source metadata
-    seen = set()
     unique_sources = []
-    for chunk in kb_context:
-        metadata = chunk.get("metadata", {})
-        source = metadata.get("source", "unknown")
-        page = metadata.get("page", 1)
-        doc_type = metadata.get("type", "unknown")
-        
-        key = (source, page, doc_type)
-        if key not in seen:
-            seen.add(key)
-            unique_sources.append({
-                "source": source,
-                "page": page,
-                "type": doc_type
-            })
+    # 2. Extract and deduplicate source metadata
+    with trace_stage("context_construction"):
+        seen = set()
+        for chunk in kb_context:
+            metadata = chunk.get("metadata", {})
+            source = metadata.get("source", "unknown")
+            page = metadata.get("page", 1)
+            doc_type = metadata.get("type", "unknown")
             
-    # 3. Define grounding prompt instructions
-    system_instruction = f"""You are the {agent_name} for TechMart Electronics.
+            key = (source, page, doc_type)
+            if key not in seen:
+                seen.add(key)
+                unique_sources.append({
+                    "source": source,
+                    "page": page,
+                    "type": doc_type
+                })
+                
+        # Define grounding prompt instructions
+        system_instruction = f"""You are the {agent_name} for TechMart Electronics.
 Your goal is to answer the customer's query professionally, politely, and factually.
 
 CRITICAL INSTRUCTIONS FOR GROUNDING:
@@ -63,54 +66,34 @@ CRITICAL INSTRUCTIONS FOR GROUNDING:
     history = []
     active_conv_id = conversation_id
     try:
-        if not active_conv_id and session_id:
-            active_conv_id = ConversationMemory.get_or_create_conversation(session_id=session_id)
-            
-        if active_conv_id:
-            # Bounded history window: Fetch only the 6 most recent messages (3 turns)
-            history_msgs = ConversationMemory.get_conversation_history(active_conv_id, limit=6)
-            history = [{"role": m["role"], "content": m["content"]} for m in history_msgs]
-            # Exclude the current user query message if it was already persisted
-            if history and history[-1]["role"] == "user":
-                history.pop()
+        with trace_stage("history_loading"):
+            if not active_conv_id and session_id:
+                active_conv_id = ConversationMemory.get_or_create_conversation(session_id=session_id)
+                
+            if active_conv_id:
+                # Bounded history window: Fetch only the 6 most recent messages (3 turns)
+                history_msgs = ConversationMemory.get_conversation_history(active_conv_id, limit=6)
+                history = [{"role": m["role"], "content": m["content"]} for m in history_msgs]
+                # Exclude the current user query message if it was already persisted
+                if history and history[-1]["role"] == "user":
+                    history.pop()
     except Exception as e:
         logger.error(f"{agent_name}: Conversation history loading failed: {str(e)}", exc_info=True)
         history = []
 
     # 4. Generate response using LLM service
     try:
-        response_text = GeminiLLMService.generate_response(
-            user_query=query,
-            system_instruction=system_instruction,
-            kb_context=kb_context,
-            agent_identity=agent_name,
-            history=history
-        )
+        with trace_stage("llm_generation"):
+            response_text = GeminiLLMService.generate_response(
+                user_query=query,
+                system_instruction=system_instruction,
+                kb_context=kb_context,
+                agent_identity=agent_name,
+                history=history
+            )
     except Exception as e:
         logger.error(f"{agent_name}: Gemini generation failed: {str(e)}", exc_info=True)
         response_text = "I apologize, but I could not formulate an answer right now. Please try again."
-        
-    # 5. Persist assistant response turn
-    if active_conv_id and response_text != "I apologize, but I could not formulate an answer right now. Please try again.":
-        try:
-            intent_mapping = {
-                "Billing Agent": "billing",
-                "Technical Agent": "technical",
-                "Product Agent": "product",
-                "Complaint Agent": "complaint",
-                "FAQ Agent": "faq"
-            }
-            intent_name = intent_mapping.get(agent_name, "faq")
-            ConversationMemory.add_message(
-                conversation_id=active_conv_id,
-                role="assistant",
-                content=response_text,
-                intent=intent_name,
-                agent=agent_name,
-                sources=unique_sources
-            )
-        except Exception as e:
-            logger.error(f"{agent_name}: Assistant message persistence failed: {str(e)}", exc_info=True)
         
     return {
         "response": response_text,

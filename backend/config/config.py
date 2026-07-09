@@ -47,6 +47,13 @@ class Settings(BaseSettings):
     MONGODB_URI: Optional[str] = None
     MONGODB_DB_NAME: str = "customer_support_ai"
 
+    # Resilience & Timeout configurations
+    GEMINI_TIMEOUT: float = 30.0
+    GEMINI_MAX_RETRIES: int = 3
+    GEMINI_BACKOFF_FACTOR: float = 2.0
+    MONGODB_TIMEOUT_MS: int = 5000
+    MONGODB_SOCKET_TIMEOUT_MS: int = 10000
+
     @field_validator("GEMINI_API_KEY")
     @classmethod
     def validate_gemini_key(cls, v: Optional[str]) -> Optional[str]:

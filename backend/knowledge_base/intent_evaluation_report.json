@@ -1,0 +1,214 @@
+{
+  "timestamp": "2026-07-09T18:59:14Z",
+  "benchmark_version": "1.0",
+  "benchmark_size": 75,
+  "aggregate_metrics": {
+    "overall_accuracy": 0.8666666666666667,
+    "macro_precision": 0.8251322751322752,
+    "macro_recall": 0.8880898513251454,
+    "macro_f1": 0.8241292598281845,
+    "weighted_f1": 0.8746018546964783,
+    "agent_routing_accuracy": 0.88,
+    "failed_query_count": 9
+  },
+  "per_class_metrics": {
+    "billing": {
+      "precision": 0.8888888888888888,
+      "recall": 0.9411764705882353,
+      "f1": 0.9142857142857143,
+      "support": 17
+    },
+    "technical": {
+      "precision": 0.8,
+      "recall": 0.75,
+      "f1": 0.7741935483870969,
+      "support": 16
+    },
+    "product": {
+      "precision": 0.9285714285714286,
+      "recall": 1.0,
+      "f1": 0.962962962962963,
+      "support": 13
+    },
+    "complaint": {
+      "precision": 1.0,
+      "recall": 0.9230769230769231,
+      "f1": 0.9600000000000001,
+      "support": 13
+    },
+    "faq": {
+      "precision": 1.0,
+      "recall": 0.7142857142857143,
+      "f1": 0.8333333333333333,
+      "support": 14
+    },
+    "unknown": {
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "f1": 0.5,
+      "support": 2
+    }
+  },
+  "confusion_matrix": {
+    "billing": {
+      "billing": 16,
+      "technical": 0,
+      "product": 0,
+      "complaint": 0,
+      "faq": 0,
+      "unknown": 1
+    },
+    "technical": {
+      "billing": 2,
+      "technical": 12,
+      "product": 0,
+      "complaint": 0,
+      "faq": 0,
+      "unknown": 2
+    },
+    "product": {
+      "billing": 0,
+      "technical": 0,
+      "product": 13,
+      "complaint": 0,
+      "faq": 0,
+      "unknown": 0
+    },
+    "complaint": {
+      "billing": 0,
+      "technical": 0,
+      "product": 1,
+      "complaint": 12,
+      "faq": 0,
+      "unknown": 0
+    },
+    "faq": {
+      "billing": 0,
+      "technical": 3,
+      "product": 0,
+      "complaint": 0,
+      "faq": 10,
+      "unknown": 1
+    },
+    "unknown": {
+      "billing": 0,
+      "technical": 0,
+      "product": 0,
+      "complaint": 0,
+      "faq": 0,
+      "unknown": 2
+    }
+  },
+  "difficulty_analysis": {
+    "easy": 0.9,
+    "medium": 0.8333333333333334,
+    "hard": 0.7142857142857143
+  },
+  "error_attribution": {
+    "missing_keyword": 2,
+    "vocabulary_mismatch": 1,
+    "keyword_collision": 0,
+    "precedence_issue": 3,
+    "substring_false_positive": 0,
+    "ambiguous_query": 0,
+    "multi_intent_limitation": 0,
+    "typo_noise": 2,
+    "missing_context": 1,
+    "wrong_intent_to_agent_mapping": 0,
+    "duplicate_routing_implementation": 0,
+    "benchmark_label_issue": 0
+  },
+  "failed_cases": [
+    {
+      "id": "hist_005",
+      "query": "What are your support hours?",
+      "expected": "faq",
+      "actual": "technical",
+      "agent_expected": "FAQ Agent",
+      "agent_actual": "Technical Agent",
+      "error_attribution": "precedence_issue"
+    },
+    {
+      "id": "tech_009",
+      "query": "I forgot my credentials for setup",
+      "expected": "technical",
+      "actual": "unknown",
+      "agent_expected": "Technical Agent",
+      "agent_actual": "FAQ Agent",
+      "error_attribution": "missing_keyword"
+    },
+    {
+      "id": "complaint_004",
+      "query": "I am very frustrated with this product",
+      "expected": "complaint",
+      "actual": "product",
+      "agent_expected": "Complaint Agent",
+      "agent_actual": "Product Agent",
+      "error_attribution": "vocabulary_mismatch"
+    },
+    {
+      "id": "faq_002",
+      "query": "How do I contact support via email?",
+      "expected": "faq",
+      "actual": "technical",
+      "agent_expected": "FAQ Agent",
+      "agent_actual": "Technical Agent",
+      "error_attribution": "precedence_issue"
+    },
+    {
+      "id": "faq_003",
+      "query": "Do you ship to over 50 countries?",
+      "expected": "faq",
+      "actual": "unknown",
+      "agent_expected": "FAQ Agent",
+      "agent_actual": "FAQ Agent",
+      "error_attribution": "missing_keyword"
+    },
+    {
+      "id": "faq_008",
+      "query": "office address and support phone number",
+      "expected": "faq",
+      "actual": "technical",
+      "agent_expected": "FAQ Agent",
+      "agent_actual": "Technical Agent",
+      "error_attribution": "precedence_issue"
+    },
+    {
+      "id": "neg_001",
+      "query": "I don't want a refund, I need technical help",
+      "expected": "technical",
+      "actual": "billing",
+      "agent_expected": "Technical Agent",
+      "agent_actual": "Billing Agent",
+      "error_attribution": "missing_context"
+    },
+    {
+      "id": "typo_001",
+      "query": "I forgot my passwrd",
+      "expected": "technical",
+      "actual": "unknown",
+      "agent_expected": "Technical Agent",
+      "agent_actual": "FAQ Agent",
+      "error_attribution": "typo_noise"
+    },
+    {
+      "id": "typo_003",
+      "query": "can i get refnd",
+      "expected": "billing",
+      "actual": "unknown",
+      "agent_expected": "Billing Agent",
+      "agent_actual": "FAQ Agent",
+      "error_attribution": "typo_noise"
+    }
+  ],
+  "experiments": {
+    "precedence_swapped": {
+      "accuracy": 0.8666666666666667,
+      "macro_f1": 0.8254737976433106
+    },
+    "regex_boundaries": {
+      "accuracy": 0.9066666666666666,
+      "macro_f1": 0.8595590828924163
+    }
+  }
+}

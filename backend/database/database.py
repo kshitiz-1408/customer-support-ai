@@ -17,23 +17,28 @@ MOCK_DB_FILE = os.path.join(
     "mock_mongo.json"
 )
 
+import threading
+_mock_db_lock = threading.Lock()
+
 def _load_mock_db() -> Dict[str, List[Dict[str, Any]]]:
-    if not os.path.exists(MOCK_DB_FILE):
-        return {"conversations": [], "messages": [], "tickets": [], "counters": [{"_id": "ticket_id", "seq": 3}]}
-    try:
-        with open(MOCK_DB_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception as e:
-        logger.error(f"Error loading mock db: {e}")
-        return {"conversations": [], "messages": [], "tickets": [], "counters": [{"_id": "ticket_id", "seq": 3}]}
+    with _mock_db_lock:
+        if not os.path.exists(MOCK_DB_FILE):
+            return {"conversations": [], "messages": [], "tickets": [], "counters": [{"_id": "ticket_id", "seq": 3}]}
+        try:
+            with open(MOCK_DB_FILE, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            logger.error(f"Error loading mock db: {e}")
+            return {"conversations": [], "messages": [], "tickets": [], "counters": [{"_id": "ticket_id", "seq": 3}]}
 
 def _save_mock_db(db_data: Dict[str, List[Dict[str, Any]]]):
-    try:
-        os.makedirs(os.path.dirname(MOCK_DB_FILE), exist_ok=True)
-        with open(MOCK_DB_FILE, "w", encoding="utf-8") as f:
-            json.dump(db_data, f, indent=2, default=str)
-    except Exception as e:
-        logger.error(f"Failed to save mock db to file: {e}")
+    with _mock_db_lock:
+        try:
+            os.makedirs(os.path.dirname(MOCK_DB_FILE), exist_ok=True)
+            with open(MOCK_DB_FILE, "w", encoding="utf-8") as f:
+                json.dump(db_data, f, indent=2, default=str)
+        except Exception as e:
+            logger.error(f"Failed to save mock db to file: {e}")
 
 
 class MockCollection:
@@ -218,6 +223,9 @@ def connect_db():
         return
         
     try:
+        import time
+        start_time = time.perf_counter()
+        
         # Prevent logging password credentials: only log host information
         masked_uri = settings.MONGODB_URI
         if "@" in masked_uri:
@@ -225,10 +233,19 @@ def connect_db():
             prefix = parts[0].split("://")
             scheme = prefix[0]
             masked_uri = f"{scheme}://****:****@{parts[1]}"
-        logger.info(f"Initializing MongoDB client pool using: {masked_uri}")
+            
+        logger.info({
+            "event": "mongodb_connection_started",
+            "uri": masked_uri
+        })
         
-        # Initialize client with connection pooling and a 5 second timeout
-        db_client = MongoClient(settings.MONGODB_URI, serverSelectionTimeoutMS=5000)
+        # Initialize client with connection pooling and configured timeouts
+        db_client = MongoClient(
+            settings.MONGODB_URI,
+            serverSelectionTimeoutMS=settings.MONGODB_TIMEOUT_MS,
+            connectTimeoutMS=settings.MONGODB_TIMEOUT_MS,
+            socketTimeoutMS=settings.MONGODB_SOCKET_TIMEOUT_MS
+        )
         # Perform lightweight check to verify connection
         db_client.admin.command('ping')
         
@@ -247,20 +264,30 @@ def connect_db():
         db_client[settings.MONGODB_DB_NAME]["tickets"].create_index("status")
         db_client[settings.MONGODB_DB_NAME]["tickets"].create_index("created_at")
         
-        logger.info("Successfully connected to MongoDB.")
+        duration_ms = int((time.perf_counter() - start_time) * 1000)
+        logger.info({
+            "event": "mongodb_connected",
+            "duration_ms": duration_ms
+        })
     except Exception as e:
-        logger.error(f"MongoDB connection failed: {str(e)}. Falling back to file-backed Mock DB.", exc_info=True)
+        duration_ms = int((time.perf_counter() - start_time) * 1000)
+        logger.error({
+            "event": "mongodb_connection_failed",
+            "exception_type": type(e).__name__,
+            "error_detail": str(e),
+            "duration_ms": duration_ms
+        })
         db_connected = False
 
 def close_db():
     """Close MongoDB connection pool cleanly."""
     global db_client, db_connected
     if db_client:
-        logger.info("Closing MongoDB connection pool...")
+        logger.info({"event": "mongodb_close_started"})
         db_client.close()
         db_client = None
         db_connected = False
-        logger.info("MongoDB connection pool closed cleanly.")
+        logger.info({"event": "mongodb_closed"})
 
 def get_db():
     """Retrieve the shared database instance."""
@@ -268,7 +295,12 @@ def get_db():
     if db_client is None:
         if not settings.MONGODB_URI:
             raise RuntimeError("MONGODB_URI is not configured in settings.")
-        db_client = MongoClient(settings.MONGODB_URI, serverSelectionTimeoutMS=5000)
+        db_client = MongoClient(
+            settings.MONGODB_URI,
+            serverSelectionTimeoutMS=settings.MONGODB_TIMEOUT_MS,
+            connectTimeoutMS=settings.MONGODB_TIMEOUT_MS,
+            socketTimeoutMS=settings.MONGODB_SOCKET_TIMEOUT_MS
+        )
     return db_client[settings.MONGODB_DB_NAME]
 
 def get_tickets_collection():

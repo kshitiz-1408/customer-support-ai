@@ -7,21 +7,18 @@ import { ChatMessage } from "@/components/chat/MessageBubble";
 export function useChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [conversationId, setConversationId] = useState<string | null>(null);
-
-  // Restore conversation ID and fetch history on client-side mount
-  useEffect(() => {
-    const savedId = localStorage.getItem("customer_support_conversation_id");
-    if (savedId) {
-      setConversationId(savedId);
-      fetchHistory(savedId);
+  const [conversationId, setConversationId] = useState<string | null>(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("customer_support_conversation_id");
     }
-  }, []);
+    return null;
+  });
 
   const fetchHistory = async (convId: string) => {
     setLoading(true);
     try {
       const response = await api.get(`/chat/conversations/${convId}/history`);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mapped = response.data.map((m: any) => ({
         id: m.message_id,
         sender: m.role as "user" | "assistant",
@@ -29,6 +26,7 @@ export function useChat() {
         timestamp: new Date(m.created_at),
       }));
       setMessages(mapped);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Failed to load chat history", error);
       // Only clear stored conversation reference if the backend definitively confirms
@@ -42,6 +40,15 @@ export function useChat() {
       setLoading(false);
     }
   };
+
+  // Restore conversation ID and fetch history on client-side mount
+  useEffect(() => {
+    const savedId = localStorage.getItem("customer_support_conversation_id");
+    if (savedId) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      fetchHistory(savedId);
+    }
+  }, []);
 
   const sendMessage = async (text: string) => {
     // 1. Append user message
@@ -82,17 +89,22 @@ export function useChat() {
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Chat routing query failed", error);
       
       let errorMsg = "An unexpected connection error occurred.";
+      const reqId = error.requestId || error.response?.headers?.["x-request-id"] || error.response?.headers?.["X-Request-ID"] || null;
+      
       if (error.response?.data?.detail) {
         errorMsg = error.response.data.detail;
       } else if (error.message) {
         errorMsg = error.message;
       }
       
-      const botText = `Failed to process chat query.\n\nError: ${errorMsg}\n\nPlease verify your FastAPI backend is running.`;
+      const botText = `Failed to process chat query.\n\nError: ${errorMsg}\n\nPlease verify your FastAPI backend is running.${
+        reqId ? `\n\nRequest ID: ${reqId}` : ""
+      }`;
 
       const assistantMessage: ChatMessage = {
         id: `assistant-${Date.now()}`,

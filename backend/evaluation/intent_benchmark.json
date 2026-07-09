@@ -1,0 +1,677 @@
+[
+  {
+    "id": "hist_001",
+    "query": "What are your prices?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "hist_002",
+    "query": "Show me your plans",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "hist_003",
+    "query": "How long does standard shipping take?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "hist_004",
+    "query": "Where is my order?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "hist_005",
+    "query": "What are your support hours?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "hist_006",
+    "query": "What is your refund policy?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "hist_007",
+    "query": "I was charged twice",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "hist_008",
+    "query": "Where is my invoice?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "hist_009",
+    "query": "I cannot login",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "hist_010",
+    "query": "The API integration is failing",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "hist_011",
+    "query": "I forgot my password",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "hist_012",
+    "query": "This service is terrible",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "hist_013",
+    "query": "I want to speak to a manager",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "hist_014",
+    "query": "I am unhappy",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "billing_001",
+    "query": "Can I get a billing statement?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "billing_002",
+    "query": "Do you accept credit card payments?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "billing_003",
+    "query": "I need a receipt for my purchase",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "billing_004",
+    "query": "Why was I charged $19.99?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "medium",
+    "category": "billing"
+  },
+  {
+    "id": "billing_005",
+    "query": "Please refund my debit card",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "billing_006",
+    "query": "Is the subscription payment processed automatically?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "medium",
+    "category": "billing"
+  },
+  {
+    "id": "billing_007",
+    "query": "My payment is paid but no confirmation",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "medium",
+    "category": "billing"
+  },
+  {
+    "id": "billing_008",
+    "query": "billing question regarding subscription",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "easy",
+    "category": "billing"
+  },
+  {
+    "id": "billing_009",
+    "query": "Where can I find checkout billing details?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "medium",
+    "category": "billing"
+  },
+  {
+    "id": "billing_010",
+    "query": "I want to cancel billing subscription",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "medium",
+    "category": "billing"
+  },
+  {
+    "id": "billing_011",
+    "query": "Why did checkout charge me twice?",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "hard",
+    "category": "billing"
+  },
+  {
+    "id": "tech_001",
+    "query": "The server is down and throws a server error",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "tech_002",
+    "query": "My port config is failing",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "tech_003",
+    "query": "Access token expired for the webhook integration",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "tech_004",
+    "query": "Why can't I access my account?",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "medium",
+    "category": "technical"
+  },
+  {
+    "id": "tech_005",
+    "query": "broken link in the dashboard page",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "tech_006",
+    "query": "API not working as expected",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "tech_007",
+    "query": "crash during launch on iOS",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "easy",
+    "category": "technical"
+  },
+  {
+    "id": "tech_008",
+    "query": "cannot connect to setup network",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "medium",
+    "category": "technical"
+  },
+  {
+    "id": "tech_009",
+    "query": "I forgot my credentials for setup",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "medium",
+    "category": "technical"
+  },
+  {
+    "id": "tech_010",
+    "query": "Webhook integration is throwing 500 errors",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "hard",
+    "category": "technical"
+  },
+  {
+    "id": "product_001",
+    "query": "What specs does the Wave Headset have?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "product_002",
+    "query": "Compare Plus Plan vs Premium Plan",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "medium",
+    "category": "product"
+  },
+  {
+    "id": "product_003",
+    "query": "When is the next release date of the camera?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "product_004",
+    "query": "What features are available in the Plus Plan?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "product_005",
+    "query": "Do you sell smart home products?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "product_006",
+    "query": "I want to purchase a wireless camera",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "product_007",
+    "query": "Where can I buy a headset license?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "medium",
+    "category": "product"
+  },
+  {
+    "id": "product_008",
+    "query": "What are the specifications of the Smart Camera Pro?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "easy",
+    "category": "product"
+  },
+  {
+    "id": "product_009",
+    "query": "How much does the upgrade cost?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "medium",
+    "category": "product"
+  },
+  {
+    "id": "product_010",
+    "query": "Do you have plans for licensing?",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "hard",
+    "category": "product"
+  },
+  {
+    "id": "complaint_001",
+    "query": "This is the worst customer service ever",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_002",
+    "query": "I want to file a formal complaint",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_003",
+    "query": "Your agent was extremely poor and slow",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_004",
+    "query": "I am very frustrated with this product",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_005",
+    "query": "Please escalate this inquiry immediately",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_006",
+    "query": "Grievance department contact details",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_007",
+    "query": "angry customer wanting a manager",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "medium",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_008",
+    "query": "unhappy with the resolution",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_009",
+    "query": "your service is slow and disappointed me",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "medium",
+    "category": "complaint"
+  },
+  {
+    "id": "complaint_010",
+    "query": "I demand to speak to your supervisor",
+    "expected_intent": "complaint",
+    "acceptable_intents": ["complaint"],
+    "expected_agent": "Complaint Agent",
+    "difficulty": "easy",
+    "category": "complaint"
+  },
+  {
+    "id": "faq_001",
+    "query": "What are your office locations?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_002",
+    "query": "How do I contact support via email?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_003",
+    "query": "Do you ship to over 50 countries?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_004",
+    "query": "where is my package tracking number?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_005",
+    "query": "What is the warranty period for devices?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_006",
+    "query": "Does standard delivery take 3 days?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_007",
+    "query": "How to track shipment status",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_008",
+    "query": "office address and support phone number",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_009",
+    "query": "What are your working hours?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "faq"
+  },
+  {
+    "id": "faq_010",
+    "query": "How do I configure the headset warranty?",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "medium",
+    "category": "faq"
+  },
+  {
+    "id": "ambig_001",
+    "query": "My order is late and I want a refund",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing", "faq"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "hard",
+    "category": "ambiguous"
+  },
+  {
+    "id": "ambig_002",
+    "query": "I was charged twice and support is terrible",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing", "complaint"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "hard",
+    "category": "ambiguous"
+  },
+  {
+    "id": "ambig_003",
+    "query": "I cannot login to view my invoice",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical", "billing"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "hard",
+    "category": "ambiguous"
+  },
+  {
+    "id": "ambig_004",
+    "query": "Your Premium Plan is too expensive",
+    "expected_intent": "product",
+    "acceptable_intents": ["product"],
+    "expected_agent": "Product Agent",
+    "difficulty": "medium",
+    "category": "ambiguous"
+  },
+  {
+    "id": "neg_001",
+    "query": "I don't want a refund, I need technical help",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "hard",
+    "category": "negation"
+  },
+  {
+    "id": "typo_001",
+    "query": "I forgot my passwrd",
+    "expected_intent": "technical",
+    "acceptable_intents": ["technical"],
+    "expected_agent": "Technical Agent",
+    "difficulty": "medium",
+    "category": "typo"
+  },
+  {
+    "id": "typo_002",
+    "query": "whre is my order delivery",
+    "expected_intent": "faq",
+    "acceptable_intents": ["faq"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "medium",
+    "category": "typo"
+  },
+  {
+    "id": "typo_003",
+    "query": "can i get refnd",
+    "expected_intent": "billing",
+    "acceptable_intents": ["billing"],
+    "expected_agent": "Billing Agent",
+    "difficulty": "medium",
+    "category": "typo"
+  },
+  {
+    "id": "fallback_001",
+    "query": "gibberish text xyz123",
+    "expected_intent": "unknown",
+    "acceptable_intents": ["unknown"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "unanswerable"
+  },
+  {
+    "id": "fallback_002",
+    "query": "hello",
+    "expected_intent": "unknown",
+    "acceptable_intents": ["unknown"],
+    "expected_agent": "FAQ Agent",
+    "difficulty": "easy",
+    "category": "conversational"
+  }
+]

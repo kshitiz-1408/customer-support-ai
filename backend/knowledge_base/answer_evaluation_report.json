@@ -1,0 +1,681 @@
+{
+  "timestamp": "2026-07-09T18:06:10Z",
+  "model_name": "gemini-2.5-flash",
+  "evaluator_type": "Deterministic Fallback",
+  "metrics": {
+    "benchmark_size": 35,
+    "total_material_claims": 6,
+    "claim_support_rate": 0.8333333333333334,
+    "hallucination_rate": 0.16666666666666666,
+    "contradiction_rate": 0.0,
+    "fully_grounded_answer_rate": 0.8333333333333334,
+    "correct_abstention_rate": 0.2,
+    "incorrect_abstention_rate": 0.16666666666666666,
+    "answer_coverage": 0.0
+  },
+  "results": [
+    {
+      "id": "pricing_001",
+      "query": "What does the Premium Plan include?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 14053.059800000483,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "premium_fact_1",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "premium_fact_2",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "premium_fact_3",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "pricing_002",
+      "query": "How much does the Premium Plan cost?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7216.864099999839,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "premium_cost_1",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "pricing_003",
+      "query": "What is the annual billing rate for the Premium Plan?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7454.418399999668,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "premium_annual_1",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "pricing_004",
+      "query": "How much is the Plus Plan per month?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7375.071399999797,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "plus_cost_1",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "pricing_005",
+      "query": "What are your prices?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8161.549399999785,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "plus_general_cost",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "premium_general_cost",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "pricing_006",
+      "query": "How much does it cost annually?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7474.782299999788,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "plus_annual_cost",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "premium_annual_cost",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "shipping_001",
+      "query": "How long does standard shipping take?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8383.24560000001,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "shipping_standard_duration",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "shipping_002",
+      "query": "What is the delivery time for express shipping?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7067.488899999262,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "shipping_express_duration",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "shipping_003",
+      "query": "Is standard shipping free?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7781.0131999995065,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "shipping_free_threshold",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "shipping_under_50_cost",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "shipping_004",
+      "query": "Do you ship internationally?",
+      "answerable": true,
+      "generated_answer": "Please clarify your question.",
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 120.73979999968287,
+      "claims": [
+        {
+          "claim": "Please clarify your question",
+          "status": "SUPPORTED"
+        }
+      ],
+      "fact_coverage": [
+        {
+          "fact_id": "shipping_international_countries",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "INCORRECT_ABSTENTION"
+    },
+    {
+      "id": "shipping_005",
+      "query": "What time do I need to order for same-day dispatch?",
+      "answerable": true,
+      "generated_answer": "Please clarify your question.",
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 122.67320000046311,
+      "claims": [
+        {
+          "claim": "Please clarify your question",
+          "status": "SUPPORTED"
+        }
+      ],
+      "fact_coverage": [
+        {
+          "fact_id": "shipping_dispatch_cutoff",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "INCORRECT_ABSTENTION"
+    },
+    {
+      "id": "refund_001",
+      "query": "What is your refund policy?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8099.569199999678,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "refund_policy_deadline",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "refund_002",
+      "query": "How long does it take to get a refund?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8494.597500000054,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "refund_processing_duration",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "refund_003",
+      "query": "How many days for refund processing?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7242.922100000214,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "refund_days_duration",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "refund_004",
+      "query": "What condition must returned items be in to get a refund?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8324.653899999248,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "refund_item_condition",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "return_001",
+      "query": "What is the return window if I miss the refund deadline?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7539.517100000012,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "return_policy_window",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "return_002",
+      "query": "Is there a restocking fee for open-box returns?",
+      "answerable": true,
+      "generated_answer": "Please clarify your question.",
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 141.53259999966394,
+      "claims": [
+        {
+          "claim": "Please clarify your question",
+          "status": "SUPPORTED"
+        }
+      ],
+      "fact_coverage": [
+        {
+          "fact_id": "return_restocking_pct",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "INCORRECT_ABSTENTION"
+    },
+    {
+      "id": "return_003",
+      "query": "How do I get an RMA number for a return?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8107.440499999939,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "return_rma_generation",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "warranty_001",
+      "query": "How long is the standard warranty on devices?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8007.314299999962,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "warranty_standard_duration",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "warranty_002",
+      "query": "How many extra years of coverage does the Extended Warranty Plan add?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8270.689299999503,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "warranty_extended_years",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "product_001",
+      "query": "Does the Wave Headset support active noise cancellation?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7712.665900000502,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "product_headset_anc",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "product_002",
+      "query": "What is the battery playback time of the wireless Wave Headset?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8019.594600000346,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "product_headset_battery",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "product_003",
+      "query": "Are smart hubs required for wireless cameras?",
+      "answerable": true,
+      "generated_answer": "Please clarify your question.",
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 124.16839999968943,
+      "claims": [
+        {
+          "claim": "Please clarify your question",
+          "status": "SUPPORTED"
+        }
+      ],
+      "fact_coverage": [
+        {
+          "fact_id": "product_cameras_hub",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "INCORRECT_ABSTENTION"
+    },
+    {
+      "id": "tech_001",
+      "query": "My smart camera keeps going offline, what should I check?",
+      "answerable": true,
+      "generated_answer": "Please clarify your question.",
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 135.93980000041483,
+      "claims": [
+        {
+          "claim": "Please clarify your question",
+          "status": "SUPPORTED"
+        }
+      ],
+      "fact_coverage": [
+        {
+          "fact_id": "tech_offline_distance",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "tech_offline_walls",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "INCORRECT_ABSTENTION"
+    },
+    {
+      "id": "tech_002",
+      "query": "Does the Smart Camera Pro support 5GHz Wi-Fi networks during setup?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7838.173299999653,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "tech_wifi_band",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "tech_003",
+      "query": "How do I turn on the Wave Headset?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7712.808000000223,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "tech_headset_power",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "account_001",
+      "query": "How long before the password reset link expires?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7193.916800000807,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "account_reset_expiry",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "account_002",
+      "query": "What domain should I whitelist if I do not receive my reset password email?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7148.267499999747,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "account_whitelist_domain",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "complaint_001",
+      "query": "How do I request a formal review of my complaint by the Support Manager?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7983.820299999934,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "complaint_manager_email",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "complaint_002",
+      "query": "When can I request escalation to a Support Supervisor?",
+      "answerable": true,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7679.442199999357,
+      "claims": [],
+      "fact_coverage": [
+        {
+          "fact_id": "complaint_escalate_lead",
+          "status": "NOT_COVERED"
+        },
+        {
+          "fact_id": "complaint_escalate_supervisor",
+          "status": "NOT_COVERED"
+        }
+      ],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "unanswerable_001",
+      "query": "Can you ship packages via autonomous drone delivery?",
+      "answerable": false,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 8033.644500000264,
+      "claims": [],
+      "fact_coverage": [],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "unanswerable_002",
+      "query": "How do I buy shares of TechMart stock?",
+      "answerable": false,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7567.508199999793,
+      "claims": [],
+      "fact_coverage": [],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "unanswerable_003",
+      "query": "Do you sell smart light bulbs?",
+      "answerable": false,
+      "generated_answer": "Please clarify your question.",
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 124.90920000072947,
+      "claims": [
+        {
+          "claim": "Please clarify your question",
+          "status": "UNSUPPORTED"
+        }
+      ],
+      "fact_coverage": [],
+      "abstention": "CORRECT_ABSTENTION"
+    },
+    {
+      "id": "unanswerable_004",
+      "query": "Can I buy a camera using Bitcoin or other crypto?",
+      "answerable": false,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7680.996600000071,
+      "claims": [],
+      "fact_coverage": [],
+      "abstention": "NOT_APPLICABLE"
+    },
+    {
+      "id": "unanswerable_005",
+      "query": "What is the repair guide for replacing the battery in the Wave Headset?",
+      "answerable": false,
+      "generated_answer": null,
+      "retrieved_sources": [
+        "sample_kb.md"
+      ],
+      "latency_ms": 7858.092299999953,
+      "claims": [],
+      "fact_coverage": [],
+      "abstention": "NOT_APPLICABLE"
+    }
+  ]
+}

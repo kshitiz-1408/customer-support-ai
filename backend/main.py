@@ -10,6 +10,7 @@ from models.chat import ChatQuery, ChatResponse
 from agents.intent_detector import detect_intent
 from agents.router import route_query
 from rag.rag_pipeline import initialize_rag_pipeline
+from middleware.observability import ObservabilityMiddleware
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -17,6 +18,9 @@ app = FastAPI(
     version=settings.VERSION,
     debug=settings.DEBUG,
 )
+
+# Register request correlation tracing middleware
+app.add_middleware(ObservabilityMiddleware)
 
 @app.on_event("startup")
 def startup_event():
@@ -85,19 +89,30 @@ def health_check():
     """
     Service health check endpoint including lightweight database health.
     """
+    import time
     from database import database
     mongodb_status = "unconfigured"
+    mongodb_ping_ms = 0.0
     if database.db_client:
         try:
+            start_ping = time.perf_counter()
             database.db_client.admin.command("ping")
+            mongodb_ping_ms = (time.perf_counter() - start_ping) * 1000.0
             mongodb_status = "connected"
         except Exception:
             mongodb_status = "unavailable"
             
+    logger.info({
+        "event": "mongodb_ping",
+        "duration_ms": mongodb_ping_ms,
+        "status": mongodb_status
+    })
+            
     return {
         "status": "ok",
         "version": settings.VERSION,
-        "database": mongodb_status
+        "database": mongodb_status,
+        "database_ping_ms": mongodb_ping_ms
     }
 
 

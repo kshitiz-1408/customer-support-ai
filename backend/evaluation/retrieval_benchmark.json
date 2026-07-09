@@ -1,0 +1,352 @@
+[
+  {
+    "id": "pricing_001",
+    "query": "What does the Premium Plan include?",
+    "expected_topic": "subscription_premium",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 7. Pricing and Subscription Plans",
+    "expected_chunks": ["6"],
+    "category": "product",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pricing_002",
+    "query": "How much does the Premium Plan cost?",
+    "expected_topic": "subscription_premium",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 7. Pricing and Subscription Plans",
+    "expected_chunks": ["6"],
+    "category": "product",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pricing_003",
+    "query": "What is the annual billing rate for the Premium Plan?",
+    "expected_topic": "subscription_premium",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 7. Pricing and Subscription Plans",
+    "expected_chunks": ["6"],
+    "category": "product",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pricing_004",
+    "query": "How much is the Plus Plan per month?",
+    "expected_topic": "subscription_plus",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 7. Pricing and Subscription Plans",
+    "expected_chunks": ["5", "6"],
+    "category": "product",
+    "difficulty": "easy"
+  },
+  {
+    "id": "pricing_005",
+    "query": "What are your prices?",
+    "expected_topic": "pricing_general",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 7. Pricing and Subscription Plans",
+    "expected_chunks": ["5", "6"],
+    "category": "product",
+    "difficulty": "medium"
+  },
+  {
+    "id": "pricing_006",
+    "query": "How much does it cost annually?",
+    "expected_topic": "pricing_general",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 7. Pricing and Subscription Plans",
+    "expected_chunks": ["5", "6"],
+    "category": "product",
+    "difficulty": "medium"
+  },
+  {
+    "id": "shipping_001",
+    "query": "How long does standard shipping take?",
+    "expected_topic": "shipping_tiers",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 5. Shipping Policy",
+    "expected_chunks": ["4"],
+    "category": "faq",
+    "difficulty": "easy"
+  },
+  {
+    "id": "shipping_002",
+    "query": "What is the delivery time for express shipping?",
+    "expected_topic": "shipping_tiers",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 5. Shipping Policy",
+    "expected_chunks": ["4"],
+    "category": "faq",
+    "difficulty": "easy"
+  },
+  {
+    "id": "shipping_003",
+    "query": "Is standard shipping free?",
+    "expected_topic": "shipping_tiers",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 5. Shipping Policy",
+    "expected_chunks": ["4"],
+    "category": "faq",
+    "difficulty": "medium"
+  },
+  {
+    "id": "shipping_004",
+    "query": "Do you ship internationally?",
+    "expected_topic": "international_shipping",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 2. FAQ (Frequently Asked Questions)",
+    "expected_chunks": ["1"],
+    "category": "faq",
+    "difficulty": "easy"
+  },
+  {
+    "id": "shipping_005",
+    "query": "What time do I need to order for same-day dispatch?",
+    "expected_topic": "shipping_tiers",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 5. Shipping Policy",
+    "expected_chunks": ["4"],
+    "category": "faq",
+    "difficulty": "hard"
+  },
+  {
+    "id": "refund_001",
+    "query": "What is your refund policy?",
+    "expected_topic": "refund_deadline",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 3. Refund Policy",
+    "expected_chunks": ["2"],
+    "category": "billing",
+    "difficulty": "easy"
+  },
+  {
+    "id": "refund_002",
+    "query": "How long does it take to get a refund?",
+    "expected_topic": "refund_processing",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 3. Refund Policy",
+    "expected_chunks": ["2"],
+    "category": "billing",
+    "difficulty": "easy"
+  },
+  {
+    "id": "refund_003",
+    "query": "How many days for refund processing?",
+    "expected_topic": "refund_processing",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 3. Refund Policy",
+    "expected_chunks": ["2"],
+    "category": "billing",
+    "difficulty": "medium"
+  },
+  {
+    "id": "refund_004",
+    "query": "What condition must returned items be in to get a refund?",
+    "expected_topic": "refund_deadline",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 3. Refund Policy",
+    "expected_chunks": ["2"],
+    "category": "billing",
+    "difficulty": "medium"
+  },
+  {
+    "id": "return_001",
+    "query": "What is the return window if I miss the refund deadline?",
+    "expected_topic": "return_policy",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 4. Return Policy",
+    "expected_chunks": ["3"],
+    "category": "billing",
+    "difficulty": "medium"
+  },
+  {
+    "id": "return_002",
+    "query": "Is there a restocking fee for open-box returns?",
+    "expected_topic": "return_policy",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 4. Return Policy",
+    "expected_chunks": ["3"],
+    "category": "billing",
+    "difficulty": "easy"
+  },
+  {
+    "id": "return_003",
+    "query": "How do I get an RMA number for a return?",
+    "expected_topic": "return_policy",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 4. Return Policy",
+    "expected_chunks": ["3"],
+    "category": "billing",
+    "difficulty": "medium"
+  },
+  {
+    "id": "warranty_001",
+    "query": "How long is the standard warranty on devices?",
+    "expected_topic": "warranty_standard",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 6. Warranty Policy",
+    "expected_chunks": ["4", "5"],
+    "category": "faq",
+    "difficulty": "easy"
+  },
+  {
+    "id": "warranty_002",
+    "query": "How many extra years of coverage does the Extended Warranty Plan add?",
+    "expected_topic": "warranty_extended",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 6. Warranty Policy",
+    "expected_chunks": ["5"],
+    "category": "faq",
+    "difficulty": "medium"
+  },
+  {
+    "id": "product_001",
+    "query": "Does the Wave Headset support active noise cancellation?",
+    "expected_topic": "product_info",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 8. Product Information",
+    "expected_chunks": ["6", "7"],
+    "category": "faq",
+    "difficulty": "easy"
+  },
+  {
+    "id": "product_002",
+    "query": "What is the battery playback time of the wireless Wave Headset?",
+    "expected_topic": "product_info",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 8. Product Information",
+    "expected_chunks": ["6", "7"],
+    "category": "faq",
+    "difficulty": "medium"
+  },
+  {
+    "id": "product_003",
+    "query": "Are smart hubs required for wireless cameras?",
+    "expected_topic": "smart_hubs",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 2. FAQ (Frequently Asked Questions)",
+    "expected_chunks": ["1", "2"],
+    "category": "faq",
+    "difficulty": "easy"
+  },
+  {
+    "id": "tech_001",
+    "query": "My smart camera keeps going offline, what should I check?",
+    "expected_topic": "technical_support",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 11. Technical Support",
+    "expected_chunks": ["8", "9"],
+    "category": "technical",
+    "difficulty": "medium"
+  },
+  {
+    "id": "tech_002",
+    "query": "Does the Smart Camera Pro support 5GHz Wi-Fi networks during setup?",
+    "expected_topic": "technical_support",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 11. Technical Support",
+    "expected_chunks": ["9"],
+    "category": "technical",
+    "difficulty": "medium"
+  },
+  {
+    "id": "tech_003",
+    "query": "How do I turn on the Wave Headset?",
+    "expected_topic": "user_manual",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 10. User Manual and Basic Usage",
+    "expected_chunks": ["8"],
+    "category": "technical",
+    "difficulty": "easy"
+  },
+  {
+    "id": "account_001",
+    "query": "How long before the password reset link expires?",
+    "expected_topic": "account_credentials",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 12. Account and Login Help",
+    "expected_chunks": ["9", "10"],
+    "category": "technical",
+    "difficulty": "easy"
+  },
+  {
+    "id": "account_002",
+    "query": "What domain should I whitelist if I do not receive my reset password email?",
+    "expected_topic": "account_credentials",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 12. Account and Login Help",
+    "expected_chunks": ["10"],
+    "category": "technical",
+    "difficulty": "hard"
+  },
+  {
+    "id": "complaint_001",
+    "query": "How do I request a formal review of my complaint by the Support Manager?",
+    "expected_topic": "complaint_escalation",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 15. Complaint and Escalation Process",
+    "expected_chunks": ["12"],
+    "category": "complaint",
+    "difficulty": "medium"
+  },
+  {
+    "id": "complaint_002",
+    "query": "When can I request escalation to a Support Supervisor?",
+    "expected_topic": "complaint_escalation",
+    "expected_sources": ["sample_kb.md"],
+    "expected_section": "## 15. Complaint and Escalation Process",
+    "expected_chunks": ["12"],
+    "category": "complaint",
+    "difficulty": "hard"
+  },
+  {
+    "id": "unanswerable_001",
+    "query": "Can you ship packages via autonomous drone delivery?",
+    "expected_topic": null,
+    "expected_sources": [],
+    "expected_section": null,
+    "expected_chunks": [],
+    "category": "faq",
+    "difficulty": "unanswerable"
+  },
+  {
+    "id": "unanswerable_002",
+    "query": "How do I buy shares of TechMart stock?",
+    "expected_topic": null,
+    "expected_sources": [],
+    "expected_section": null,
+    "expected_chunks": [],
+    "category": "faq",
+    "difficulty": "unanswerable"
+  },
+  {
+    "id": "unanswerable_003",
+    "query": "Do you sell smart light bulbs?",
+    "expected_topic": null,
+    "expected_sources": [],
+    "expected_section": null,
+    "expected_chunks": [],
+    "category": "faq",
+    "difficulty": "unanswerable"
+  },
+  {
+    "id": "unanswerable_004",
+    "query": "Can I buy a camera using Bitcoin or other crypto?",
+    "expected_topic": null,
+    "expected_sources": [],
+    "expected_section": null,
+    "expected_chunks": [],
+    "category": "faq",
+    "difficulty": "unanswerable"
+  },
+  {
+    "id": "unanswerable_005",
+    "query": "What is the repair guide for replacing the battery in the Wave Headset?",
+    "expected_topic": null,
+    "expected_sources": [],
+    "expected_section": null,
+    "expected_chunks": [],
+    "category": "faq",
+    "difficulty": "unanswerable"
+  }
+]

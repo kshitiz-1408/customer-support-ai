@@ -18,7 +18,7 @@ export default function Navbar() {
         } else {
           setConnection("disconnected");
         }
-      } catch (err) {
+      } catch {
         setConnection("disconnected");
       }
     };

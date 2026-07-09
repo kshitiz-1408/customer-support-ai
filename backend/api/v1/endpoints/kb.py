@@ -68,14 +68,16 @@ async def upload_document(file: UploadFile = File(...)):
             chunks = extract_chunks_from_text(text_content, filename, ext)
             doc_type = ext
             
+        import asyncio
+        
         # Calculate embeddings for the chunks
         logger.info(f"Computing embeddings for {len(chunks)} uploaded chunks...")
         texts = [c["content"] for c in chunks]
-        embeddings = embed_chunks(texts)
+        embeddings = await asyncio.to_thread(embed_chunks, texts)
         
         # Add to FAISS vector store
         logger.info(f"Adding chunks to FAISS vector store database...")
-        vector_store.add_chunks(chunks, embeddings)
+        await asyncio.to_thread(vector_store.add_chunks, chunks, embeddings)
             
         # Save to memory KBService store for listing/tracking
         added_chunks = KBService.add_chunks(chunks)

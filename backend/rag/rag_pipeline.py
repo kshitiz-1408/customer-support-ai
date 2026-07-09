@@ -99,17 +99,60 @@ def query_kb(query: str, top_k: int = 4) -> List[Dict[str, Any]]:
     Translates user query string into a vector, queries the FAISS vector store,
     and returns similarity matches as search results.
     """
+    import time
+    start_time = time.perf_counter()
+    logger.info({
+        "event": "rag_retrieval_started",
+        "top_k": top_k
+    })
+    
     if not query or not query.strip():
-        logger.warning("Empty search query received in query_kb.")
+        logger.warning({
+            "event": "rag_retrieval_completed",
+            "top_k": top_k,
+            "retrieval_count": 0,
+            "duration_ms": 0,
+            "detail": "empty query"
+        })
         return []
         
     try:
+        from utils.tracing import pipeline_tracker_var
+        tracker = pipeline_tracker_var.get()
+
         # Convert search query into unit vector
+        embed_start = time.perf_counter()
         query_vector = embed_query(query)
+        embedding_generation_ms = (time.perf_counter() - embed_start) * 1000.0
         
         # similarity matching top_k
+        search_start = time.perf_counter()
         results = vector_store.search(query_vector, top_k=top_k)
+        faiss_search_ms = (time.perf_counter() - search_start) * 1000.0
+        
+        duration_ms = (time.perf_counter() - start_time) * 1000.0
+
+        if tracker:
+            tracker.embedding_generation_ms = embedding_generation_ms
+            tracker.faiss_search_ms = faiss_search_ms
+            tracker.rag_retrieval_total_ms = duration_ms
+            
+        source_names = list(set(r.get("metadata", {}).get("source", "unknown") for r in results))
+        
+        logger.info({
+            "event": "rag_retrieval_completed",
+            "top_k": top_k,
+            "retrieval_count": len(results),
+            "sources": source_names,
+            "duration_ms": int(duration_ms)
+        })
         return results
     except Exception as e:
-        logger.error(f"Error executing similarity search in RAG query_kb: {str(e)}", exc_info=True)
+        duration_ms = (time.perf_counter() - start_time) * 1000.0
+        logger.error({
+            "event": "rag_retrieval_failed",
+            "exception_type": type(e).__name__,
+            "error_detail": str(e),
+            "duration_ms": int(duration_ms)
+        })
         return []

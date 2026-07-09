@@ -1,0 +1,2781 @@
+{
+  "timestamp": "2026-07-09T18:55:31Z",
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "index_type": "IndexFlatIP",
+  "score_semantics": "Cosine Similarity (higher is better)",
+  "results": {
+    "1": {
+      "hit_at_k": 0.7,
+      "recall_at_k": 0.55,
+      "mrr": 0.7,
+      "ndcg": 0.85,
+      "false_positive_rate": 0.8,
+      "cases": [
+        {
+          "id": "pricing_001",
+          "query": "What does the Premium Plan include?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.45329707860946655
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "pricing_002",
+          "query": "How much does the Premium Plan cost?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.49244633316993713
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "pricing_003",
+          "query": "What is the annual billing rate for the Premium Plan?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.4584867060184479
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "pricing_004",
+          "query": "How much is the Plus Plan per month?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.44626539945602417
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "pricing_005",
+          "query": "What are your prices?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "6"
+          ],
+          "retrieved_scores": [
+            0.325839102268219
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "pricing_006",
+          "query": "How much does it cost annually?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.35892125964164734
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_001",
+          "query": "How long does standard shipping take?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "4"
+          ],
+          "retrieved_scores": [
+            0.4982263445854187
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_002",
+          "query": "What is the delivery time for express shipping?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "4"
+          ],
+          "retrieved_scores": [
+            0.49583396315574646
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_003",
+          "query": "Is standard shipping free?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "4"
+          ],
+          "retrieved_scores": [
+            0.4235336482524872
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_004",
+          "query": "Do you ship internationally?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "1"
+          ],
+          "retrieved_scores": [
+            0.3063756227493286
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_005",
+          "query": "What time do I need to order for same-day dispatch?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "4"
+          ],
+          "retrieved_scores": [
+            0.3083893656730652
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "refund_001",
+          "query": "What is your refund policy?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.48594197630882263
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "refund_002",
+          "query": "How long does it take to get a refund?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.515489935874939
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "refund_003",
+          "query": "How many days for refund processing?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.5503748059272766
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "refund_004",
+          "query": "What condition must returned items be in to get a refund?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.5135096311569214
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "return_001",
+          "query": "What is the return window if I miss the refund deadline?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.48645347356796265
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "return_002",
+          "query": "Is there a restocking fee for open-box returns?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.4463096261024475
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "return_003",
+          "query": "How do I get an RMA number for a return?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3"
+          ],
+          "retrieved_scores": [
+            0.31736692786216736
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "warranty_001",
+          "query": "How long is the standard warranty on devices?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.5042257308959961
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "warranty_002",
+          "query": "How many extra years of coverage does the Extended Warranty Plan add?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5"
+          ],
+          "retrieved_scores": [
+            0.5313920974731445
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_001",
+          "query": "Does the Wave Headset support active noise cancellation?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "6"
+          ],
+          "retrieved_scores": [
+            0.17894861102104187
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_002",
+          "query": "What is the battery playback time of the wireless Wave Headset?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "7"
+          ],
+          "retrieved_scores": [
+            0.29272404313087463
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_003",
+          "query": "Are smart hubs required for wireless cameras?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "2"
+          ],
+          "retrieved_scores": [
+            0.5431444644927979
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "tech_001",
+          "query": "My smart camera keeps going offline, what should I check?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "8"
+          ],
+          "retrieved_scores": [
+            0.6418133974075317
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "tech_002",
+          "query": "Does the Smart Camera Pro support 5GHz Wi-Fi networks during setup?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "2"
+          ],
+          "retrieved_scores": [
+            0.529392659664154
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "tech_003",
+          "query": "How do I turn on the Wave Headset?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "8"
+          ],
+          "retrieved_scores": [
+            0.3306589126586914
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "account_001",
+          "query": "How long before the password reset link expires?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "10"
+          ],
+          "retrieved_scores": [
+            0.3814486861228943
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 0.5,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "account_002",
+          "query": "What domain should I whitelist if I do not receive my reset password email?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "10"
+          ],
+          "retrieved_scores": [
+            0.4236075282096863
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "complaint_001",
+          "query": "How do I request a formal review of my complaint by the Support Manager?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "13"
+          ],
+          "retrieved_scores": [
+            0.7800772190093994
+          ],
+          "relevance_labels": [
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.5,
+          "first_hit_rank": null
+        },
+        {
+          "id": "complaint_002",
+          "query": "When can I request escalation to a Support Supervisor?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "12"
+          ],
+          "retrieved_scores": [
+            0.6527755260467529
+          ],
+          "relevance_labels": [
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "unanswerable_001",
+          "query": "Can you ship packages via autonomous drone delivery?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "1"
+          ],
+          "retrieved_scores": [
+            0.40650323033332825
+          ],
+          "relevance_labels": [
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_002",
+          "query": "How do I buy shares of TechMart stock?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "11"
+          ],
+          "retrieved_scores": [
+            0.4932142198085785
+          ],
+          "relevance_labels": [
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_003",
+          "query": "Do you sell smart light bulbs?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "6"
+          ],
+          "retrieved_scores": [
+            0.3181920051574707
+          ],
+          "relevance_labels": [
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_004",
+          "query": "Can I buy a camera using Bitcoin or other crypto?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "6"
+          ],
+          "retrieved_scores": [
+            0.41081100702285767
+          ],
+          "relevance_labels": [
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_005",
+          "query": "What is the repair guide for replacing the battery in the Wave Headset?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "8"
+          ],
+          "retrieved_scores": [
+            0.3520621955394745
+          ],
+          "relevance_labels": [
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        }
+      ]
+    },
+    "3": {
+      "hit_at_k": 0.9666666666666667,
+      "recall_at_k": 0.9666666666666667,
+      "mrr": 0.8333333333333334,
+      "ndcg": 0.9555988861749571,
+      "false_positive_rate": 0.8,
+      "cases": [
+        {
+          "id": "pricing_001",
+          "query": "What does the Premium Plan include?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "10"
+          ],
+          "retrieved_scores": [
+            0.45329707860946655,
+            0.3167971670627594,
+            0.2224196493625641
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "pricing_002",
+          "query": "How much does the Premium Plan cost?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.49244633316993713,
+            0.39647501707077026,
+            0.24053864181041718
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "pricing_003",
+          "query": "What is the annual billing rate for the Premium Plan?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5",
+            "10",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.4584867060184479,
+            0.35845473408699036,
+            0.3131116032600403
+          ],
+          "relevance_labels": [
+            1,
+            1,
+            1
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.680606056760201,
+          "first_hit_rank": null
+        },
+        {
+          "id": "pricing_004",
+          "query": "How much is the Plus Plan per month?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.44626539945602417,
+            0.3700662851333618,
+            0.23603810369968414
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "pricing_005",
+          "query": "What are your prices?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "6",
+            "5",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.325839102268219,
+            0.2760981321334839,
+            0.2282325178384781
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "pricing_006",
+          "query": "How much does it cost annually?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.35892125964164734,
+            0.3254336714744568,
+            0.1937648057937622
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_001",
+          "query": "How long does standard shipping take?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.4982263445854187,
+            0.4175555109977722,
+            0.3094887137413025
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_002",
+          "query": "What is the delivery time for express shipping?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.49583396315574646,
+            0.3657844364643097,
+            0.35010355710983276
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_003",
+          "query": "Is standard shipping free?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.4235336482524872,
+            0.29499340057373047,
+            0.2600611448287964
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_004",
+          "query": "Do you ship internationally?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "1",
+            "4",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.3063756227493286,
+            0.14340274035930634,
+            0.10811813920736313
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_005",
+          "query": "What time do I need to order for same-day dispatch?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.3083893656730652,
+            0.28865349292755127,
+            0.24093621969223022
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "refund_001",
+          "query": "What is your refund policy?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "13"
+          ],
+          "retrieved_scores": [
+            0.48594197630882263,
+            0.4827561378479004,
+            0.3057531416416168
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "refund_002",
+          "query": "How long does it take to get a refund?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4"
+          ],
+          "retrieved_scores": [
+            0.515489935874939,
+            0.5010203123092651,
+            0.28115296363830566
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "refund_003",
+          "query": "How many days for refund processing?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4"
+          ],
+          "retrieved_scores": [
+            0.5503748059272766,
+            0.49023792147636414,
+            0.2926996350288391
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "refund_004",
+          "query": "What condition must returned items be in to get a refund?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4"
+          ],
+          "retrieved_scores": [
+            0.5135096311569214,
+            0.4163399934768677,
+            0.24327677488327026
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "return_001",
+          "query": "What is the return window if I miss the refund deadline?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.48645347356796265,
+            0.4051724672317505,
+            0.21082673966884613
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "return_002",
+          "query": "Is there a restocking fee for open-box returns?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4"
+          ],
+          "retrieved_scores": [
+            0.4463096261024475,
+            0.31000256538391113,
+            0.2630319893360138
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "return_003",
+          "query": "How do I get an RMA number for a return?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "13",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.31736692786216736,
+            0.18188992142677307,
+            0.1593165248632431
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "warranty_001",
+          "query": "How long is the standard warranty on devices?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "4",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.5042257308959961,
+            0.4647754430770874,
+            0.40169286727905273
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "warranty_002",
+          "query": "How many extra years of coverage does the Extended Warranty Plan add?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5",
+            "4",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.5313920974731445,
+            0.3155304491519928,
+            0.28012293577194214
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_001",
+          "query": "Does the Wave Headset support active noise cancellation?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "6",
+            "8",
+            "7"
+          ],
+          "retrieved_scores": [
+            0.17894861102104187,
+            0.17772047221660614,
+            0.16458696126937866
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 0.9651954696014428,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_002",
+          "query": "What is the battery playback time of the wireless Wave Headset?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "7",
+            "8",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.29272404313087463,
+            0.27414020895957947,
+            0.2707396149635315
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            2
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 0.9651954696014428,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_003",
+          "query": "Are smart hubs required for wireless cameras?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "2",
+            "1",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.5431444644927979,
+            0.49152350425720215,
+            0.45828187465667725
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "tech_001",
+          "query": "My smart camera keeps going offline, what should I check?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "8",
+            "9",
+            "7"
+          ],
+          "retrieved_scores": [
+            0.6418133974075317,
+            0.5398407578468323,
+            0.42336440086364746
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "tech_002",
+          "query": "Does the Smart Camera Pro support 5GHz Wi-Fi networks during setup?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "2",
+            "9",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.529392659664154,
+            0.46710896492004395,
+            0.4013102650642395
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "tech_003",
+          "query": "How do I turn on the Wave Headset?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "8",
+            "7",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.3306589126586914,
+            0.19623929262161255,
+            0.09419367462396622
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "account_001",
+          "query": "How long before the password reset link expires?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "10",
+            "9",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.3814486861228943,
+            0.35715872049331665,
+            0.29043835401535034
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "account_002",
+          "query": "What domain should I whitelist if I do not receive my reset password email?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "10",
+            "9",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.4236075282096863,
+            0.26389288902282715,
+            0.23613178730010986
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "complaint_001",
+          "query": "How do I request a formal review of my complaint by the Support Manager?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "13",
+            "12",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.7800772190093994,
+            0.5919567942619324,
+            0.3327072858810425
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.8821211986607034,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "complaint_002",
+          "query": "When can I request escalation to a Support Supervisor?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "12",
+            "13",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.6527755260467529,
+            0.40863168239593506,
+            0.21157234907150269
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "unanswerable_001",
+          "query": "Can you ship packages via autonomous drone delivery?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "1",
+            "4",
+            "2"
+          ],
+          "retrieved_scores": [
+            0.40650323033332825,
+            0.3163022994995117,
+            0.19060827791690826
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_002",
+          "query": "How do I buy shares of TechMart stock?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "11",
+            "0",
+            "5"
+          ],
+          "retrieved_scores": [
+            0.4932142198085785,
+            0.38460835814476013,
+            0.3839603066444397
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_003",
+          "query": "Do you sell smart light bulbs?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "6",
+            "2",
+            "1"
+          ],
+          "retrieved_scores": [
+            0.3181920051574707,
+            0.2714535892009735,
+            0.26795682311058044
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_004",
+          "query": "Can I buy a camera using Bitcoin or other crypto?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "6",
+            "7",
+            "8"
+          ],
+          "retrieved_scores": [
+            0.41081100702285767,
+            0.35540327429771423,
+            0.2767309844493866
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_005",
+          "query": "What is the repair guide for replacing the battery in the Wave Headset?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "8",
+            "7",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.3520621955394745,
+            0.2409563660621643,
+            0.21658343076705933
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        }
+      ]
+    },
+    "5": {
+      "hit_at_k": 1.0,
+      "recall_at_k": 1.0,
+      "mrr": 0.8416666666666667,
+      "ndcg": 0.9683617764169851,
+      "false_positive_rate": 0.8,
+      "cases": [
+        {
+          "id": "pricing_001",
+          "query": "What does the Premium Plan include?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "10",
+            "11",
+            "2"
+          ],
+          "retrieved_scores": [
+            0.45329707860946655,
+            0.3167971670627594,
+            0.2224196493625641,
+            0.2076406478881836,
+            0.19524545967578888
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "pricing_002",
+          "query": "How much does the Premium Plan cost?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "11",
+            "10",
+            "4"
+          ],
+          "retrieved_scores": [
+            0.49244633316993713,
+            0.39647501707077026,
+            0.24053864181041718,
+            0.2367154359817505,
+            0.23625397682189941
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "pricing_003",
+          "query": "What is the annual billing rate for the Premium Plan?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5",
+            "10",
+            "11",
+            "6",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.4584867060184479,
+            0.35845473408699036,
+            0.3131116032600403,
+            0.30491483211517334,
+            0.24367791414260864
+          ],
+          "relevance_labels": [
+            1,
+            1,
+            1,
+            2,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.25,
+          "ndcg": 0.8558112355261802,
+          "first_hit_rank": 4
+        },
+        {
+          "id": "pricing_004",
+          "query": "How much is the Plus Plan per month?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "11",
+            "4",
+            "10"
+          ],
+          "retrieved_scores": [
+            0.44626539945602417,
+            0.3700662851333618,
+            0.23603810369968414,
+            0.16969086229801178,
+            0.16546040773391724
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "pricing_005",
+          "query": "What are your prices?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "6",
+            "5",
+            "1",
+            "4",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.325839102268219,
+            0.2760981321334839,
+            0.2282325178384781,
+            0.18679600954055786,
+            0.1076945960521698
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "pricing_006",
+          "query": "How much does it cost annually?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5",
+            "6",
+            "1",
+            "4",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.35892125964164734,
+            0.3254336714744568,
+            0.1937648057937622,
+            0.15823395550251007,
+            0.13671699166297913
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_001",
+          "query": "How long does standard shipping take?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "1",
+            "2",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.4982263445854187,
+            0.4175555109977722,
+            0.3094887137413025,
+            0.256799578666687,
+            0.15050753951072693
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_002",
+          "query": "What is the delivery time for express shipping?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "1",
+            "2",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.49583396315574646,
+            0.3657844364643097,
+            0.35010355710983276,
+            0.23601247370243073,
+            0.23418016731739044
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_003",
+          "query": "Is standard shipping free?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "1",
+            "5",
+            "2"
+          ],
+          "retrieved_scores": [
+            0.4235336482524872,
+            0.29499340057373047,
+            0.2600611448287964,
+            0.21992602944374084,
+            0.19136418402194977
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_004",
+          "query": "Do you ship internationally?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "1",
+            "4",
+            "3",
+            "13",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.3063756227493286,
+            0.14340274035930634,
+            0.10811813920736313,
+            0.026905521750450134,
+            0.025990672409534454
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "shipping_005",
+          "query": "What time do I need to order for same-day dispatch?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "4",
+            "3",
+            "12",
+            "1",
+            "11"
+          ],
+          "retrieved_scores": [
+            0.3083893656730652,
+            0.28865349292755127,
+            0.24093621969223022,
+            0.23439152538776398,
+            0.2169867306947708
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "refund_001",
+          "query": "What is your refund policy?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "13",
+            "4",
+            "5"
+          ],
+          "retrieved_scores": [
+            0.48594197630882263,
+            0.4827561378479004,
+            0.3057531416416168,
+            0.2815587520599365,
+            0.27976194024086
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "refund_002",
+          "query": "How long does it take to get a refund?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4",
+            "13",
+            "10"
+          ],
+          "retrieved_scores": [
+            0.515489935874939,
+            0.5010203123092651,
+            0.28115296363830566,
+            0.18745267391204834,
+            0.18724176287651062
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "refund_003",
+          "query": "How many days for refund processing?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4",
+            "10",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.5503748059272766,
+            0.49023792147636414,
+            0.2926996350288391,
+            0.21608775854110718,
+            0.19477969408035278
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "refund_004",
+          "query": "What condition must returned items be in to get a refund?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4",
+            "13",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.5135096311569214,
+            0.4163399934768677,
+            0.24327677488327026,
+            0.18350619077682495,
+            0.15318427979946136
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "return_001",
+          "query": "What is the return window if I miss the refund deadline?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "12",
+            "13",
+            "10"
+          ],
+          "retrieved_scores": [
+            0.48645347356796265,
+            0.4051724672317505,
+            0.21082673966884613,
+            0.210665762424469,
+            0.17270100116729736
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "return_002",
+          "query": "Is there a restocking fee for open-box returns?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "3",
+            "2",
+            "4",
+            "5",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.4463096261024475,
+            0.31000256538391113,
+            0.2630319893360138,
+            0.252058207988739,
+            0.2487521767616272
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "return_003",
+          "query": "How do I get an RMA number for a return?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "3",
+            "13",
+            "11",
+            "2",
+            "10"
+          ],
+          "retrieved_scores": [
+            0.31736692786216736,
+            0.18188992142677307,
+            0.1593165248632431,
+            0.15388788282871246,
+            0.15351182222366333
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "warranty_001",
+          "query": "How long is the standard warranty on devices?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "5",
+            "4",
+            "3",
+            "2",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.5042257308959961,
+            0.4647754430770874,
+            0.40169286727905273,
+            0.395580530166626,
+            0.3442333936691284
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "warranty_002",
+          "query": "How many extra years of coverage does the Extended Warranty Plan add?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "5",
+            "4",
+            "3",
+            "2",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.5313920974731445,
+            0.3155304491519928,
+            0.28012293577194214,
+            0.2506316304206848,
+            0.2453557848930359
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_001",
+          "query": "Does the Wave Headset support active noise cancellation?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "6",
+            "8",
+            "7",
+            "2",
+            "0"
+          ],
+          "retrieved_scores": [
+            0.17894861102104187,
+            0.17772047221660614,
+            0.16458696126937866,
+            0.06944257020950317,
+            0.03965511918067932
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 0.9714089025373848,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_002",
+          "query": "What is the battery playback time of the wireless Wave Headset?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "7",
+            "8",
+            "6",
+            "2",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.29272404313087463,
+            0.27414020895957947,
+            0.2707396149635315,
+            0.17485034465789795,
+            0.12556587159633636
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            2,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 0.9714089025373848,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "product_003",
+          "query": "Are smart hubs required for wireless cameras?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "2",
+            "1",
+            "6",
+            "7",
+            "9"
+          ],
+          "retrieved_scores": [
+            0.5431444644927979,
+            0.49152350425720215,
+            0.45828187465667725,
+            0.4288339614868164,
+            0.4233451187610626
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "tech_001",
+          "query": "My smart camera keeps going offline, what should I check?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "8",
+            "9",
+            "7",
+            "6",
+            "2"
+          ],
+          "retrieved_scores": [
+            0.6418133974075317,
+            0.5398407578468323,
+            0.42336440086364746,
+            0.40737980604171753,
+            0.36461570858955383
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "tech_002",
+          "query": "Does the Smart Camera Pro support 5GHz Wi-Fi networks during setup?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "2",
+            "9",
+            "1",
+            "8",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.529392659664154,
+            0.46710896492004395,
+            0.4013102650642395,
+            0.4010932743549347,
+            0.3861921429634094
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "tech_003",
+          "query": "How do I turn on the Wave Headset?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "8",
+            "7",
+            "6",
+            "0",
+            "13"
+          ],
+          "retrieved_scores": [
+            0.3306589126586914,
+            0.19623929262161255,
+            0.09419367462396622,
+            0.06665828078985214,
+            0.06534890085458755
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "account_001",
+          "query": "How long before the password reset link expires?",
+          "is_answerable": true,
+          "difficulty": "easy",
+          "retrieved_chunk_ids": [
+            "10",
+            "9",
+            "3",
+            "2",
+            "5"
+          ],
+          "retrieved_scores": [
+            0.3814486861228943,
+            0.35715872049331665,
+            0.29043835401535034,
+            0.2227957844734192,
+            0.21517635881900787
+          ],
+          "relevance_labels": [
+            2,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "account_002",
+          "query": "What domain should I whitelist if I do not receive my reset password email?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "10",
+            "9",
+            "11",
+            "13",
+            "3"
+          ],
+          "retrieved_scores": [
+            0.4236075282096863,
+            0.26389288902282715,
+            0.23613178730010986,
+            0.20729318261146545,
+            0.17367134988307953
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "complaint_001",
+          "query": "How do I request a formal review of my complaint by the Support Manager?",
+          "is_answerable": true,
+          "difficulty": "medium",
+          "retrieved_chunk_ids": [
+            "13",
+            "12",
+            "11",
+            "10",
+            "4"
+          ],
+          "retrieved_scores": [
+            0.7800772190093994,
+            0.5919567942619324,
+            0.3327072858810425,
+            0.24994096159934998,
+            0.24200430512428284
+          ],
+          "relevance_labels": [
+            1,
+            2,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 0.5,
+          "ndcg": 0.9065280314885752,
+          "first_hit_rank": 2
+        },
+        {
+          "id": "complaint_002",
+          "query": "When can I request escalation to a Support Supervisor?",
+          "is_answerable": true,
+          "difficulty": "hard",
+          "retrieved_chunk_ids": [
+            "12",
+            "13",
+            "11",
+            "4",
+            "10"
+          ],
+          "retrieved_scores": [
+            0.6527755260467529,
+            0.40863168239593506,
+            0.21157234907150269,
+            0.16247981786727905,
+            0.15387111902236938
+          ],
+          "relevance_labels": [
+            2,
+            1,
+            1,
+            1,
+            1
+          ],
+          "hit": 1,
+          "recall": 1.0,
+          "mrr": 1.0,
+          "ndcg": 1.0,
+          "first_hit_rank": 1
+        },
+        {
+          "id": "unanswerable_001",
+          "query": "Can you ship packages via autonomous drone delivery?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "1",
+            "4",
+            "2",
+            "5",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.40650323033332825,
+            0.3163022994995117,
+            0.19060827791690826,
+            0.1806095838546753,
+            0.17933335900306702
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_002",
+          "query": "How do I buy shares of TechMart stock?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "11",
+            "0",
+            "5",
+            "3",
+            "12"
+          ],
+          "retrieved_scores": [
+            0.4932142198085785,
+            0.38460835814476013,
+            0.3839603066444397,
+            0.3690396845340729,
+            0.3417808413505554
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_003",
+          "query": "Do you sell smart light bulbs?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "6",
+            "2",
+            "1",
+            "5",
+            "0"
+          ],
+          "retrieved_scores": [
+            0.3181920051574707,
+            0.2714535892009735,
+            0.26795682311058044,
+            0.2507024109363556,
+            0.24753564596176147
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_004",
+          "query": "Can I buy a camera using Bitcoin or other crypto?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "6",
+            "7",
+            "8",
+            "2",
+            "9"
+          ],
+          "retrieved_scores": [
+            0.41081100702285767,
+            0.35540327429771423,
+            0.2767309844493866,
+            0.2751678228378296,
+            0.25065386295318604
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        },
+        {
+          "id": "unanswerable_005",
+          "query": "What is the repair guide for replacing the battery in the Wave Headset?",
+          "is_answerable": false,
+          "difficulty": "unanswerable",
+          "retrieved_chunk_ids": [
+            "8",
+            "7",
+            "12",
+            "13",
+            "6"
+          ],
+          "retrieved_scores": [
+            0.3520621955394745,
+            0.2409563660621643,
+            0.21658343076705933,
+            0.2087710052728653,
+            0.18922370672225952
+          ],
+          "relevance_labels": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "hit": 0,
+          "recall": 0.0,
+          "mrr": 0.0,
+          "ndcg": 0.0,
+          "first_hit_rank": null
+        }
+      ]
+    }
+  },
+  "score_stats": {
+    "relevant": {
+      "count": 150,
+      "min": 0.025990672409534454,
+      "max": 0.7800772190093994,
+      "mean": 0.3028013809025288,
+      "median": 0.27994243800640106
+    },
+    "irrelevant": {
+      "count": 25,
+      "min": 0.17933335900306702,
+      "max": 0.4932142198085785,
+      "mean": 0.29512657165527345,
+      "median": 0.2751678228378296
+    }
+  }
+}

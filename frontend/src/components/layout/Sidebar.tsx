@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, MessageSquare, BookOpen, Settings, HelpCircle } from "lucide-react";
+import { LayoutDashboard, MessageSquare, Settings, HelpCircle } from "lucide-react";
 
 export default function Sidebar() {
   const pathname = usePathname();

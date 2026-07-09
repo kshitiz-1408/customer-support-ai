@@ -14,17 +14,19 @@ class GeminiLLMService:
     _client: Optional[genai.Client] = None
 
     @classmethod
-    def _initialize_sdk(cls, timeout: float = 30.0) -> None:
+    def _initialize_sdk(cls, timeout: Optional[float] = None) -> None:
         """Lazily configures the GenAI client to prevent startup failure if key is missing during initialization."""
         if cls._client is None:
             # Pydantic validates key presence on startup, but we double-check here
             if not settings.GEMINI_API_KEY or settings.GEMINI_API_KEY == "PASTE_YOUR_ACTUAL_API_KEY_HERE":
                 raise ValueError("GEMINI_API_KEY environment variable is missing or not configured correctly.")
             
+            client_timeout = timeout if timeout is not None else settings.GEMINI_TIMEOUT
+            
             logger.info("Initializing Google GenAI client credentials...")
             cls._client = genai.Client(
                 api_key=settings.GEMINI_API_KEY,
-                http_options=types.HttpOptions(timeout=int(timeout * 1000))
+                http_options=types.HttpOptions(timeout=int(client_timeout * 1000))
             )
 
     @classmethod
@@ -88,20 +90,50 @@ class GeminiLLMService:
                 system_instruction=system_instruction
             )
             
-            # Execute request via the new google-genai SDK
-            response = cls._client.models.generate_content(
+            import time
+            start_time = time.perf_counter()
+            logger.info({
+                "event": "llm_generation_started",
+                "model": model_name
+            })
+            
+            from utils.resilience import retry_gemini_call
+            
+            # Execute request via the new google-genai SDK wrapped in retry with backoff/jitter
+            response = retry_gemini_call(
+                cls._client.models.generate_content,
                 model=model_name,
                 contents=full_prompt,
                 config=config
             )
             
+            duration_ms = int((time.perf_counter() - start_time) * 1000)
             if not response or not response.text:
-                logger.warning("Gemini API returned empty text response.")
+                logger.warning({
+                    "event": "llm_generation_completed",
+                    "model": model_name,
+                    "success": False,
+                    "detail": "empty text",
+                    "duration_ms": duration_ms
+                })
                 return "I apologize, but I could not formulate an answer right now. Please try again."
                 
+            logger.info({
+                "event": "llm_generation_completed",
+                "model": model_name,
+                "success": True,
+                "duration_ms": duration_ms
+            })
             return response.text
             
         except Exception as e:
-            logger.error(f"Generative completion failed: {str(e)}", exc_info=True)
+            duration_ms = int((time.perf_counter() - start_time) * 1000) if 'start_time' in locals() else 0
+            logger.error({
+                "event": "llm_generation_failed",
+                "model": model_name,
+                "exception_type": type(e).__name__,
+                "error_detail": str(e),
+                "duration_ms": duration_ms
+            })
             # Do not expose raw SDK exceptions directly to users
             raise RuntimeError("The AI customer assistant is currently unavailable. Please try again later.")
