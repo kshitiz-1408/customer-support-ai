@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-09T18:06:10Z",
+  "timestamp": "2026-07-12T19:40:50Z",
   "model_name": "gemini-2.5-flash",
   "evaluator_type": "Deterministic Fallback",
   "metrics": {
@@ -22,7 +22,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 14053.059800000483,
+      "latency_ms": 7695.858499995666,
       "claims": [],
       "fact_coverage": [
         {
@@ -48,7 +48,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7216.864099999839,
+      "latency_ms": 2189.772300000186,
       "claims": [],
       "fact_coverage": [
         {
@@ -66,7 +66,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7454.418399999668,
+      "latency_ms": 2323.5892999946373,
       "claims": [],
       "fact_coverage": [
         {
@@ -84,7 +84,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7375.071399999797,
+      "latency_ms": 1861.0687000036705,
       "claims": [],
       "fact_coverage": [
         {
@@ -102,7 +102,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8161.549399999785,
+      "latency_ms": 2945.470100006787,
       "claims": [],
       "fact_coverage": [
         {
@@ -124,7 +124,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7474.782299999788,
+      "latency_ms": 3760.8418999880087,
       "claims": [],
       "fact_coverage": [
         {
@@ -146,7 +146,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8383.24560000001,
+      "latency_ms": 4198.831800007611,
       "claims": [],
       "fact_coverage": [
         {
@@ -164,7 +164,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7067.488899999262,
+      "latency_ms": 8050.0214000057895,
       "claims": [],
       "fact_coverage": [
         {
@@ -182,7 +182,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7781.0131999995065,
+      "latency_ms": 7682.035200006794,
       "claims": [],
       "fact_coverage": [
         {
@@ -204,7 +204,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 120.73979999968287,
+      "latency_ms": 297.8194000024814,
       "claims": [
         {
           "claim": "Please clarify your question",
@@ -227,7 +227,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 122.67320000046311,
+      "latency_ms": 295.96160000073723,
       "claims": [
         {
           "claim": "Please clarify your question",
@@ -250,7 +250,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8099.569199999678,
+      "latency_ms": 10396.180399999139,
       "claims": [],
       "fact_coverage": [
         {
@@ -268,7 +268,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8494.597500000054,
+      "latency_ms": 1722.9014999902574,
       "claims": [],
       "fact_coverage": [
         {
@@ -286,7 +286,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7242.922100000214,
+      "latency_ms": 1782.4994000111474,
       "claims": [],
       "fact_coverage": [
         {
@@ -304,7 +304,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8324.653899999248,
+      "latency_ms": 1870.459400000982,
       "claims": [],
       "fact_coverage": [
         {
@@ -322,7 +322,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7539.517100000012,
+      "latency_ms": 1786.8903999915347,
       "claims": [],
       "fact_coverage": [
         {
@@ -340,7 +340,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 141.53259999966394,
+      "latency_ms": 292.812400002731,
       "claims": [
         {
           "claim": "Please clarify your question",
@@ -363,7 +363,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8107.440499999939,
+      "latency_ms": 2089.74360000866,
       "claims": [],
       "fact_coverage": [
         {
@@ -381,7 +381,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8007.314299999962,
+      "latency_ms": 9443.163700008881,
       "claims": [],
       "fact_coverage": [
         {
@@ -399,7 +399,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8270.689299999503,
+      "latency_ms": 7932.423200007179,
       "claims": [],
       "fact_coverage": [
         {
@@ -417,7 +417,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7712.665900000502,
+      "latency_ms": 8829.501200001687,
       "claims": [],
       "fact_coverage": [
         {
@@ -435,7 +435,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8019.594600000346,
+      "latency_ms": 9773.440000004484,
       "claims": [],
       "fact_coverage": [
         {
@@ -453,7 +453,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 124.16839999968943,
+      "latency_ms": 329.94419999886304,
       "claims": [
         {
           "claim": "Please clarify your question",
@@ -476,7 +476,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 135.93980000041483,
+      "latency_ms": 337.9650999995647,
       "claims": [
         {
           "claim": "Please clarify your question",
@@ -503,7 +503,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7838.173299999653,
+      "latency_ms": 3015.337799995905,
       "claims": [],
       "fact_coverage": [
         {
@@ -521,7 +521,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7712.808000000223,
+      "latency_ms": 2129.3595999886747,
       "claims": [],
       "fact_coverage": [
         {
@@ -539,7 +539,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7193.916800000807,
+      "latency_ms": 2063.139299993054,
       "claims": [],
       "fact_coverage": [
         {
@@ -557,7 +557,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7148.267499999747,
+      "latency_ms": 8042.188300009002,
       "claims": [],
       "fact_coverage": [
         {
@@ -575,7 +575,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7983.820299999934,
+      "latency_ms": 8072.334199998295,
       "claims": [],
       "fact_coverage": [
         {
@@ -593,7 +593,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7679.442199999357,
+      "latency_ms": 9764.650500001153,
       "claims": [],
       "fact_coverage": [
         {
@@ -615,7 +615,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 8033.644500000264,
+      "latency_ms": 8547.064500002307,
       "claims": [],
       "fact_coverage": [],
       "abstention": "NOT_APPLICABLE"
@@ -628,7 +628,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7567.508199999793,
+      "latency_ms": 8810.138100001495,
       "claims": [],
       "fact_coverage": [],
       "abstention": "NOT_APPLICABLE"
@@ -641,7 +641,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 124.90920000072947,
+      "latency_ms": 325.36040000559296,
       "claims": [
         {
           "claim": "Please clarify your question",
@@ -659,7 +659,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7680.996600000071,
+      "latency_ms": 8269.697199997609,
       "claims": [],
       "fact_coverage": [],
       "abstention": "NOT_APPLICABLE"
@@ -672,7 +672,7 @@
       "retrieved_sources": [
         "sample_kb.md"
       ],
-      "latency_ms": 7858.092299999953,
+      "latency_ms": 8221.219999992172,
       "claims": [],
       "fact_coverage": [],
       "abstention": "NOT_APPLICABLE"

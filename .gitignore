@@ -38,3 +38,7 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Runtime data & evaluations
+backend/data/
+backend/evaluation_reports/

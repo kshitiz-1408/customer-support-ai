@@ -110,5 +110,11 @@
       "page": 1,
       "type": "md"
     }
+  },
+  "__manifest__": {
+    "sample_kb.md": {
+      "mtime": 1783187486.369397,
+      "size": 8609
+    }
   }
 }

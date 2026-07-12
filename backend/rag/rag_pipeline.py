@@ -20,15 +20,46 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     """
     logger.info("Initializing RAG ingestion pipeline...")
     
-    # Check if index already has populated vectors and we aren't forcing a rebuild
-    if vector_store._index.ntotal > 0 and not force_rebuild:
-        logger.info(f"RAG pipeline initialized: active FAISS index loaded from disk ({vector_store._index.ntotal} vectors).")
-        return
-        
     # Resolve absolute path to the project root (three levels up from backend/rag/rag_pipeline.py)
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     kb_dir = os.path.join(project_root, "knowledge_base")
     
+    # Build current files manifest to detect modifications
+    current_manifest = {}
+    if os.path.exists(kb_dir):
+        for filename in os.listdir(kb_dir):
+            file_path = os.path.join(kb_dir, filename)
+            if os.path.isdir(file_path):
+                continue
+            if filename in [
+                os.path.basename(settings.VECTOR_INDEX_PATH),
+                os.path.basename(settings.VECTOR_METADATA_PATH)
+            ]:
+                continue
+            ext = filename.split(".")[-1].lower() if "." in filename else ""
+            if ext not in ["pdf", "txt", "md"]:
+                continue
+            try:
+                stat = os.stat(file_path)
+                current_manifest[filename] = {
+                    "mtime": stat.st_mtime,
+                    "size": stat.st_size
+                }
+            except Exception as e:
+                logger.warning(f"Failed to stat knowledge base file '{filename}': {str(e)}")
+
+    # Check if index already has populated vectors and we aren't forcing a rebuild
+    has_vectors = vector_store._index.ntotal > 0
+    saved_manifest = vector_store._metadata_store.get("__manifest__", {})
+    manifests_match = (current_manifest == saved_manifest)
+    
+    if has_vectors and not force_rebuild and manifests_match:
+        logger.info(f"RAG pipeline initialized: active FAISS index loaded from disk ({vector_store._index.ntotal} vectors). File manifest matches, skipping rebuild.")
+        return
+        
+    if not force_rebuild and not manifests_match:
+        logger.info("Knowledge base file modifications detected or manifest missing. Rebuilding vector store index...")
+        
     if not os.path.exists(kb_dir):
         logger.warning(f"Knowledge base directory '{kb_dir}' missing. Creating empty directory.")
         os.makedirs(kb_dir, exist_ok=True)
@@ -57,11 +88,11 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
         try:
             if ext == "pdf":
                 with open(file_path, "rb") as f:
-                    file_bytes = f.read()
+                     file_bytes = f.read()
                 file_chunks = extract_chunks_from_pdf(file_bytes, filename)
             else:
                 with open(file_path, "r", encoding="utf-8") as f:
-                    text_content = f.read()
+                     text_content = f.read()
                 file_chunks = extract_chunks_from_text(text_content, filename, ext)
                 
             all_chunks.extend(file_chunks)
@@ -73,6 +104,11 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
             
     if not all_chunks:
         logger.warning("No documentation files found or no chunks could be extracted. FAISS index left empty.")
+        # Ensure we clear memory
+        vector_store.clear()
+        with vector_store._lock:
+            vector_store._metadata_store["__manifest__"] = current_manifest
+            vector_store.save_to_disk()
         return
         
     logger.info(f"Generating semantic vector embeddings for {len(all_chunks)} chunks...")
@@ -88,6 +124,12 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
         
         # Store index and mappings
         vector_store.add_chunks(all_chunks, embeddings)
+        
+        # Record manifest inside metadata store and re-save to disk
+        with vector_store._lock:
+            vector_store._metadata_store["__manifest__"] = current_manifest
+            vector_store.save_to_disk()
+            
         logger.info(f"Ingested RAG pipeline complete. Total indexed chunks: {vector_store._index.ntotal}")
         
     except Exception as e:

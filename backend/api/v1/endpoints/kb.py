@@ -5,7 +5,8 @@ from models.kb import KBArticle, KBArticleCreate, KBArticleUpdate, KBSearchResul
 from services.kb_service import KBService
 from rag.pdf_loader import extract_chunks_from_pdf, extract_chunks_from_text
 from embeddings.embedding_model import embed_chunks
-from rag.rag_pipeline import vector_store, query_kb
+from rag.rag_pipeline import vector_store, query_kb, initialize_rag_pipeline
+import asyncio
 
 logger = logging.getLogger("customer_support_backend")
 
@@ -116,6 +117,27 @@ def search_knowledge_base(payload: KBSearchQuery):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Internal error performing vector similarity search: {str(e)}"
+        )
+
+
+@router.post("/rebuild", status_code=status.HTTP_200_OK)
+def rebuild_knowledge_base():
+    """
+    Force clean rebuild of the FAISS vector index from raw files in knowledge_base directory.
+    """
+    logger.info("Explicit request to rebuild RAG vector store received.")
+    try:
+        initialize_rag_pipeline(force_rebuild=True)
+        return {
+            "status": "success",
+            "indexed_chunks": vector_store._index.ntotal,
+            "message": "Knowledge base index rebuilt successfully."
+        }
+    except Exception as e:
+        logger.error(f"Error rebuilding knowledge base index: {str(e)}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Internal error rebuilding knowledge base: {str(e)}"
         )
 
 

@@ -175,16 +175,30 @@ class LocalVectorStore:
                 with open(self.metadata_path, "r", encoding="utf-8") as f:
                     loaded_metadata = json.load(f)
                     
-                # Sanity check matching vector totals
-                if len(loaded_metadata) != loaded_index.ntotal:
-                    logger.warning(f"Count mismatch: Metadata has {len(loaded_metadata)} keys, Index has {loaded_index.ntotal} vectors. Index might be corrupted.")
+                # Sanity check matching vector totals (excluding special fields like __manifest__)
+                vector_metadata_keys = [k for k in loaded_metadata.keys() if k.isdigit()]
+                if len(vector_metadata_keys) != loaded_index.ntotal:
+                    logger.warning(f"Count mismatch: Metadata has {len(vector_metadata_keys)} vector keys, Index has {loaded_index.ntotal} vectors. Index might be corrupted.")
                     
                 self._index = loaded_index
                 self._metadata_store = loaded_metadata
                 logger.info(f"Successfully loaded persisted FAISS index containing {self._index.ntotal} vectors.")
                 
             except Exception as e:
-                logger.critical(f"Failed to load persisted FAISS index: {str(e)}", exc_info=True)
+                logger.critical(f"Failed to load persisted FAISS index: {str(e)}. Moving corrupt files to .corrupt...", exc_info=True)
+                
+                # Safeguard backup for corrupted files
+                for path in [self.index_path, self.metadata_path]:
+                    if os.path.exists(path):
+                        try:
+                            corrupt_path = path + ".corrupt"
+                            if os.path.exists(corrupt_path):
+                                os.remove(corrupt_path)
+                            os.rename(path, corrupt_path)
+                            logger.info(f"Renamed corrupt file '{path}' to '{corrupt_path}'")
+                        except Exception as move_err:
+                            logger.error(f"Failed to move corrupt file '{path}': {str(move_err)}")
+
                 # Fallback to empty initialized state
                 self._index = faiss.IndexFlatIP(self.dimension)
                 self._metadata_store = {}

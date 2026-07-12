@@ -1,0 +1,1797 @@
+{
+  "conversations": [
+    {
+      "conversation_id": "f6fac93501b24c3b8458cf320bf88f83",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:40.430821+00:00",
+      "updated_at": "2026-07-09 19:38:46.223532+00:00"
+    },
+    {
+      "conversation_id": "f8eabe705fe8442e8ef954e221613644",
+      "user_id": null,
+      "session_id": null,
+      "title": "How much does standard shipping take?",
+      "created_at": "2026-07-09 19:38:46.258660+00:00",
+      "updated_at": "2026-07-09 19:38:46.308894+00:00"
+    },
+    {
+      "conversation_id": "18f200d1f86442bfafc27ccc68f1dfef",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:46.472242+00:00",
+      "updated_at": "2026-07-09 19:38:46.523787+00:00"
+    },
+    {
+      "conversation_id": "3d722e7aa7ee43c1851ef115de2a2085",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:46.549900+00:00",
+      "updated_at": "2026-07-09 19:38:46.605977+00:00"
+    },
+    {
+      "conversation_id": "9a0f88e14379486785ea9f4defeb5774",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:46.629402+00:00",
+      "updated_at": "2026-07-09 19:38:53.818342+00:00"
+    },
+    {
+      "conversation_id": "7e72aaba155b44a196ffd493d052a19b",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:53.851598+00:00",
+      "updated_at": "2026-07-09 19:38:53.904761+00:00"
+    },
+    {
+      "conversation_id": "b54f8383c9364b4da9c00110993c0f9b",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-09 19:38:53.942189+00:00",
+      "updated_at": "2026-07-09 19:38:53.942189+00:00"
+    },
+    {
+      "conversation_id": "c9897be1cbea42abb9e98a607bfd1f50",
+      "user_id": null,
+      "session_id": null,
+      "title": "First query",
+      "created_at": "2026-07-09 19:38:54.007892+00:00",
+      "updated_at": "2026-07-09 19:38:54.116732+00:00"
+    },
+    {
+      "conversation_id": "3e0e9c6f0470480f94575a6710fc1725",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:54.143556+00:00",
+      "updated_at": "2026-07-09 19:38:54.214312+00:00"
+    },
+    {
+      "conversation_id": "fea41f413a2c416b8b687ade54449ad4",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:54.241588+00:00",
+      "updated_at": "2026-07-09 19:38:54.740360+00:00"
+    },
+    {
+      "conversation_id": "90a33593f0c64dc182aade8a94a1b096",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-09 19:38:54.770980+00:00",
+      "updated_at": "2026-07-09 19:38:54.843861+00:00"
+    },
+    {
+      "conversation_id": "f590fe322a6e40179df315b4b5669f6c",
+      "user_id": null,
+      "session_id": null,
+      "title": "Query number 0",
+      "created_at": "2026-07-09 19:38:55.506412+00:00",
+      "updated_at": "2026-07-09 19:38:55.612060+00:00"
+    },
+    {
+      "conversation_id": "ec765f9311de477ea1cc745b7516eef5",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-09 19:38:55.528833+00:00",
+      "updated_at": "2026-07-09 19:38:55.646428+00:00"
+    },
+    {
+      "conversation_id": "4316404a1b734de392d0d66cb5f34080",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-09 19:38:55.872865+00:00",
+      "updated_at": "2026-07-09 19:38:56.530384+00:00"
+    },
+    {
+      "conversation_id": "fb65cf145bc94e6fb328e1b3ce4e69b4",
+      "user_id": null,
+      "session_id": null,
+      "title": "refund bill query",
+      "created_at": "2026-07-09 19:38:55.874128+00:00",
+      "updated_at": "2026-07-09 19:38:56.965407+00:00"
+    },
+    {
+      "conversation_id": "a4b554c7c19b4c8fa84e83b1ae3e80ad",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:12.057547+00:00",
+      "updated_at": "2026-07-11 18:59:19.599959+00:00"
+    },
+    {
+      "conversation_id": "78b09b52f93f4e499523dccd38e06a06",
+      "user_id": null,
+      "session_id": null,
+      "title": "How much does standard shipping take?",
+      "created_at": "2026-07-11 18:59:19.644483+00:00",
+      "updated_at": "2026-07-11 18:59:19.718804+00:00"
+    },
+    {
+      "conversation_id": "93db3360c4964895a2b14ac793cb2f5e",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:20.012046+00:00",
+      "updated_at": "2026-07-11 18:59:20.088301+00:00"
+    },
+    {
+      "conversation_id": "126a28219dac47e18c28321a14178e1f",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:20.135781+00:00",
+      "updated_at": "2026-07-11 18:59:20.180841+00:00"
+    },
+    {
+      "conversation_id": "bc7b05abee714545b68c0d4c138cdfbe",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:20.224635+00:00",
+      "updated_at": "2026-07-11 18:59:27.329586+00:00"
+    },
+    {
+      "conversation_id": "9c924c22c4c04e9b8a3916e7345296b7",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:27.363727+00:00",
+      "updated_at": "2026-07-11 18:59:27.425686+00:00"
+    },
+    {
+      "conversation_id": "df8c943e0fbd4493b6dea4b497971f26",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-11 18:59:27.474874+00:00",
+      "updated_at": "2026-07-11 18:59:27.474874+00:00"
+    },
+    {
+      "conversation_id": "889ca22d5ee84441a7a7d080388aa4de",
+      "user_id": null,
+      "session_id": null,
+      "title": "First query",
+      "created_at": "2026-07-11 18:59:27.584580+00:00",
+      "updated_at": "2026-07-11 18:59:27.819458+00:00"
+    },
+    {
+      "conversation_id": "2fdffac224e64750a71ab544502a664e",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:27.870685+00:00",
+      "updated_at": "2026-07-11 18:59:27.943711+00:00"
+    },
+    {
+      "conversation_id": "4fdf4ed524f449529c185dfdd6bc02c5",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:27.991322+00:00",
+      "updated_at": "2026-07-11 18:59:28.941244+00:00"
+    },
+    {
+      "conversation_id": "2d8c72adeaaa4346a5d2c3a6a19f1ced",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 18:59:28.975070+00:00",
+      "updated_at": "2026-07-11 18:59:29.039510+00:00"
+    },
+    {
+      "conversation_id": "22a1d07361df45beaa79ab6449da45f0",
+      "user_id": null,
+      "session_id": null,
+      "title": "Query number 0",
+      "created_at": "2026-07-11 18:59:29.741587+00:00",
+      "updated_at": "2026-07-11 18:59:29.957743+00:00"
+    },
+    {
+      "conversation_id": "5896ff554c8f4562be66b726163968c7",
+      "user_id": null,
+      "session_id": null,
+      "title": "Query number 4",
+      "created_at": "2026-07-11 18:59:29.766083+00:00",
+      "updated_at": "2026-07-11 18:59:30.005491+00:00"
+    },
+    {
+      "conversation_id": "cbb66badc4ca4b5a9714306f8e602cb0",
+      "user_id": null,
+      "session_id": null,
+      "title": "refund bill query",
+      "created_at": "2026-07-11 18:59:30.594345+00:00",
+      "updated_at": "2026-07-11 18:59:32.031585+00:00"
+    },
+    {
+      "conversation_id": "497a8ab633644b4e91949ef6a6d877a0",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:57:53.358839+00:00",
+      "updated_at": "2026-07-11 19:58:00.807832+00:00"
+    },
+    {
+      "conversation_id": "ee636d89c6d149b69414e5d56501f01e",
+      "user_id": null,
+      "session_id": null,
+      "title": "How much does standard shipping take?",
+      "created_at": "2026-07-11 19:58:00.862747+00:00",
+      "updated_at": "2026-07-11 19:58:00.948443+00:00"
+    },
+    {
+      "conversation_id": "5fda0819a25a4fcabf7f5f996b655b46",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:01.399212+00:00",
+      "updated_at": "2026-07-11 19:58:01.466049+00:00"
+    },
+    {
+      "conversation_id": "bc9678da6b114132b1e79c970a6a0ae4",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:01.520221+00:00",
+      "updated_at": "2026-07-11 19:58:01.564802+00:00"
+    },
+    {
+      "conversation_id": "7b51bb1feaaf4358afa4cf3f38feac47",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:01.617031+00:00",
+      "updated_at": "2026-07-11 19:58:08.198330+00:00"
+    },
+    {
+      "conversation_id": "b4cd6f9b456e4e05a7f57f62245bff46",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:08.238514+00:00",
+      "updated_at": "2026-07-11 19:58:08.304337+00:00"
+    },
+    {
+      "conversation_id": "63397efddaf34b839fbe8ee9334826af",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-11 19:58:08.351278+00:00",
+      "updated_at": "2026-07-11 19:58:08.351278+00:00"
+    },
+    {
+      "conversation_id": "93ca753dee6e490881f182713dcba170",
+      "user_id": null,
+      "session_id": null,
+      "title": "First query",
+      "created_at": "2026-07-11 19:58:08.463796+00:00",
+      "updated_at": "2026-07-11 19:58:08.618202+00:00"
+    },
+    {
+      "conversation_id": "66d728194b83460dad27cabfeb806f86",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:08.665643+00:00",
+      "updated_at": "2026-07-11 19:58:08.752443+00:00"
+    },
+    {
+      "conversation_id": "574cb3a89ebe400cb33d7eee82069aab",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:08.804619+00:00",
+      "updated_at": "2026-07-11 19:58:09.402878+00:00"
+    },
+    {
+      "conversation_id": "b7d9e9cfbaa64906b336899b4e363b3e",
+      "user_id": null,
+      "session_id": null,
+      "title": "What does the Premium Plan include?",
+      "created_at": "2026-07-11 19:58:09.443324+00:00",
+      "updated_at": "2026-07-11 19:58:09.512248+00:00"
+    },
+    {
+      "conversation_id": "4cbd3195cc064508bfca8e3f5c47f690",
+      "user_id": null,
+      "session_id": null,
+      "title": "Query number 0",
+      "created_at": "2026-07-11 19:58:10.273652+00:00",
+      "updated_at": "2026-07-11 19:58:10.524075+00:00"
+    },
+    {
+      "conversation_id": "3a3fcfd079dc41f5ab9f8489e26cbd4f",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-11 19:58:10.310914+00:00",
+      "updated_at": "2026-07-11 19:58:10.310914+00:00"
+    },
+    {
+      "conversation_id": "472f384f89564f11b0cc651164f751b1",
+      "user_id": null,
+      "session_id": null,
+      "title": "Query number 2",
+      "created_at": "2026-07-11 19:58:10.331662+00:00",
+      "updated_at": "2026-07-11 19:58:10.555593+00:00"
+    },
+    {
+      "conversation_id": "e141f8f0b29b4f8d9123e15c51bf47c4",
+      "user_id": null,
+      "session_id": null,
+      "title": null,
+      "created_at": "2026-07-11 19:58:11.051559+00:00",
+      "updated_at": "2026-07-11 19:58:11.944045+00:00"
+    },
+    {
+      "conversation_id": "5e7e574eb39340fa940994f2f6e5124b",
+      "user_id": null,
+      "session_id": null,
+      "title": "refund bill query",
+      "created_at": "2026-07-11 19:58:11.058426+00:00",
+      "updated_at": "2026-07-11 19:58:12.105537+00:00"
+    }
+  ],
+  "messages": [
+    {
+      "message_id": "1ddff66206aa4b9fa3248c8c2549d40f",
+      "conversation_id": "f6fac93501b24c3b8458cf320bf88f83",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:40.432775+00:00"
+    },
+    {
+      "message_id": "fc1c74d2fcaa4cfeb103d922e9baba22",
+      "conversation_id": "f6fac93501b24c3b8458cf320bf88f83",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:46.154237+00:00"
+    },
+    {
+      "message_id": "4d2f02e4cfd844b6bbc6613007100d2c",
+      "conversation_id": "f6fac93501b24c3b8458cf320bf88f83",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:46.185840+00:00"
+    },
+    {
+      "message_id": "a11c36b232774ac999772fa2445ac52d",
+      "conversation_id": "f6fac93501b24c3b8458cf320bf88f83",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:46.223532+00:00"
+    },
+    {
+      "message_id": "99547d4f74f34f0497a291ba0d5c47c1",
+      "conversation_id": "f8eabe705fe8442e8ef954e221613644",
+      "role": "user",
+      "content": "How much does standard shipping take?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:46.260416+00:00"
+    },
+    {
+      "message_id": "3611f772e06e47439213e036a177900d",
+      "conversation_id": "f8eabe705fe8442e8ef954e221613644",
+      "role": "assistant",
+      "content": "Standard Ground Shipping takes 3 to 5 business days for delivery.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:46.308894+00:00"
+    },
+    {
+      "message_id": "cd4b3244f5904ffcb8a4396f0f534834",
+      "conversation_id": "18f200d1f86442bfafc27ccc68f1dfef",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:46.487593+00:00"
+    },
+    {
+      "message_id": "88f64fe430774d32b2979a62f4ffeb41",
+      "conversation_id": "18f200d1f86442bfafc27ccc68f1dfef",
+      "role": "assistant",
+      "content": "Grounded answer",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:46.523787+00:00"
+    },
+    {
+      "message_id": "cb3b69fa9e4448d394a820fb97dda492",
+      "conversation_id": "3d722e7aa7ee43c1851ef115de2a2085",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:46.566771+00:00"
+    },
+    {
+      "message_id": "d8ac2eae4eec4167a93034ccd13fe230",
+      "conversation_id": "3d722e7aa7ee43c1851ef115de2a2085",
+      "role": "assistant",
+      "content": "Ungrounded fallback answer",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": null,
+      "created_at": "2026-07-09 19:38:46.605977+00:00"
+    },
+    {
+      "message_id": "a9720406096f466a9c5754ee2941508d",
+      "conversation_id": "9a0f88e14379486785ea9f4defeb5774",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:46.641883+00:00"
+    },
+    {
+      "message_id": "75c58e867a394cbba0422cfa1e2fcd58",
+      "conversation_id": "9a0f88e14379486785ea9f4defeb5774",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:53.818342+00:00"
+    },
+    {
+      "message_id": "2c7bb3d5e7914d28951499dbda5c8f84",
+      "conversation_id": "7e72aaba155b44a196ffd493d052a19b",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:53.868165+00:00"
+    },
+    {
+      "message_id": "c3fb823f6a184ba28bfb2b94c86bf054",
+      "conversation_id": "7e72aaba155b44a196ffd493d052a19b",
+      "role": "assistant",
+      "content": "Standard response",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:53.904761+00:00"
+    },
+    {
+      "message_id": "846d137450ae4427952d8fd0d774772b",
+      "conversation_id": "c9897be1cbea42abb9e98a607bfd1f50",
+      "role": "user",
+      "content": "First query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:54.010279+00:00"
+    },
+    {
+      "message_id": "c5cf5663d2804232a25797127096a2a8",
+      "conversation_id": "c9897be1cbea42abb9e98a607bfd1f50",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:54.045458+00:00"
+    },
+    {
+      "message_id": "ae5ab5b97e714432a9209f7b190d05cd",
+      "conversation_id": "c9897be1cbea42abb9e98a607bfd1f50",
+      "role": "user",
+      "content": "Second query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:54.077731+00:00"
+    },
+    {
+      "message_id": "15a619e24ea74af0b8f61654fb6df3ba",
+      "conversation_id": "c9897be1cbea42abb9e98a607bfd1f50",
+      "role": "assistant",
+      "content": "First answer",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:54.116732+00:00"
+    },
+    {
+      "message_id": "44c02f0d9f8b4d9ca85828b65f6d5828",
+      "conversation_id": "3e0e9c6f0470480f94575a6710fc1725",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:54.160882+00:00"
+    },
+    {
+      "message_id": "199c509671754c509190ac7116e1b0f5",
+      "conversation_id": "3e0e9c6f0470480f94575a6710fc1725",
+      "role": "assistant",
+      "content": "Mocked Premium Plan includes cameras and cellular backup.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:54.214312+00:00"
+    },
+    {
+      "message_id": "98836a8fccd34d3f9d15581b35e68d07",
+      "conversation_id": "fea41f413a2c416b8b687ade54449ad4",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:54.256268+00:00"
+    },
+    {
+      "message_id": "837b3ea868304c9ebc7eadcfa1c4ba32",
+      "conversation_id": "fea41f413a2c416b8b687ade54449ad4",
+      "role": "assistant",
+      "content": "Mocked Premium response",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:54.740360+00:00"
+    },
+    {
+      "message_id": "3cc93dea9fd743278fbbda2634ec637e",
+      "conversation_id": "90a33593f0c64dc182aade8a94a1b096",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:54.786032+00:00"
+    },
+    {
+      "message_id": "e1792dc0752a4a83946049cf7589310d",
+      "conversation_id": "90a33593f0c64dc182aade8a94a1b096",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:54.843861+00:00"
+    },
+    {
+      "message_id": "b9d1fe0939984d41bdcdfe737e3a5a4c",
+      "conversation_id": "5341a2d3822d4b9697104dfe32d05454",
+      "role": "user",
+      "content": "Query number 7",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:55.541374+00:00"
+    },
+    {
+      "message_id": "7a984df4c5934f06ac998f7c98032c62",
+      "conversation_id": "f590fe322a6e40179df315b4b5669f6c",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:55.612060+00:00"
+    },
+    {
+      "message_id": "a42971e68b004fe6bb92227689580202",
+      "conversation_id": "29377dffccfb4af38a85aee20d818023",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:55.621378+00:00"
+    },
+    {
+      "message_id": "0006ad08ff9548aaa407db3d4def149e",
+      "conversation_id": "conv_B",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:55.755896+00:00"
+    },
+    {
+      "message_id": "85d1fe106f2d4f59a5dad0e43769baf3",
+      "conversation_id": "conv_B",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:55.813293+00:00"
+    },
+    {
+      "message_id": "5e237e618d3944dabc59cb82fe6bba37",
+      "conversation_id": "conv_A",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:55.818696+00:00"
+    },
+    {
+      "message_id": "cc0e0a7132ee40e4bbb0c892bc53b4c1",
+      "conversation_id": "e250d9977a224dd1bc1581b27b24739c",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-09 19:38:55.893229+00:00"
+    },
+    {
+      "message_id": "e2d82443f34e41e4a841590b1670619b",
+      "conversation_id": "e250d9977a224dd1bc1581b27b24739c",
+      "role": "assistant",
+      "content": "Success response",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:55.971501+00:00"
+    },
+    {
+      "message_id": "b94609e71f354e4d8404cf137e75512c",
+      "conversation_id": "4316404a1b734de392d0d66cb5f34080",
+      "role": "assistant",
+      "content": "Success response",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:56.530384+00:00"
+    },
+    {
+      "message_id": "1810ee5b28424e3bb8736472cd9fe5e8",
+      "conversation_id": "fb65cf145bc94e6fb328e1b3ce4e69b4",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-09 19:38:56.965407+00:00"
+    },
+    {
+      "message_id": "3fd91e0ed2c14574a6ffaa492ae698ed",
+      "conversation_id": "a4b554c7c19b4c8fa84e83b1ae3e80ad",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:12.062761+00:00"
+    },
+    {
+      "message_id": "e63e50ddd98948bfb6ddda3a27fef6e6",
+      "conversation_id": "a4b554c7c19b4c8fa84e83b1ae3e80ad",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:19.518498+00:00"
+    },
+    {
+      "message_id": "c8830ac6541247148bdd6933535e5f05",
+      "conversation_id": "a4b554c7c19b4c8fa84e83b1ae3e80ad",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:19.545119+00:00"
+    },
+    {
+      "message_id": "c2f74e7186de4946a9061055a58b7d10",
+      "conversation_id": "a4b554c7c19b4c8fa84e83b1ae3e80ad",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:19.599959+00:00"
+    },
+    {
+      "message_id": "c6839e328f624244ba6261559d3c5fe5",
+      "conversation_id": "78b09b52f93f4e499523dccd38e06a06",
+      "role": "user",
+      "content": "How much does standard shipping take?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:19.653171+00:00"
+    },
+    {
+      "message_id": "a3906c65fec140f4ab7594c922effa71",
+      "conversation_id": "78b09b52f93f4e499523dccd38e06a06",
+      "role": "assistant",
+      "content": "Standard Ground Shipping takes 3 to 5 business days for delivery.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:19.718804+00:00"
+    },
+    {
+      "message_id": "2503b879679b45f1bbadde0668514f7e",
+      "conversation_id": "93db3360c4964895a2b14ac793cb2f5e",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:20.017992+00:00"
+    },
+    {
+      "message_id": "d228333d391b4ed5a98d00b751b7d8ec",
+      "conversation_id": "93db3360c4964895a2b14ac793cb2f5e",
+      "role": "assistant",
+      "content": "Grounded answer",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:20.088301+00:00"
+    },
+    {
+      "message_id": "be7bd9ca52634f59a544115e0f5634c4",
+      "conversation_id": "126a28219dac47e18c28321a14178e1f",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:20.143520+00:00"
+    },
+    {
+      "message_id": "b43e8a846b8840529200bc43de20a5dd",
+      "conversation_id": "126a28219dac47e18c28321a14178e1f",
+      "role": "assistant",
+      "content": "Ungrounded fallback answer",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": null,
+      "created_at": "2026-07-11 18:59:20.180841+00:00"
+    },
+    {
+      "message_id": "6fb791e0bbf047479157067052c80ae6",
+      "conversation_id": "bc7b05abee714545b68c0d4c138cdfbe",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:20.235543+00:00"
+    },
+    {
+      "message_id": "2c2667d055bb4e38b4f9762d4830d1c7",
+      "conversation_id": "bc7b05abee714545b68c0d4c138cdfbe",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:27.329586+00:00"
+    },
+    {
+      "message_id": "0c7e1c28d423465b8b94f68115cd5cca",
+      "conversation_id": "9c924c22c4c04e9b8a3916e7345296b7",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:27.370272+00:00"
+    },
+    {
+      "message_id": "419970b2c39c40dc8df6689bf7f24ff6",
+      "conversation_id": "9c924c22c4c04e9b8a3916e7345296b7",
+      "role": "assistant",
+      "content": "Standard response",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:27.425686+00:00"
+    },
+    {
+      "message_id": "ee7de5244452430ea378220d87b5e7cd",
+      "conversation_id": "889ca22d5ee84441a7a7d080388aa4de",
+      "role": "user",
+      "content": "First query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:27.592655+00:00"
+    },
+    {
+      "message_id": "f4b12dc0f111445881003eea6df9224d",
+      "conversation_id": "889ca22d5ee84441a7a7d080388aa4de",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:27.610138+00:00"
+    },
+    {
+      "message_id": "776194705c874bafa27234186618b358",
+      "conversation_id": "889ca22d5ee84441a7a7d080388aa4de",
+      "role": "user",
+      "content": "Second query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:27.643059+00:00"
+    },
+    {
+      "message_id": "1ffe145f4b974da1a4dc90ac8906f15c",
+      "conversation_id": "889ca22d5ee84441a7a7d080388aa4de",
+      "role": "assistant",
+      "content": "First answer",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:27.819458+00:00"
+    },
+    {
+      "message_id": "842507c85e434fa9a903505625687e26",
+      "conversation_id": "2fdffac224e64750a71ab544502a664e",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:27.886307+00:00"
+    },
+    {
+      "message_id": "9db41bf31fcc40688ec7a911368e8a86",
+      "conversation_id": "2fdffac224e64750a71ab544502a664e",
+      "role": "assistant",
+      "content": "Mocked Premium Plan includes cameras and cellular backup.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:27.943711+00:00"
+    },
+    {
+      "message_id": "e8c6acc763a44245ab2e30f24924fc21",
+      "conversation_id": "4fdf4ed524f449529c185dfdd6bc02c5",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:28.000846+00:00"
+    },
+    {
+      "message_id": "fd8892a4e84e448782c5e202fd8f23c8",
+      "conversation_id": "4fdf4ed524f449529c185dfdd6bc02c5",
+      "role": "assistant",
+      "content": "Mocked Premium response",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:28.941244+00:00"
+    },
+    {
+      "message_id": "a9c0f0e9cb0b4dab8a8859df08791e7c",
+      "conversation_id": "2d8c72adeaaa4346a5d2c3a6a19f1ced",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:28.979819+00:00"
+    },
+    {
+      "message_id": "ce0c4cc5285a4e2dbce4a73bd9ca012f",
+      "conversation_id": "2d8c72adeaaa4346a5d2c3a6a19f1ced",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:29.039510+00:00"
+    },
+    {
+      "message_id": "f67a7c28e9354a1c8305dddb444c034b",
+      "conversation_id": "41e648a4a6dc4f58a5e359de6856ba38",
+      "role": "user",
+      "content": "Query number 3",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:29.785915+00:00"
+    },
+    {
+      "message_id": "c7fb99a154b6477e92676864db411c9e",
+      "conversation_id": "c9834f9083be464980e03308aa7cd51b",
+      "role": "user",
+      "content": "Query number 7",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:29.847050+00:00"
+    },
+    {
+      "message_id": "31b4d2172d684966ba5c88f9d9298d8a",
+      "conversation_id": "a83e38c1916441b7a27434df18c9c80f",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:29.976823+00:00"
+    },
+    {
+      "message_id": "55553db083d444e8917b445b5d89fca8",
+      "conversation_id": "5896ff554c8f4562be66b726163968c7",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:30.005491+00:00"
+    },
+    {
+      "message_id": "d302d207f4ab4e29a58de5c443826eda",
+      "conversation_id": "conv_B",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:30.260464+00:00"
+    },
+    {
+      "message_id": "55953058c5d84519b892bf4d96d26a48",
+      "conversation_id": "conv_A",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:30.262597+00:00"
+    },
+    {
+      "message_id": "665e40ee2c134bd5b6a1ac2f8ec7dced",
+      "conversation_id": "conv_B",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:30.431260+00:00"
+    },
+    {
+      "message_id": "8ed2601d557a4429af96d9bdbadda6ed",
+      "conversation_id": "conv_A",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:30.479022+00:00"
+    },
+    {
+      "message_id": "678e7c446dcf405a9e1fba1fca83791f",
+      "conversation_id": "conv_C",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:30.494846+00:00"
+    },
+    {
+      "message_id": "d0c5119bc69b4414ae420e5ef5d7afcf",
+      "conversation_id": "49070c8eee7e4f05972839f7fb58cb3e",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:30.611987+00:00"
+    },
+    {
+      "message_id": "2c5679eabd0342a18aca93072e3abf8d",
+      "conversation_id": "a464f765606c4052ac619ca7f84bf5d1",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 18:59:30.636139+00:00"
+    },
+    {
+      "message_id": "51b0d1edd62e4b6b8a3144b65e008d69",
+      "conversation_id": "a464f765606c4052ac619ca7f84bf5d1",
+      "role": "assistant",
+      "content": "Success response",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:30.785876+00:00"
+    },
+    {
+      "message_id": "87e17e20a760412e998a590fa4ee3cf8",
+      "conversation_id": "49070c8eee7e4f05972839f7fb58cb3e",
+      "role": "assistant",
+      "content": "Success response",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:31.561143+00:00"
+    },
+    {
+      "message_id": "4821be174909475d9aeea0c34ab1ea05",
+      "conversation_id": "cbb66badc4ca4b5a9714306f8e602cb0",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 18:59:32.031585+00:00"
+    },
+    {
+      "message_id": "0c4b547f304344bfbd1c778aee51cffd",
+      "conversation_id": "497a8ab633644b4e91949ef6a6d877a0",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:57:53.367372+00:00"
+    },
+    {
+      "message_id": "8f4f448a8dec4e9a82590763cddb3a37",
+      "conversation_id": "497a8ab633644b4e91949ef6a6d877a0",
+      "role": "assistant",
+      "content": "The Premium Plan includes unlimited camera support, 60-day storage history, advanced AI detection rules, and cellular backup. It is priced at $19.99 per month or $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:00.697096+00:00"
+    },
+    {
+      "message_id": "2e753a549a6a4fa395765ff222fb21e2",
+      "conversation_id": "497a8ab633644b4e91949ef6a6d877a0",
+      "role": "user",
+      "content": "How much does it cost annually?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:00.733942+00:00"
+    },
+    {
+      "message_id": "4cfd52cce62241f792cc2a7eeab8ee76",
+      "conversation_id": "497a8ab633644b4e91949ef6a6d877a0",
+      "role": "assistant",
+      "content": "The Premium Plan costs $199.99 when billed annually.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:00.807832+00:00"
+    },
+    {
+      "message_id": "e66fc6e437194b5281ef12d8ff54833e",
+      "conversation_id": "ee636d89c6d149b69414e5d56501f01e",
+      "role": "user",
+      "content": "How much does standard shipping take?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:00.871328+00:00"
+    },
+    {
+      "message_id": "9bdbc526588f489ab94ccb67eab7b126",
+      "conversation_id": "ee636d89c6d149b69414e5d56501f01e",
+      "role": "assistant",
+      "content": "Standard Ground Shipping takes 3 to 5 business days for delivery.",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:00.948443+00:00"
+    },
+    {
+      "message_id": "062e8240449a4c17a1bdc9c54d2fb31c",
+      "conversation_id": "5fda0819a25a4fcabf7f5f996b655b46",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:01.407864+00:00"
+    },
+    {
+      "message_id": "c7815b1efd674f6b92e038d9571397aa",
+      "conversation_id": "5fda0819a25a4fcabf7f5f996b655b46",
+      "role": "assistant",
+      "content": "Grounded answer",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:01.466049+00:00"
+    },
+    {
+      "message_id": "5ea3a0fcb89b4b5588be819c253c36ee",
+      "conversation_id": "bc9678da6b114132b1e79c970a6a0ae4",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:01.529144+00:00"
+    },
+    {
+      "message_id": "7bb36272b487497a87aa26d9d7fa3653",
+      "conversation_id": "bc9678da6b114132b1e79c970a6a0ae4",
+      "role": "assistant",
+      "content": "Ungrounded fallback answer",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": null,
+      "created_at": "2026-07-11 19:58:01.564802+00:00"
+    },
+    {
+      "message_id": "adf7ed9a2ba942ccb297277f049fb46b",
+      "conversation_id": "7b51bb1feaaf4358afa4cf3f38feac47",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:01.628214+00:00"
+    },
+    {
+      "message_id": "81f1118ea36b48eb94ac52784e87a078",
+      "conversation_id": "7b51bb1feaaf4358afa4cf3f38feac47",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:08.198330+00:00"
+    },
+    {
+      "message_id": "09900ee9479547a49dd843d17a8a1cbc",
+      "conversation_id": "b4cd6f9b456e4e05a7f57f62245bff46",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:08.249167+00:00"
+    },
+    {
+      "message_id": "58fed89697a64ff89fea31825d142f7f",
+      "conversation_id": "b4cd6f9b456e4e05a7f57f62245bff46",
+      "role": "assistant",
+      "content": "Standard response",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:08.304337+00:00"
+    },
+    {
+      "message_id": "3c9454315abf493f99e9bb66faf15614",
+      "conversation_id": "93ca753dee6e490881f182713dcba170",
+      "role": "user",
+      "content": "First query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:08.476628+00:00"
+    },
+    {
+      "message_id": "cc486f320bbe4ad58f9d06d8850cf067",
+      "conversation_id": "93ca753dee6e490881f182713dcba170",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:08.506448+00:00"
+    },
+    {
+      "message_id": "bc9d9c9f62b141b68f366d0d98f45788",
+      "conversation_id": "93ca753dee6e490881f182713dcba170",
+      "role": "user",
+      "content": "Second query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:08.546363+00:00"
+    },
+    {
+      "message_id": "874a663c9ce24337b02f2e4018d4a51a",
+      "conversation_id": "93ca753dee6e490881f182713dcba170",
+      "role": "assistant",
+      "content": "First answer",
+      "intent": "faq",
+      "agent": "FAQ Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:08.618202+00:00"
+    },
+    {
+      "message_id": "4d105e0761ec446c8bcb745a16509c16",
+      "conversation_id": "66d728194b83460dad27cabfeb806f86",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:08.679076+00:00"
+    },
+    {
+      "message_id": "99015eba6998486bb6512752ccc459da",
+      "conversation_id": "66d728194b83460dad27cabfeb806f86",
+      "role": "assistant",
+      "content": "Mocked Premium Plan includes cameras and cellular backup.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:08.752443+00:00"
+    },
+    {
+      "message_id": "19f761ef00bf48618b2c3dc4424c7f2d",
+      "conversation_id": "574cb3a89ebe400cb33d7eee82069aab",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:08.815645+00:00"
+    },
+    {
+      "message_id": "0837018c6c9f45bbb6ebabe12fbe29c8",
+      "conversation_id": "574cb3a89ebe400cb33d7eee82069aab",
+      "role": "assistant",
+      "content": "Mocked Premium response",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:09.402878+00:00"
+    },
+    {
+      "message_id": "d125386144a34ddb9371dcfb7241064b",
+      "conversation_id": "b7d9e9cfbaa64906b336899b4e363b3e",
+      "role": "user",
+      "content": "What does the Premium Plan include?",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:09.448559+00:00"
+    },
+    {
+      "message_id": "643ef46a57484e1fa7e3dafe1b90e499",
+      "conversation_id": "b7d9e9cfbaa64906b336899b4e363b3e",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "product",
+      "agent": "Product Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:09.512248+00:00"
+    },
+    {
+      "message_id": "df9db1215a3b4a9ba0c6944847a945a4",
+      "conversation_id": "8d160797127f4d6b83a9e6c25e6f068a",
+      "role": "user",
+      "content": "Query number 4",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:10.357683+00:00"
+    },
+    {
+      "message_id": "cbf3e003e9f641d6b9695e2175269149",
+      "conversation_id": "557ee582cd9c4b68b45db8d4b8602bce",
+      "role": "user",
+      "content": "Query number 7",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:10.393044+00:00"
+    },
+    {
+      "message_id": "fd5efa1211ec4b25b6af4f7aa415cce4",
+      "conversation_id": "3a3fcfd079dc41f5ab9f8489e26cbd4f",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:10.532149+00:00"
+    },
+    {
+      "message_id": "e087a3fac06349e287b2abc67b39afbf",
+      "conversation_id": "f092fb6dfe634ecf963ff93cc25bfac4",
+      "role": "assistant",
+      "content": "Please clarify your question.",
+      "intent": "unknown",
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:10.559795+00:00"
+    },
+    {
+      "message_id": "fbbe1d1e3f304d7991d5cc9c40b077f4",
+      "conversation_id": "conv_A",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:10.767529+00:00"
+    },
+    {
+      "message_id": "2b459c3437684d1ba1d95ebd0099a025",
+      "conversation_id": "conv_C",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:10.784250+00:00"
+    },
+    {
+      "message_id": "b83205e0158f4c838c90c65d06f02bae",
+      "conversation_id": "conv_A",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:10.904107+00:00"
+    },
+    {
+      "message_id": "add2ac02c793449facee25e2ba3da58f",
+      "conversation_id": "conv_B",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:10.953058+00:00"
+    },
+    {
+      "message_id": "134c448eaf794cb38636e42869c62f6a",
+      "conversation_id": "conv_C",
+      "role": "assistant",
+      "content": "Response text",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:10.974347+00:00"
+    },
+    {
+      "message_id": "5670f3efa8f94ce199801677645efcbe",
+      "conversation_id": "5e7e574eb39340fa940994f2f6e5124b",
+      "role": "user",
+      "content": "refund bill query",
+      "intent": null,
+      "agent": null,
+      "sources": null,
+      "created_at": "2026-07-11 19:58:11.095239+00:00"
+    },
+    {
+      "message_id": "1c204c8f1ff541f3b9e6edd1188212b6",
+      "conversation_id": "f4e9d217136a4b199d4328aa17ae9267",
+      "role": "assistant",
+      "content": "Success response",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:11.243083+00:00"
+    },
+    {
+      "message_id": "05d334b5fb424d73bb927bda845dcf4e",
+      "conversation_id": "e141f8f0b29b4f8d9123e15c51bf47c4",
+      "role": "assistant",
+      "content": "Success response",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:11.944045+00:00"
+    },
+    {
+      "message_id": "27084105d311488abf9528505cb47a14",
+      "conversation_id": "5e7e574eb39340fa940994f2f6e5124b",
+      "role": "assistant",
+      "content": "I apologize, but I could not formulate an answer right now. Please try again.",
+      "intent": "billing",
+      "agent": "Billing Agent",
+      "sources": [
+        {
+          "source": "sample_kb.md",
+          "page": 1,
+          "type": "md"
+        }
+      ],
+      "created_at": "2026-07-11 19:58:12.105537+00:00"
+    }
+  ],
+  "tickets": [
+    {
+      "id": 1,
+      "ticket_id": "TKT-0001",
+      "customer_name": "Alice Johnson",
+      "customer_email": "alice@example.com",
+      "subject": "Unable to access billing history",
+      "description": "Every time I click on 'Billing History', the app crashes with a 500 error page. Please help.",
+      "priority": "high",
+      "category": "billing",
+      "status": "open",
+      "created_at": "2026-07-09 19:38:40.309492+00:00",
+      "updated_at": "2026-07-09 19:38:40.309492+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    },
+    {
+      "id": 2,
+      "ticket_id": "TKT-0002",
+      "customer_name": "Bob Smith",
+      "customer_email": "bob@example.com",
+      "subject": "Request for custom API integration documentation",
+      "description": "We are looking to integrate the customer-support dashboard with our internal logging system. Is there a webhooks specification available?",
+      "priority": "medium",
+      "category": "technical",
+      "status": "open",
+      "created_at": "2026-07-09 19:38:40.309492+00:00",
+      "updated_at": "2026-07-09 19:38:40.309492+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    },
+    {
+      "id": 3,
+      "ticket_id": "TKT-0003",
+      "customer_name": "Charlie Brown",
+      "customer_email": "charlie@example.com",
+      "subject": "Password reset link not arriving",
+      "description": "I have requested a password reset link three times but it has not arrived in my inbox or spam folder.",
+      "priority": "urgent",
+      "category": "account",
+      "status": "open",
+      "created_at": "2026-07-09 19:38:40.309492+00:00",
+      "updated_at": "2026-07-09 19:38:40.309492+00:00",
+      "assigned_agent": null,
+      "resolution_notes": null,
+      "conversation_id": null,
+      "user_id": null
+    }
+  ],
+  "counters": [
+    {
+      "_id": "ticket_id",
+      "seq": 6
+    }
+  ]
+}

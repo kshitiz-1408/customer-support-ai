@@ -10,32 +10,41 @@ logger = logging.getLogger("customer_support_backend")
 db_client: MongoClient = None
 db_connected: bool = False
 
-# File-backed mock database for graceful fallback when remote MongoDB Atlas is offline or blocked
-MOCK_DB_FILE = os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-    "knowledge_base", 
-    "mock_mongo.json"
-)
+from pathlib import Path
+
+# Resolve project root portably
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+
+def get_mock_db_file() -> Path:
+    """Resolves the mock database path dynamically based on configuration."""
+    if settings.MOCK_MONGO_PATH:
+        return Path(settings.MOCK_MONGO_PATH).resolve()
+    
+    # Fallback to RUNTIME_DATA_DIR / mock_mongo.json
+    runtime_dir = PROJECT_ROOT / settings.RUNTIME_DATA_DIR
+    return runtime_dir / "mock_mongo.json"
 
 import threading
 _mock_db_lock = threading.Lock()
 
 def _load_mock_db() -> Dict[str, List[Dict[str, Any]]]:
+    mock_file = get_mock_db_file()
     with _mock_db_lock:
-        if not os.path.exists(MOCK_DB_FILE):
+        if not mock_file.exists():
             return {"conversations": [], "messages": [], "tickets": [], "counters": [{"_id": "ticket_id", "seq": 3}]}
         try:
-            with open(MOCK_DB_FILE, "r", encoding="utf-8") as f:
+            with open(mock_file, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
             logger.error(f"Error loading mock db: {e}")
             return {"conversations": [], "messages": [], "tickets": [], "counters": [{"_id": "ticket_id", "seq": 3}]}
 
 def _save_mock_db(db_data: Dict[str, List[Dict[str, Any]]]):
+    mock_file = get_mock_db_file()
     with _mock_db_lock:
         try:
-            os.makedirs(os.path.dirname(MOCK_DB_FILE), exist_ok=True)
-            with open(MOCK_DB_FILE, "w", encoding="utf-8") as f:
+            mock_file.parent.mkdir(parents=True, exist_ok=True)
+            with open(mock_file, "w", encoding="utf-8") as f:
                 json.dump(db_data, f, indent=2, default=str)
         except Exception as e:
             logger.error(f"Failed to save mock db to file: {e}")
@@ -239,12 +248,16 @@ def connect_db():
             "uri": masked_uri
         })
         
-        # Initialize client with connection pooling and configured timeouts
+        # Initialize client with connection pooling, automatic retries, and configured timeouts
         db_client = MongoClient(
             settings.MONGODB_URI,
             serverSelectionTimeoutMS=settings.MONGODB_TIMEOUT_MS,
             connectTimeoutMS=settings.MONGODB_TIMEOUT_MS,
-            socketTimeoutMS=settings.MONGODB_SOCKET_TIMEOUT_MS
+            socketTimeoutMS=settings.MONGODB_SOCKET_TIMEOUT_MS,
+            maxPoolSize=50,
+            minPoolSize=5,
+            retryWrites=True,
+            retryReads=True
         )
         # Perform lightweight check to verify connection
         db_client.admin.command('ping')
@@ -252,17 +265,27 @@ def connect_db():
         db_connected = True
         
         # Create indexes
-        db_client[settings.MONGODB_DB_NAME]["conversations"].create_index("conversation_id", unique=True)
-        db_client[settings.MONGODB_DB_NAME]["conversations"].create_index("session_id")
-        db_client[settings.MONGODB_DB_NAME]["conversations"].create_index("user_id")
-        db_client[settings.MONGODB_DB_NAME]["messages"].create_index("conversation_id")
-        db_client[settings.MONGODB_DB_NAME]["messages"].create_index("created_at")
+        db = db_client[settings.MONGODB_DB_NAME]
+        
+        # Conversations Indexes
+        db["conversations"].create_index("conversation_id", unique=True)
+        db["conversations"].create_index("session_id")
+        db["conversations"].create_index("user_id")
+        # Compound indexes to optimize list sorting without in-memory sorts
+        db["conversations"].create_index([("session_id", 1), ("updated_at", -1)])
+        db["conversations"].create_index([("user_id", 1), ("updated_at", -1)])
+        
+        # Messages Indexes
+        db["messages"].create_index("conversation_id")
+        db["messages"].create_index("created_at")
+        # Compound index for historical scrollback logs retrieval
+        db["messages"].create_index([("conversation_id", 1), ("created_at", -1)])
         
         # Ticket indexes
-        db_client[settings.MONGODB_DB_NAME]["tickets"].create_index("id", unique=True)
-        db_client[settings.MONGODB_DB_NAME]["tickets"].create_index("ticket_id", unique=True)
-        db_client[settings.MONGODB_DB_NAME]["tickets"].create_index("status")
-        db_client[settings.MONGODB_DB_NAME]["tickets"].create_index("created_at")
+        db["tickets"].create_index("id", unique=True)
+        db["tickets"].create_index("ticket_id", unique=True)
+        db["tickets"].create_index("status")
+        db["tickets"].create_index("created_at")
         
         duration_ms = int((time.perf_counter() - start_time) * 1000)
         logger.info({
@@ -279,6 +302,7 @@ def connect_db():
         })
         db_connected = False
 
+
 def close_db():
     """Close MongoDB connection pool cleanly."""
     global db_client, db_connected
@@ -289,9 +313,10 @@ def close_db():
         db_connected = False
         logger.info({"event": "mongodb_closed"})
 
+
 def get_db():
     """Retrieve the shared database instance."""
-    global db_client
+    global db_client, db_connected
     if db_client is None:
         if not settings.MONGODB_URI:
             raise RuntimeError("MONGODB_URI is not configured in settings.")
@@ -299,36 +324,67 @@ def get_db():
             settings.MONGODB_URI,
             serverSelectionTimeoutMS=settings.MONGODB_TIMEOUT_MS,
             connectTimeoutMS=settings.MONGODB_TIMEOUT_MS,
-            socketTimeoutMS=settings.MONGODB_SOCKET_TIMEOUT_MS
+            socketTimeoutMS=settings.MONGODB_SOCKET_TIMEOUT_MS,
+            maxPoolSize=50,
+            minPoolSize=5,
+            retryWrites=True,
+            retryReads=True
         )
     return db_client[settings.MONGODB_DB_NAME]
 
+
+def _should_use_mock() -> bool:
+    """
+    Determines if collection accesses should fall back to mock JSON file storage.
+    Always returns False in production or when MONGODB_URI is set.
+    """
+    if settings.APP_ENV == "production":
+        return False
+    if settings.MONGODB_URI:
+        return False
+    return not db_connected
+
+
 def get_tickets_collection():
     """Retrieve the collection storing support tickets."""
-    if not db_connected:
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'tickets' is disabled in production.")
+    if _should_use_mock():
         return MockCollection("tickets")
     return get_db()["tickets"]
 
+
 def get_chat_history_collection():
     """Retrieve the collection storing chat session memory logs."""
-    if not db_connected:
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'chat_history' is disabled in production.")
+    if _should_use_mock():
         return MockCollection("chat_history")
     return get_db()["chat_history"]
 
+
 def get_counters_collection():
     """Retrieve the collection managing auto-incrementing sequential sequence counters."""
-    if not db_connected:
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'counters' is disabled in production.")
+    if _should_use_mock():
         return MockCollection("counters")
     return get_db()["counters"]
 
+
 def get_conversations_collection():
     """Retrieve the collection storing conversations."""
-    if not db_connected:
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'conversations' is disabled in production.")
+    if _should_use_mock():
         return MockCollection("conversations")
     return get_db()["conversations"]
 
+
 def get_messages_collection():
     """Retrieve the collection storing conversation messages."""
-    if not db_connected:
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'messages' is disabled in production.")
+    if _should_use_mock():
         return MockCollection("messages")
     return get_db()["messages"]

@@ -1,3 +1,5 @@
+import time
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from api.router import api_router
@@ -12,44 +14,85 @@ from agents.router import route_query
 from rag.rag_pipeline import initialize_rag_pipeline
 from middleware.observability import ObservabilityMiddleware
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Production-ready resource lifecycle manager.
+    Handles startup pre-warming, connection pool setups, and clean shutdown releases.
+    """
+    logger.info("Initializing application resources via lifespan hook...")
+    start_time = time.perf_counter()
+    
+    # 1. MongoDB pool setup
+    mongo_start = time.perf_counter()
+    try:
+        connect_db()
+        logger.info(f"MongoDB connection initialized in {(time.perf_counter() - mongo_start)*1000:.2f}ms")
+    except Exception as e:
+        logger.critical(f"Critical error during startup MongoDB initialization: {str(e)}", exc_info=True)
+        # We do not crash here so the readiness probe can report specific connection errors
+        
+    # 2. Embedding Model pre-warming
+    embed_start = time.perf_counter()
+    try:
+        from embeddings.embedding_model import get_model
+        # Pre-loads SentenceTransformers cache into memory
+        get_model()
+        logger.info(f"SentenceTransformers embedding model warmed up in {(time.perf_counter() - embed_start)*1000:.2f}ms")
+    except Exception as e:
+        logger.error(f"Error pre-warming embedding model on startup: {str(e)}", exc_info=True)
+        
+    # 3. RAG pipeline setup
+    rag_start = time.perf_counter()
+    try:
+        initialize_rag_pipeline()
+        logger.info(f"RAG pipeline initialized in {(time.perf_counter() - rag_start)*1000:.2f}ms")
+    except Exception as e:
+        logger.error(f"Error initializing RAG pipeline on startup: {str(e)}", exc_info=True)
+        
+    # 4. Gemini SDK client pre-warming
+    gemini_start = time.perf_counter()
+    try:
+        from services.llm_service import GeminiLLMService
+        if settings.GEMINI_API_KEY and settings.GEMINI_API_KEY != "PASTE_YOUR_ACTUAL_API_KEY_HERE":
+            GeminiLLMService._initialize_sdk()
+            logger.info(f"Gemini client initialized in {(time.perf_counter() - gemini_start)*1000:.2f}ms")
+    except Exception as e:
+        logger.error(f"Error initializing Gemini SDK on startup: {str(e)}", exc_info=True)
+        
+    total_startup_ms = (time.perf_counter() - start_time) * 1000
+    logger.info(f"Application startup sequence completed in {total_startup_ms:.2f}ms")
+    
+    app.state.startup_timings = {
+        "total_ms": total_startup_ms,
+        "mongo_init_ms": (time.perf_counter() - mongo_start) * 1000,
+        "embedding_load_ms": (time.perf_counter() - embed_start) * 1000,
+        "rag_init_ms": (time.perf_counter() - rag_start) * 1000,
+        "gemini_init_ms": (time.perf_counter() - gemini_start) * 1000,
+    }
+    
+    yield
+    
+    # Shutdown tasks
+    logger.info("Releasing connection pools and resources via lifespan hook...")
+    try:
+        close_db()
+        logger.info("Database connection pools closed successfully.")
+    except Exception as e:
+        logger.error(f"Error during shutdown resource cleanup: {str(e)}", exc_info=True)
+
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="Enterprise Customer Support AI Backend - restructured flat layout.",
     version=settings.VERSION,
     debug=settings.DEBUG,
+    lifespan=lifespan,
 )
 
 # Register request correlation tracing middleware
 app.add_middleware(ObservabilityMiddleware)
-
-@app.on_event("startup")
-def startup_event():
-    """
-    Triggers RAG pipeline initialization and MongoDB connection pool setup on app startup.
-    """
-    # 1. Setup MongoDB connection pool
-    try:
-        connect_db()
-    except Exception as e:
-        logger.error(f"Error during startup MongoDB initialization: {str(e)}", exc_info=True)
-        
-    # 2. Setup RAG pipeline
-    try:
-        initialize_rag_pipeline()
-    except Exception as e:
-        logger.error(f"Error during startup RAG pipeline initialization: {str(e)}", exc_info=True)
-
-
-@app.on_event("shutdown")
-def shutdown_event():
-    """
-    Closes database client pools cleanly during application shutdown.
-    """
-    try:
-        close_db()
-    except Exception as e:
-        logger.error(f"Error during shutdown connection cleanup: {str(e)}", exc_info=True)
-
 
 # Initialize CORS configuration
 if settings.ALLOWED_ORIGINS:
@@ -84,12 +127,92 @@ def index():
     }
 
 
+@app.get("/health/live", tags=["General"])
+def liveness_check():
+    """
+    Liveness probe. Returns HTTP 200 as long as the process is alive.
+    Does not run expensive downstream dependency checks.
+    """
+    return {
+        "status": "ok",
+        "timestamp": time.time()
+    }
+
+
+@app.get("/health/ready", tags=["General"])
+def readiness_check():
+    """
+    Readiness probe. Checks MongoDB connection, FAISS store index file, and
+    embedding model cache state before declaring ready.
+    """
+    from database import database
+    from embeddings import embedding_model
+    from rag.rag_pipeline import vector_store
+    
+    errors = {}
+    
+    # 1. MongoDB check
+    mongodb_status = "unconfigured"
+    if not database.db_client:
+        try:
+            connect_db()
+        except Exception:
+            pass
+
+    if database.db_client:
+        try:
+            database.db_client.admin.command("ping")
+            mongodb_status = "connected"
+        except Exception as e:
+            mongodb_status = "unavailable"
+            errors["mongodb"] = f"Failed to ping MongoDB: {str(e)}"
+    else:
+        mongodb_status = "unavailable"
+        errors["mongodb"] = "MongoDB client pool not initialized"
+        
+    # 2. FAISS Index check
+    try:
+        if not vector_store or not vector_store._index:
+            errors["faiss"] = "FAISS vector store not initialized"
+    except Exception as e:
+        errors["faiss"] = str(e)
+        
+    # 3. Embeddings model cache check
+    try:
+        from embeddings.embedding_model import _model
+        if _model is None:
+            embedding_model.get_model()
+    except Exception as e:
+        errors["embeddings"] = f"Embedding model failed to load: {str(e)}"
+        
+    if errors:
+        logger.error(f"Readiness check failed: {errors}")
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "status": "unhealthy",
+                "version": settings.VERSION,
+                "database": mongodb_status,
+                "errors": errors
+            }
+        )
+        
+    startup_timings = getattr(app.state, "startup_timings", {})
+    return {
+        "status": "ready",
+        "version": settings.VERSION,
+        "database": mongodb_status,
+        "faiss_vectors": vector_store._index.ntotal if vector_store and vector_store._index else 0,
+        "startup_timings": startup_timings
+    }
+
+
 @app.get("/health", tags=["General"])
 def health_check():
     """
     Service health check endpoint including lightweight database health.
+    Preserved for backwards compatibility with existing clients.
     """
-    import time
     from database import database
     mongodb_status = "unconfigured"
     mongodb_ping_ms = 0.0

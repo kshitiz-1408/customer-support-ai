@@ -11,6 +11,7 @@ if backend_dir not in sys.path:
     sys.path.insert(0, backend_dir)
 
 from agents.intent_detector import detect_intent
+from config.config import settings
 
 BENCHMARK_PATH = os.path.join(backend_dir, "evaluation", "intent_benchmark.json")
 
@@ -273,10 +274,14 @@ def evaluate_intents() -> Dict[str, Any]:
     print(f"Saved JSON report to: {report_path}")
     
     # Save human-readable Markdown summary report
-    md_path = os.path.expanduser(
-        "~/.gemini/antigravity-ide/brain/19a93036-5576-4401-8a01-827787595b36/day6_intent_report.md"
-    )
-    os.makedirs(os.path.dirname(md_path), exist_ok=True)
+    output_dir = getattr(settings, "EVALUATION_OUTPUT_DIR", None)
+    if output_dir:
+        md_dir = os.path.abspath(output_dir)
+    else:
+        md_dir = os.path.join(backend_dir, "evaluation_reports")
+        
+    os.makedirs(md_dir, exist_ok=True)
+    md_path = os.path.join(md_dir, "day6_intent_report.md")
     
     cm_rows = ""
     for r in classes:

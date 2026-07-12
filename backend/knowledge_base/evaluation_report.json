@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-09T18:55:31Z",
+  "timestamp": "2026-07-12T19:36:59Z",
   "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
   "index_type": "IndexFlatIP",
   "score_semantics": "Cosine Similarity (higher is better)",

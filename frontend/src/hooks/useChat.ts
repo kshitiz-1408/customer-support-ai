@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { api } from "@/services/api";
 import { ChatMessage } from "@/components/chat/MessageBubble";
 
@@ -13,6 +13,8 @@ export function useChat() {
     }
     return null;
   });
+
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const fetchHistory = async (convId: string) => {
     setLoading(true);
@@ -31,7 +33,7 @@ export function useChat() {
       console.error("Failed to load chat history", error);
       // Only clear stored conversation reference if the backend definitively confirms
       // that the thread does not exist (HTTP 404).
-      if (error?.status === 404 || error?.response?.status === 404) {
+      if (error?.status === 404) {
         localStorage.removeItem("customer_support_conversation_id");
         setConversationId(null);
         setMessages([]);
@@ -48,9 +50,28 @@ export function useChat() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       fetchHistory(savedId);
     }
+    
+    // Cleanup any pending request on unmount
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
   }, []);
 
   const sendMessage = async (text: string) => {
+    // 0. Prevent duplicate submission / rapid clicks
+    if (loading) return;
+
+    // Cancel any previous in-flight request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    // Initialize new AbortController
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     // 1. Append user message
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -64,10 +85,16 @@ export function useChat() {
 
     try {
       // 2. Query the canonical versioned /api/v1/chat/ endpoint
-      const response = await api.post("/chat/", {
-        message: text,
-        conversation_id: conversationId,
-      });
+      const response = await api.post(
+        "/chat/",
+        {
+          message: text,
+          conversation_id: conversationId,
+        },
+        {
+          signal: controller.signal,
+        }
+      );
       
       // Simulating minor network latency for animation visibility
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -91,16 +118,15 @@ export function useChat() {
       setMessages((prev) => [...prev, assistantMessage]);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      // If the request was cancelled, do not append an error bubble
+      if (error?.isCancelled) {
+        return;
+      }
+
       console.error("Chat routing query failed", error);
       
-      let errorMsg = "An unexpected connection error occurred.";
-      const reqId = error.requestId || error.response?.headers?.["x-request-id"] || error.response?.headers?.["X-Request-ID"] || null;
-      
-      if (error.response?.data?.detail) {
-        errorMsg = error.response.data.detail;
-      } else if (error.message) {
-        errorMsg = error.message;
-      }
+      const errorMsg = error?.message || "An unexpected connection error occurred.";
+      const reqId = error?.requestId || null;
       
       const botText = `Failed to process chat query.\n\nError: ${errorMsg}\n\nPlease verify your FastAPI backend is running.${
         reqId ? `\n\nRequest ID: ${reqId}` : ""
@@ -115,11 +141,18 @@ export function useChat() {
 
       setMessages((prev) => [...prev, assistantMessage]);
     } finally {
-      setLoading(false);
+      // Avoid updating state if this request was aborted and replaced
+      if (abortControllerRef.current === controller) {
+        setLoading(false);
+      }
     }
   };
 
   const clearChat = () => {
+    // Abort any active query
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     setMessages([]);
     setConversationId(null);
     localStorage.removeItem("customer_support_conversation_id");

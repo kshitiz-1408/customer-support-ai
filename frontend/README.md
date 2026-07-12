@@ -1,36 +1,50 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+## ⚙️ Production Configuration & Environment Variables
 
-First, run the development server:
+The frontend service requires the following environment variables:
 
+- `NEXT_PUBLIC_API_URL`: The absolute base URL of the FastAPI backend service (e.g. `http://localhost:8000`).
+  - **Development Mode**: Defaults to `http://localhost:8000` if not set.
+  - **Production Mode**: **Must be explicitly configured**. Outgoing requests will throw an error at request-time if this variable is missing in production.
+
+To set local variables, create a `.env` or `.env.local` file under this directory:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_API_URL=http://localhost:8000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Build and Compilation Hardening
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Code Linting
+Enforce style bounds and typescript imports rules:
+```bash
+npm run lint
+```
 
-## Learn More
+### 2. Optimized Production Compile
+Build optimized static and dynamic server-rendered assets:
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Local Node Verification Suite
+Run mock-based client normalizer and cancellation unit tests:
+```bash
+node tests/test_suite.js
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🐳 Docker Deployment
 
-## Deploy on Vercel
+The frontend container is configured for multi-stage optimized builds:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Build Injections**: Since Next.js embeds `NEXT_PUBLIC_` environment variables into client-side JS bundles during compile-time, the backend API URL must be supplied as a `--build-arg`:
+  ```bash
+  docker compose build --build-arg NEXT_PUBLIC_API_URL=http://localhost:8000
+  ```
+- **Runner Boundaries**: The final image runs under a restricted non-root user (`nextjs`) inside an Alpine Node container.
+- **Compose Orchestration**: Binds port `3000` on the host and communicates with the backend container using standard docker networks.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

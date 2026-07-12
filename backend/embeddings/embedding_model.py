@@ -16,9 +16,11 @@ def get_model() -> SentenceTransformer:
     Prevents blocking application startup.
     """
     global _model
+    import os
     if _model is None:
         model_name = settings.EMBEDDING_MODEL_NAME
-        logger.info(f"Loading SentenceTransformer model lazily: '{model_name}'...")
+        cache_dir = os.environ.get("HF_HOME", "default cache")
+        logger.info(f"Loading SentenceTransformer model lazily: '{model_name}' (cache: '{cache_dir}')...")
         try:
             _model = SentenceTransformer(model_name)
             logger.info(f"SentenceTransformer model '{model_name}' loaded successfully.")

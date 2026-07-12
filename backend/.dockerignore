@@ -1,0 +1,16 @@
+.env
+.env.*
+.gitignore
+.git
+.vscode
+.idea
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+tests/
+evaluation_reports/
+data/
+mock_mongo.json
+Dockerfile
+*.db
