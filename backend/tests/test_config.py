@@ -31,7 +31,7 @@ def test_production_cors_restriction():
     with pytest.raises(ValidationError) as excinfo:
         Settings(
             APP_ENV="production",
-            MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
+            MONGODB_URI=os.getenv("MONGODB_URI"),
             GEMINI_API_KEY="real_key",
             JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["http://localhost:3000"]
@@ -44,7 +44,7 @@ def test_production_placeholder_secrets_rejection():
     with pytest.raises(ValidationError) as excinfo:
         Settings(
             APP_ENV="production",
-            MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
+            MONGODB_URI=os.getenv("MONGODB_URI"),
             GEMINI_API_KEY="PASTE_YOUR_ACTUAL_API_KEY_HERE",
             JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["https://my-production-app.com"]
@@ -55,7 +55,7 @@ def test_production_placeholder_secrets_rejection():
     with pytest.raises(ValidationError) as excinfo:
         Settings(
             APP_ENV="production",
-            MONGODB_URI="mongodb+srv://user:pass@cluster.mongodb.net/?appName=customer-support-ai",
+            MONGODB_URI=os.getenv("MONGODB_URI"),
             GEMINI_API_KEY="real_key",
             JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["https://my-production-app.com"]
@@ -68,7 +68,7 @@ def test_production_antigravity_path_rejection():
     with pytest.raises(ValidationError) as excinfo:
         Settings(
             APP_ENV="production",
-            MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
+            MONGODB_URI=os.getenv("MONGODB_URI"),
             GEMINI_API_KEY="real_key",
             JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["https://my-production-app.com"],
@@ -103,7 +103,7 @@ def test_production_jwt_secret_rejection():
     with pytest.raises(ValidationError) as excinfo:
         Settings(
             APP_ENV="production",
-            MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
+            MONGODB_URI=os.getenv("MONGODB_URI"),
             GEMINI_API_KEY="real_key",
             JWT_SECRET_KEY="CHANGE_ME_SECRET_KEY_FOR_PRODUCTION",
             ALLOWED_ORIGINS=["https://my-production-app.com"]
