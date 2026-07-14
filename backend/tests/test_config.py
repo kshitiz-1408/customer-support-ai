@@ -14,8 +14,9 @@ def test_app_env_validation():
     
     s_prod = Settings(
         APP_ENV="production",
-        MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
+        MONGODB_URI=os.getenv("MONGODB_URI"),
         GEMINI_API_KEY="real_key",
+        JWT_SECRET_KEY="real_secret_key_12345",
         ALLOWED_ORIGINS=["https://my-production-app.com"]
     )
     assert s_prod.APP_ENV == "production"
@@ -32,6 +33,7 @@ def test_production_cors_restriction():
             APP_ENV="production",
             MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
             GEMINI_API_KEY="real_key",
+            JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["http://localhost:3000"]
         )
     assert "CORS origin" in str(excinfo.value)
@@ -44,6 +46,7 @@ def test_production_placeholder_secrets_rejection():
             APP_ENV="production",
             MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
             GEMINI_API_KEY="PASTE_YOUR_ACTUAL_API_KEY_HERE",
+            JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["https://my-production-app.com"]
         )
     assert "GEMINI_API_KEY" in str(excinfo.value)
@@ -54,6 +57,7 @@ def test_production_placeholder_secrets_rejection():
             APP_ENV="production",
             MONGODB_URI="mongodb+srv://user:pass@cluster.mongodb.net/?appName=customer-support-ai",
             GEMINI_API_KEY="real_key",
+            JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["https://my-production-app.com"]
         )
     assert "MONGODB_URI must not contain default placeholders" in str(excinfo.value)
@@ -66,6 +70,7 @@ def test_production_antigravity_path_rejection():
             APP_ENV="production",
             MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
             GEMINI_API_KEY="real_key",
+            JWT_SECRET_KEY="real_secret_key_12345",
             ALLOWED_ORIGINS=["https://my-production-app.com"],
             EVALUATION_OUTPUT_DIR="~/.gemini/antigravity-ide/brain/12345"
         )
@@ -91,3 +96,17 @@ def test_production_mock_fallback_disabled():
     finally:
         database.settings.APP_ENV = orig_env
         database.db_connected = orig_connected
+
+
+def test_production_jwt_secret_rejection():
+    # Production must reject default JWT secret placeholder
+    with pytest.raises(ValidationError) as excinfo:
+        Settings(
+            APP_ENV="production",
+            MONGODB_URI="mongodb+srv://realuser:realpass@cluster.mongodb.net/db",
+            GEMINI_API_KEY="real_key",
+            JWT_SECRET_KEY="CHANGE_ME_SECRET_KEY_FOR_PRODUCTION",
+            ALLOWED_ORIGINS=["https://my-production-app.com"]
+        )
+    assert "JWT_SECRET_KEY" in str(excinfo.value)
+

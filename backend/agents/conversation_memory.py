@@ -94,9 +94,12 @@ class ConversationMemory:
         if session_id and session_id.strip():
             start_time = time.perf_counter()
             try:
+                query_filter = {"session_id": session_id}
+                if user_id:
+                    query_filter["user_id"] = user_id
                 latest = retry_mongodb_read(
                     get_conversations_collection().find_one,
-                    {"session_id": session_id},
+                    query_filter,
                     sort=[("updated_at", -1)]
                 )
                 duration_ms = (time.perf_counter() - start_time) * 1000.0
@@ -108,6 +111,7 @@ class ConversationMemory:
                 logger.debug({
                     "event": "conversation_session_lookup",
                     "session_id": session_id,
+                    "user_id": user_id,
                     "found": latest is not None,
                     "duration_ms": int(duration_ms)
                 })
@@ -201,7 +205,7 @@ class ConversationMemory:
             return []
 
     @classmethod
-    def get_history(cls, session_id: str, limit: int = 10) -> List[dict]:
+    def get_history(cls, session_id: str, limit: int = 10, user_id: Optional[str] = None) -> List[dict]:
         """
         Legacy/compatibility helper to fetch memory context logs structured as:
         [{"role": "user"|"assistant", "content": "..."}]
@@ -210,9 +214,12 @@ class ConversationMemory:
             return []
         start_time = time.perf_counter()
         try:
+            query_filter = {"session_id": session_id}
+            if user_id:
+                query_filter["user_id"] = user_id
             latest = retry_mongodb_read(
                 get_conversations_collection().find_one,
-                {"session_id": session_id},
+                query_filter,
                 sort=[("updated_at", -1)]
             )
             if not latest:
@@ -232,11 +239,17 @@ class ConversationMemory:
             return []
 
     @classmethod
-    def add_message(cls, conversation_id: str, role: str, content: str, intent: Optional[str] = None, agent: Optional[str] = None, sources: Optional[List[dict]] = None) -> dict:
+    def add_message(cls, conversation_id: str, role: str, content: str, intent: Optional[str] = None, agent: Optional[str] = None, sources: Optional[List[dict]] = None, user_id: Optional[str] = None) -> dict:
         """Persist a message and update the parent conversation's timestamp."""
         start_time = time.perf_counter()
         msg_id = uuid.uuid4().hex
         now = datetime.now(timezone.utc)
+        
+        # Fallback to retrieve user_id from parent conversation thread if not explicitly passed
+        if not user_id:
+            conv = cls.get_conversation(conversation_id)
+            if conv:
+                user_id = conv.get("user_id")
         
         # Clean sources: remove raw text chunk bodies, only store metadata (source, page, type)
         cleaned_sources = []
@@ -251,6 +264,7 @@ class ConversationMemory:
         doc = {
             "message_id": msg_id,
             "conversation_id": conversation_id,
+            "user_id": user_id,
             "role": role,
             "content": content,
             "intent": intent,

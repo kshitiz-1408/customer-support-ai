@@ -1,18 +1,19 @@
 import uuid
 from typing import List, Optional
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Depends
 from models.chat import ChatQuery, ChatResponse, ConversationCreate, ConversationResponse, MessageResponse
 from agents.intent_detector import detect_intent
 from agents.router import route_query
 from agents.conversation_memory import ConversationMemory
 from utils.logging import logger
 from utils.tracing import pipeline_tracker_var, trace_stage
+from api.deps import get_current_user
 
 router = APIRouter()
 
 
 @router.post("/", response_model=ChatResponse, status_code=status.HTTP_200_OK)
-def process_chat(query: ChatQuery):
+def process_chat(query: ChatQuery, current_user = Depends(get_current_user)):
     """
     Submits a message query to the Multi-Agent system.
     Coordinated Flow:
@@ -46,11 +47,18 @@ def process_chat(query: ChatQuery):
                             status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"Conversation thread '{query.conversation_id}' not found."
                         )
+                    # Check ownership
+                    if conv.get("user_id") and conv["user_id"] != current_user.id:
+                        raise HTTPException(
+                            status_code=status.HTTP_403_FORBIDDEN,
+                            detail="Access denied to this conversation thread."
+                        )
                     conversation_id = query.conversation_id
                 else:
                     conversation_id = ConversationMemory.get_or_create_conversation(
                         conversation_id=None,
-                        session_id=query.session_id
+                        session_id=query.session_id,
+                        user_id=current_user.id
                     )
             
             if tracker:
@@ -67,7 +75,8 @@ def process_chat(query: ChatQuery):
                     ConversationMemory.add_message(
                         conversation_id=conversation_id,
                         role="user",
-                        content=query.message
+                        content=query.message,
+                        user_id=current_user.id
                     )
             except Exception as db_err:
                 logger.error({
@@ -133,7 +142,8 @@ def process_chat(query: ChatQuery):
                                 conversation_id=conversation_id,
                                 role="assistant",
                                 content="Please clarify your question.",
-                                intent="unknown"
+                                intent="unknown",
+                                user_id=current_user.id
                             )
                     except Exception as db_err:
                         logger.error({
@@ -195,7 +205,8 @@ def process_chat(query: ChatQuery):
                         content=response_text or "",
                         intent=intent,
                         agent=agent_name,
-                        sources=sources_list
+                        sources=sources_list,
+                        user_id=current_user.id
                     )
             except Exception as db_err:
                 persistence_success = False
@@ -251,31 +262,40 @@ def process_chat(query: ChatQuery):
 
 
 @router.post("/conversations", response_model=ConversationResponse, status_code=status.HTTP_201_CREATED, tags=["Conversations"])
-def create_conversation(conv_in: ConversationCreate):
+def create_conversation(conv_in: ConversationCreate, current_user = Depends(get_current_user)):
     """Create a new conversation thread thread for tracking state."""
     return ConversationMemory.create_conversation(
         session_id=conv_in.session_id,
-        user_id=conv_in.user_id,
+        user_id=current_user.id,
         title=conv_in.title
     )
 
 
 @router.get("/conversations", response_model=List[ConversationResponse], status_code=status.HTTP_200_OK, tags=["Conversations"])
-def list_conversations(session_id: Optional[str] = None, user_id: Optional[str] = None):
-    """List active conversation threads, optionally filtering by session_id or user_id."""
+def list_conversations(session_id: Optional[str] = None, current_user = Depends(get_current_user)):
+    """List active conversation threads, optionally filtering by session_id."""
     return ConversationMemory.list_conversations(
-        user_id=user_id,
+        user_id=current_user.id,
         session_id=session_id
     )
 
 
 @router.get("/conversations/{conversation_id}/history", response_model=List[MessageResponse], status_code=status.HTTP_200_OK, tags=["Conversations"])
-def get_conversation_history(conversation_id: str, limit: int = 20):
-    """Retrieve the chronological message logs for a conversation thread."""
-    history = ConversationMemory.get_conversation_history(conversation_id, limit=limit)
-    if not history and not ConversationMemory.get_conversation(conversation_id):
+def get_conversation_history(conversation_id: str, limit: int = 20, current_user = Depends(get_current_user)):
+    """Retrieve the chronological message logs for a conversation thread, validating ownership."""
+    conv = ConversationMemory.get_conversation(conversation_id)
+    if not conv:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Conversation thread '{conversation_id}' not found."
         )
+    # Check ownership
+    if conv.get("user_id") and conv["user_id"] != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Access denied to this conversation thread."
+        )
+        
+    history = ConversationMemory.get_conversation_history(conversation_id, limit=limit)
     return history
+

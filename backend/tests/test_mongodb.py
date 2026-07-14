@@ -29,7 +29,8 @@ def test_should_use_mock_logic():
 
 def test_mongo_client_pooling_configuration():
     mock_client = MagicMock()
-    with patch.object(database, "MongoClient", return_value=mock_client) as mock_mongo_ctor:
+    with patch.object(database.settings, "MONGODB_URI", "mongodb://localhost:27017"), \
+         patch.object(database, "MongoClient", return_value=mock_client) as mock_mongo_ctor:
         with patch.object(database, "db_client", None):
             database.get_db()
             

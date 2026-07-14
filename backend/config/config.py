@@ -53,6 +53,12 @@ class Settings(BaseSettings):
     MONGODB_URI: Optional[str] = None
     MONGODB_DB_NAME: str = "customer_support_ai"
 
+    # JWT Settings
+    JWT_SECRET_KEY: str = "CHANGE_ME_SECRET_KEY_FOR_PRODUCTION"
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
+    REFRESH_TOKEN_EXPIRE_DAYS: int = 7
+
     # Path & Dir boundaries
     RUNTIME_DATA_DIR: str = "data"
     MOCK_MONGO_PATH: Optional[str] = None
@@ -91,6 +97,8 @@ class Settings(BaseSettings):
                 raise ValueError("MONGODB_URI is required in production environment.")
             if not self.GEMINI_API_KEY:
                 raise ValueError("GEMINI_API_KEY is required in production environment.")
+            if not self.JWT_SECRET_KEY or self.JWT_SECRET_KEY == "CHANGE_ME_SECRET_KEY_FOR_PRODUCTION":
+                raise ValueError("JWT_SECRET_KEY is required and must be changed from the default placeholder in production.")
 
             # 2. Reject credentials placeholders in production
             if self.GEMINI_API_KEY == "PASTE_YOUR_ACTUAL_API_KEY_HERE" or "your-gemini" in self.GEMINI_API_KEY.lower():

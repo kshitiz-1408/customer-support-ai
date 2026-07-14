@@ -233,8 +233,8 @@ class TicketService:
             return None
 
     @classmethod
-    def get_all(cls, status: Optional[TicketStatus] = None) -> List[Ticket]:
-        """Retrieve all tickets from MongoDB, optionally filtering by status."""
+    def get_all(cls, status: Optional[TicketStatus] = None, user_id: Optional[str] = None, email: Optional[str] = None) -> List[Ticket]:
+        """Retrieve all tickets from MongoDB, optionally filtering by status, user_id, or email."""
         start_time = time.perf_counter()
         try:
             cls._ensure_prepopulated()
@@ -246,6 +246,19 @@ class TicketService:
                 return list(get_tickets_collection().find(query))
                 
             docs = retry_mongodb_read(run_get_all_query)
+            
+            # Post-filter in Python to ensure compatibility with Mock MongoDB (which doesn't support $or / $exists)
+            if user_id:
+                filtered_docs = []
+                for doc in docs:
+                    # Match if user_id equals current user_id
+                    if doc.get("user_id") == user_id:
+                        filtered_docs.append(doc)
+                    # Match if user_id is None/unset AND email matches
+                    elif not doc.get("user_id") and email and doc.get("customer_email", "").lower().strip() == email.lower().strip():
+                        filtered_docs.append(doc)
+                docs = filtered_docs
+                
             duration_ms = (time.perf_counter() - start_time) * 1000.0
             
             tracker = pipeline_tracker_var.get()
@@ -255,6 +268,8 @@ class TicketService:
             logger.info({
                 "event": "tickets_listed",
                 "filter_status": str(status),
+                "user_id": user_id,
+                "email": email,
                 "count": len(docs),
                 "duration_ms": int(duration_ms)
             })

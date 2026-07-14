@@ -18,3 +18,8 @@ numpy==2.5.0
 faiss-cpu==1.14.3
 google-genai==2.10.0
 pymongo==3.12.0
+passlib==1.7.4
+bcrypt==4.2.0
+email-validator==2.3.0
+dnspython==2.8.0
+pyjwt==2.8.0

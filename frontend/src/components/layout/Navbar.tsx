@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
-import { Sparkles, Activity, MessageSquare, AlertTriangle, Loader2 } from "lucide-react";
+import { Sparkles, Activity, MessageSquare, AlertTriangle, Loader2, LogOut, User } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 export default function Navbar() {
   const [connection, setConnection] = useState<"checking" | "connected" | "disconnected">("checking");
+  const { user, logout } = useAuth();
 
   useEffect(() => {
     const checkConnection = async () => {
@@ -54,6 +56,34 @@ export default function Navbar() {
             Support Chat
           </Link>
           
+          <div className="h-4 w-[1px] bg-zinc-800" />
+
+          {/* Context Auth actions */}
+          {user ? (
+            <>
+              <div className="flex items-center gap-2 text-xs font-bold text-zinc-350">
+                <User className="h-4 w-4 text-indigo-400" />
+                <span className="max-w-[120px] truncate" title={user.email}>{user.full_name}</span>
+              </div>
+              <button 
+                onClick={logout}
+                className="flex items-center gap-2 text-xs font-bold text-zinc-450 hover:text-rose-400 transition-colors cursor-pointer"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" className="text-xs font-bold text-zinc-400 hover:text-zinc-200 transition-colors">
+                Login
+              </Link>
+              <Link href="/register" className="text-xs font-bold px-3 py-1.5 rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white transition-colors">
+                Register
+              </Link>
+            </>
+          )}
+
           <div className="h-4 w-[1px] bg-zinc-800" />
 
           {/* Dynamic Connection Indicator */}

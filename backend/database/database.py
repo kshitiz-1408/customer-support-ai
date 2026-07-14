@@ -287,6 +287,11 @@ def connect_db():
         db["tickets"].create_index("status")
         db["tickets"].create_index("created_at")
         
+        # User indexes
+        db["users"].create_index("email", unique=True)
+        db["users"].create_index("created_at")
+        db["users"].create_index("role")
+        
         duration_ms = int((time.perf_counter() - start_time) * 1000)
         logger.info({
             "event": "mongodb_connected",
@@ -388,3 +393,12 @@ def get_messages_collection():
     if _should_use_mock():
         return MockCollection("messages")
     return get_db()["messages"]
+
+
+def get_users_collection():
+    """Retrieve the collection storing registered users."""
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'users' is disabled in production.")
+    if _should_use_mock():
+        return MockCollection("users")
+    return get_db()["users"]
