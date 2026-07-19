@@ -54,6 +54,85 @@ class MockCollection:
     def __init__(self, name: str):
         self.name = name
 
+    def _evaluate_query(self, doc: dict, query: dict) -> bool:
+        if not query:
+            return True
+        for k, v in query.items():
+            if k == "$or":
+                if not isinstance(v, list):
+                    return False
+                if not any(self._evaluate_query(doc, sub) for sub in v):
+                    return False
+            elif k == "$and":
+                if not isinstance(v, list):
+                    return False
+                if not all(self._evaluate_query(doc, sub) for sub in v):
+                    return False
+            else:
+                doc_val = doc.get(k)
+                if isinstance(v, dict):
+                    for op, op_val in v.items():
+                        c_doc = doc_val
+                        c_op = op_val
+                        from datetime import datetime
+                        if isinstance(c_doc, str) and isinstance(c_op, datetime):
+                            try:
+                                c_doc = datetime.fromisoformat(c_doc.replace("Z", "+00:00"))
+                            except Exception:
+                                pass
+                        elif isinstance(c_op, str) and isinstance(c_doc, datetime):
+                            try:
+                                c_op = datetime.fromisoformat(c_op.replace("Z", "+00:00"))
+                            except Exception:
+                                pass
+                        
+                        if isinstance(c_doc, datetime) and isinstance(c_op, datetime):
+                            if c_doc.tzinfo is not None and c_op.tzinfo is None:
+                                c_doc = c_doc.replace(tzinfo=None)
+                            elif c_op.tzinfo is not None and c_doc.tzinfo is None:
+                                c_op = c_op.replace(tzinfo=None)
+
+                        if op == "$in":
+                            # Match if doc_val is in op_val or stringified matches
+                            if not isinstance(op_val, list):
+                                return False
+                            if doc_val not in op_val and str(doc_val) not in [str(x) for x in op_val]:
+                                return False
+                        elif op == "$regex":
+                            import re
+                            pattern = op_val
+                            options = v.get("$options", "")
+                            flags = 0
+                            if "i" in options:
+                                flags |= re.IGNORECASE
+                            try:
+                                rx = re.compile(pattern, flags)
+                                if not rx.search(str(doc_val or "")):
+                                    return False
+                            except Exception:
+                                return False
+                        elif op == "$options":
+                            pass
+                        elif op == "$gte":
+                            if c_doc is None or c_doc < c_op:
+                                return False
+                        elif op == "$lte":
+                            if c_doc is None or c_doc > c_op:
+                                return False
+                        elif op == "$gt":
+                            if c_doc is None or c_doc <= c_op:
+                                return False
+                        elif op == "$lt":
+                            if c_doc is None or c_doc >= c_op:
+                                return False
+                        elif op == "$ne":
+                            if doc_val == op_val:
+                                return False
+                else:
+                    if doc_val != v and str(doc_val) != str(v):
+                        return False
+        return True
+
     def create_index(self, keys, unique=False):
         pass
 
@@ -82,12 +161,7 @@ class MockCollection:
             return 0
         count = 0
         for doc in db[self.name]:
-            match = True
-            for k, v in query.items():
-                if doc.get(k) != v:
-                    match = False
-                    break
-            if match:
+            if self._evaluate_query(doc, query):
                 count += 1
         return count
 
@@ -97,12 +171,7 @@ class MockCollection:
             return None
         results = []
         for doc in db[self.name]:
-            match = True
-            for k, v in query.items():
-                if doc.get(k) != v:
-                    match = False
-                    break
-            if match:
+            if self._evaluate_query(doc, query):
                 results.append(doc)
         
         if not results:
@@ -125,12 +194,7 @@ class MockCollection:
         else:
             results = []
             for doc in db[self.name]:
-                match = True
-                for k, v in query.items():
-                    if doc.get(k) != v:
-                        match = False
-                        break
-                if match:
+                if self._evaluate_query(doc, query):
                     results.append(doc)
                 
         class Cursor:
@@ -145,6 +209,9 @@ class MockCollection:
                         self.data.sort(key=lambda x: x.get(f, ""), reverse=(o == -1))
                 else:
                     self.data.sort(key=lambda x: x.get(field, ""), reverse=(order == -1))
+                return self
+            def skip(self, count):
+                self.data = self.data[count:]
                 return self
             def limit(self, count):
                 self.data = self.data[:count]
@@ -292,6 +359,13 @@ def connect_db():
         db["users"].create_index("created_at")
         db["users"].create_index("role")
         
+        # Audit Logs indexes
+        db["audit_logs"].create_index("timestamp")
+        db["audit_logs"].create_index("action")
+        db["audit_logs"].create_index("actor_user_id")
+        db["audit_logs"].create_index("resource_type")
+        db["audit_logs"].create_index("status")
+        
         duration_ms = int((time.perf_counter() - start_time) * 1000)
         logger.info({
             "event": "mongodb_connected",
@@ -402,3 +476,32 @@ def get_users_collection():
     if _should_use_mock():
         return MockCollection("users")
     return get_db()["users"]
+
+
+def get_audit_logs_collection():
+    """Retrieve the collection storing security audit logs."""
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'audit_logs' is disabled in production.")
+    if _should_use_mock():
+        return MockCollection("audit_logs")
+    return get_db()["audit_logs"]
+
+
+def get_ticket_notes_collection():
+    """Retrieve the collection storing internal ticket notes."""
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'ticket_notes' is disabled in production.")
+    if _should_use_mock():
+        return MockCollection("ticket_notes")
+    return get_db()["ticket_notes"]
+
+
+def get_knowledge_base_collection():
+    """Retrieve the collection storing uploaded knowledge base documents metadata."""
+    if not db_connected and settings.APP_ENV == "production":
+        raise RuntimeError("Database connection is offline. Mock collection 'knowledge_base' is disabled in production.")
+    if _should_use_mock():
+        return MockCollection("knowledge_base")
+    return get_db()["knowledge_base"]
+
+

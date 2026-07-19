@@ -1,5 +1,5 @@
 from typing import List, Optional
-from fastapi import APIRouter, HTTPException, Query, status, Depends
+from fastapi import APIRouter, HTTPException, Query, status, Depends, Request
 from models.ticket import Ticket, TicketCreate, TicketStatus, TicketUpdate
 from services.ticket_service import TicketService
 from agents.conversation_memory import ConversationMemory
@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=Ticket, status_code=status.HTTP_201_CREATED)
-def create_ticket(ticket_in: TicketCreate, current_user = Depends(get_current_user)):
+def create_ticket(ticket_in: TicketCreate, request: Request, current_user = Depends(get_current_user)):
     """Submit a new support ticket associated with the authenticated user."""
     if ticket_in.conversation_id:
         conv = ConversationMemory.get_conversation(ticket_in.conversation_id)
@@ -20,7 +20,22 @@ def create_ticket(ticket_in: TicketCreate, current_user = Depends(get_current_us
             )
             
     ticket_in.user_id = current_user.id
-    return TicketService.create(ticket_in)
+    created = TicketService.create(ticket_in)
+    
+    from services.audit_service import AuditService
+    AuditService.log_action(
+        admin_id=current_user.id,
+        target_user_id=None,
+        action="ticket_created",
+        previous_value=None,
+        new_value=created.ticket_id,
+        resource_type="ticket",
+        resource_id=created.ticket_id,
+        status="success",
+        ip_address=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent")
+    )
+    return created
 
 
 @router.get("/", response_model=List[Ticket])
@@ -63,7 +78,7 @@ def get_ticket(ticket_id: str, current_user = Depends(get_current_user)):
 
 
 @router.put("/{ticket_id}", response_model=Ticket)
-def update_ticket(ticket_id: str, ticket_update: TicketUpdate, current_user = Depends(get_current_user)):
+def update_ticket(ticket_id: str, ticket_update: TicketUpdate, request: Request, current_user = Depends(get_current_user)):
     """Update fields on a support ticket by integer ID or string ticket_id, validating ownership."""
     try:
         val = int(ticket_id)
@@ -109,12 +124,26 @@ def update_ticket(ticket_id: str, ticket_update: TicketUpdate, current_user = De
             )
             
     ticket_update.user_id = current_user.id
+    updated = TicketService.update(ticket.id, ticket_update)
     
-    return TicketService.update(ticket.id, ticket_update)
+    from services.audit_service import AuditService
+    AuditService.log_action(
+        admin_id=current_user.id,
+        target_user_id=None,
+        action="ticket_updated",
+        previous_value=None,
+        new_value=updated.ticket_id,
+        resource_type="ticket",
+        resource_id=updated.ticket_id,
+        status="success",
+        ip_address=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent")
+    )
+    return updated
 
 
 @router.delete("/{ticket_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_ticket(ticket_id: str, current_user = Depends(get_current_user)):
+def delete_ticket(ticket_id: str, request: Request, current_user = Depends(get_current_user)):
     """Permanently delete a support ticket by integer ID or string ticket_id, validating ownership."""
     try:
         val = int(ticket_id)
@@ -149,5 +178,18 @@ def delete_ticket(ticket_id: str, current_user = Depends(get_current_user)):
             detail=f"Ticket with ID '{ticket_id}' not found"
         )
         
+    from services.audit_service import AuditService
+    AuditService.log_action(
+        admin_id=current_user.id,
+        target_user_id=None,
+        action="ticket_deleted",
+        previous_value=ticket.ticket_id,
+        new_value=None,
+        resource_type="ticket",
+        resource_id=ticket.ticket_id,
+        status="success",
+        ip_address=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent")
+    )
     return None
 

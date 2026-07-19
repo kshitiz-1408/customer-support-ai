@@ -368,3 +368,149 @@ class TicketService:
                 "duration_ms": int(duration_ms)
             })
             return False
+
+    @classmethod
+    def get_tickets_paginated(
+        cls,
+        page: int = 1,
+        limit: int = 10,
+        search: Optional[str] = None,
+        status: Optional[str] = None,
+        priority: Optional[str] = None,
+        category: Optional[str] = None,
+        assigned_agent: Optional[str] = None,
+        customer_email: Optional[str] = None,
+        sort_by: str = "created_at",
+        sort_order: str = "desc"
+    ) -> dict:
+        """Retrieve paginated and filtered lists of support tickets (Admin dashboard)."""
+        try:
+            cls._ensure_prepopulated()
+            coll = get_tickets_collection()
+            docs = list(coll.find({}))
+            
+            filtered = []
+            for doc in docs:
+                # 1. Search (subject, description, customer_name, customer_email, ticket_id)
+                if search:
+                    s_lower = search.lower().strip()
+                    in_subject = s_lower in doc.get("subject", "").lower()
+                    in_description = s_lower in doc.get("description", "").lower()
+                    in_cust_name = s_lower in doc.get("customer_name", "").lower()
+                    in_cust_email = s_lower in doc.get("customer_email", "").lower()
+                    in_ticket_id = s_lower in doc.get("ticket_id", "").lower()
+                    if not (in_subject or in_description or in_cust_name or in_cust_email or in_ticket_id):
+                        continue
+                
+                # 2. Status filter
+                if status and doc.get("status") != status:
+                    continue
+                    
+                # 3. Priority filter
+                if priority and doc.get("priority") != priority:
+                    continue
+                    
+                # 4. Category filter
+                if category and doc.get("category") != category:
+                    continue
+                    
+                # 5. Assigned agent filter
+                if assigned_agent is not None:
+                    val = doc.get("assigned_agent")
+                    if assigned_agent == "":
+                        if val is not None:
+                            continue
+                    elif val != assigned_agent:
+                        continue
+                        
+                # 6. Customer email filter
+                if customer_email and doc.get("customer_email", "").lower().strip() != customer_email.lower().strip():
+                    continue
+                    
+                filtered.append(doc)
+                
+            # Sort
+            reverse = (sort_order.lower() == "desc")
+            def sort_key(x):
+                val = x.get(sort_by)
+                if val is None:
+                    return ""
+                if isinstance(val, datetime):
+                    return val.timestamp()
+                return str(val)
+                
+            filtered.sort(key=sort_key, reverse=reverse)
+            
+            total = len(filtered)
+            start = (page - 1) * limit
+            end = start + limit
+            page_items = filtered[start:end]
+            
+            return {
+                "total": total,
+                "page": page,
+                "limit": limit,
+                "tickets": [Ticket(**d) for d in page_items]
+            }
+        except Exception as e:
+            logger.error(f"Error listing paginated tickets: {str(e)}")
+            raise e
+
+    @classmethod
+    def get_metrics(cls) -> dict:
+        """Aggregates ticket analytics metrics for the administrator dashboard."""
+        try:
+            cls._ensure_prepopulated()
+            coll = get_tickets_collection()
+            docs = list(coll.find({}))
+            
+            open_count = 0
+            closed_count = 0
+            high_priority_count = 0
+            tickets_today = 0
+            
+            resolution_times = []
+            
+            now = datetime.now(timezone.utc)
+            today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+            
+            for doc in docs:
+                status_val = doc.get("status")
+                priority_val = doc.get("priority")
+                
+                if status_val == "open":
+                    open_count += 1
+                elif status_val == "closed" or status_val == "resolved":
+                    closed_count += 1
+                    
+                if priority_val in ["high", "urgent"]:
+                    high_priority_count += 1
+                    
+                created_at = doc.get("created_at")
+                if isinstance(created_at, datetime):
+                    if created_at >= today_start:
+                        tickets_today += 1
+                        
+                # Compute resolution time in seconds for closed/resolved
+                if status_val in ["resolved", "closed"]:
+                    updated_at = doc.get("updated_at")
+                    if isinstance(created_at, datetime) and isinstance(updated_at, datetime):
+                        delta = (updated_at - created_at).total_seconds()
+                        if delta >= 0:
+                            resolution_times.append(delta)
+                            
+            avg_res_seconds = 0.0
+            if resolution_times:
+                avg_res_seconds = sum(resolution_times) / len(resolution_times)
+                
+            return {
+                "open_tickets": open_count,
+                "closed_tickets": closed_count,
+                "high_priority": high_priority_count,
+                "average_resolution_time": avg_res_seconds,
+                "tickets_created_today": tickets_today
+            }
+        except Exception as e:
+            logger.error(f"Error computing ticket metrics: {str(e)}")
+            raise e
+

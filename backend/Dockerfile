@@ -12,6 +12,7 @@ WORKDIR /app
 # Install minimal OS packages if required
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy dependency metadata before application source for cache efficiency

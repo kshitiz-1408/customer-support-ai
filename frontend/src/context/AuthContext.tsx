@@ -14,6 +14,7 @@ interface User {
   is_active: boolean;
   is_verified: boolean;
   created_at?: string;
+  last_login?: string;
 }
 
 interface AuthContextType {

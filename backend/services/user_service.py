@@ -165,3 +165,81 @@ class UserService:
             logger.error(f"Error changing password for user '{user_id}': {str(e)}")
             raise DatabaseFailureException(f"Error changing password in datastore: {str(e)}")
 
+    @classmethod
+    def get_users_paginated(
+        cls,
+        page: int = 1,
+        limit: int = 10,
+        search: Optional[str] = None,
+        email: Optional[str] = None,
+        role: Optional[str] = None,
+        is_active: Optional[bool] = None,
+        is_verified: Optional[bool] = None,
+        sort_by: str = "created_at",
+        sort_order: str = "desc"
+    ) -> dict:
+        """Retrieves and paginates users, supporting search and filtering."""
+        try:
+            coll = get_users_collection()
+            if hasattr(coll, "find"):
+                cursor = coll.find({})
+                docs = list(cursor)
+            else:
+                docs = list(coll.find({}))
+            
+            filtered = []
+            for doc in docs:
+                # 1. Search filter (email or full_name)
+                if search:
+                    s_lower = search.lower()
+                    if s_lower not in doc.get("email", "").lower() and s_lower not in doc.get("full_name", "").lower():
+                        continue
+                
+                # 2. Exact email filter
+                if email and email.strip().lower() != doc.get("email", "").lower():
+                    continue
+                    
+                # 3. Role filter
+                if role and role != doc.get("role"):
+                    continue
+                    
+                # 4. Active status filter
+                if is_active is not None and is_active != doc.get("is_active"):
+                    continue
+                    
+                # 5. Verified status filter
+                if is_verified is not None and is_verified != doc.get("is_verified"):
+                    continue
+                    
+                filtered.append(doc)
+                
+            # Sort
+            reverse = (sort_order.lower() == "desc")
+            
+            def sort_key(x):
+                val = x.get(sort_by)
+                if val is None:
+                    return ""
+                if isinstance(val, datetime):
+                    return val.timestamp()
+                return str(val)
+                
+            filtered.sort(key=sort_key, reverse=reverse)
+            
+            # Paginate
+            total = len(filtered)
+            start = (page - 1) * limit
+            end = start + limit
+            page_items = filtered[start:end]
+            
+            return {
+                "total": total,
+                "page": page,
+                "limit": limit,
+                "users": [UserInDB(**d) for d in page_items]
+            }
+        except Exception as e:
+            logger.error(f"Error fetching paginated users: {str(e)}")
+            raise DatabaseFailureException(f"Error listing users from datastore: {str(e)}")
+
+

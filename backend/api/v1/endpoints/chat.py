@@ -143,7 +143,8 @@ def process_chat(query: ChatQuery, current_user = Depends(get_current_user)):
                                 role="assistant",
                                 content="Please clarify your question.",
                                 intent="unknown",
-                                user_id=current_user.id
+                                user_id=current_user.id,
+                                confidence_score=0.5
                             )
                     except Exception as db_err:
                         logger.error({
@@ -197,6 +198,10 @@ def process_chat(query: ChatQuery, current_user = Depends(get_current_user)):
             
             # 5. Persist assistant response
             persistence_success = True
+            conf = 0.85
+            if sources_list:
+                conf = sum(s.get("score", 0.90) for s in sources_list) / len(sources_list)
+            conf = max(0.1, min(1.0, conf))
             try:
                 with trace_stage("assistant_persistence"):
                     ConversationMemory.add_message(
@@ -206,7 +211,8 @@ def process_chat(query: ChatQuery, current_user = Depends(get_current_user)):
                         intent=intent,
                         agent=agent_name,
                         sources=sources_list,
-                        user_id=current_user.id
+                        user_id=current_user.id,
+                        confidence_score=conf
                     )
             except Exception as db_err:
                 persistence_success = False

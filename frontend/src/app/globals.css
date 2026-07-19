@@ -1,28 +1,83 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #09090b;
+  --foreground: #ffffff;
+
+  /* Default Dark Mode Custom Properties */
+  --zinc-950: #09090b;
+  --zinc-900: #18181b;
+  --zinc-850: #202024;
+  --zinc-800: #27272a;
+  --zinc-700: #3f3f46;
+  --zinc-650: #4b4b54;
+  --zinc-600: #52525b;
+  --zinc-550: #60606a;
+  --zinc-500: #71717a;
+  --zinc-450: #8c8c9a;
+  --zinc-400: #a1a1aa;
+  --zinc-355: #c0c0ca;
+  --zinc-300: #d4d4d8;
+  --zinc-200: #e4e4e7;
+  --zinc-150: #ededf2;
+  --zinc-100: #f4f4f5;
+  --zinc-50: #fafafa;
 }
 
-@theme inline {
+html.light {
+  --background: #f4f4f5;
+  --foreground: #09090b;
+
+  /* Light Mode Custom Properties overrides */
+  --zinc-950: #f4f4f5;
+  --zinc-900: #ffffff;
+  --zinc-850: #e4e4e7;
+  --zinc-800: #e4e4e7;
+  --zinc-700: #d4d4d8;
+  --zinc-650: #a1a1aa;
+  --zinc-600: #71717a;
+  --zinc-550: #71717a;
+  --zinc-500: #71717a;
+  --zinc-450: #52525b;
+  --zinc-400: #3f3f46;
+  --zinc-355: #27272a;
+  --zinc-300: #18181b;
+  --zinc-200: #09090b;
+  --zinc-150: #09090b;
+  --zinc-100: #09090b;
+  --zinc-50: #09090b;
+}
+
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-zinc-950: var(--zinc-950);
+  --color-zinc-900: var(--zinc-900);
+  --color-zinc-850: var(--zinc-850);
+  --color-zinc-800: var(--zinc-800);
+  --color-zinc-700: var(--zinc-700);
+  --color-zinc-650: var(--zinc-650);
+  --color-zinc-600: var(--zinc-600);
+  --color-zinc-550: var(--zinc-550);
+  --color-zinc-500: var(--zinc-500);
+  --color-zinc-450: var(--zinc-450);
+  --color-zinc-400: var(--zinc-400);
+  --color-zinc-355: var(--zinc-355);
+  --color-zinc-300: var(--zinc-300);
+  --color-zinc-200: var(--zinc-200);
+  --color-zinc-150: var(--zinc-150);
+  --color-zinc-100: var(--zinc-100);
+  --color-zinc-50: var(--zinc-50);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 @layer utilities {
@@ -35,4 +90,3 @@ body {
     animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
-

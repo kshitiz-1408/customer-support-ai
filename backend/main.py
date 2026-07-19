@@ -1,4 +1,6 @@
 import time
+from datetime import datetime, timezone
+STARTUP_TIME = datetime.now(timezone.utc)
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -72,6 +74,72 @@ async def lifespan(app: FastAPI):
         "gemini_init_ms": (time.perf_counter() - gemini_start) * 1000,
     }
     
+    # 5. Bootstrap initial administrator account (DEVELOPMENT ONLY)
+    import os
+    if settings.APP_ENV != "production" and os.getenv("DISABLE_ADMIN_BOOTSTRAP", "").lower() != "true":
+        try:
+            from services.user_service import UserService
+            from models.user import UserCreate, UserRole, UserUpdate
+            from database.database import get_users_collection
+            import secrets
+            import string
+            from pathlib import Path
+            import json
+            
+            coll = get_users_collection()
+            admin_count = 0
+            if hasattr(coll, "count_documents"):
+                admin_count = coll.count_documents({"role": UserRole.ADMIN})
+            else:
+                admin_count = len(list(coll.find({"role": UserRole.ADMIN})))
+                
+            if admin_count == 0:
+                logger.warning("[BOOTSTRAP] No administrator accounts detected. Bootstrapping initial admin (DEVELOPMENT ONLY)...")
+                
+                alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
+                while True:
+                    pwd = "".join(secrets.choice(alphabet) for _ in range(16))
+                    has_upper = any(c.isupper() for c in pwd)
+                    has_lower = any(c.islower() for c in pwd)
+                    has_digit = any(c.isdigit() for c in pwd)
+                    has_spec = any(c in "!@#$%^&*" for c in pwd)
+                    if has_upper and has_lower and has_digit and has_spec:
+                        break
+                        
+                admin_email = "admin@example.com"
+                
+                existing_user = UserService.get_user_by_email(admin_email)
+                if existing_user:
+                    UserService.update_user(existing_user.id, UserUpdate(role=UserRole.ADMIN))
+                    logger.warning(f"[BOOTSTRAP] Promoted existing user '{admin_email}' to administrator.")
+                else:
+                    UserService.create_user(UserCreate(
+                        email=admin_email,
+                        full_name="Initial Admin Bootstrap",
+                        password=pwd,
+                        role=UserRole.ADMIN
+                    ))
+                    
+                logger.warning("==================================================================")
+                logger.warning("[BOOTSTRAP] INITIAL ADMINISTRATOR ACCOUNT CREATED (DEVELOPMENT ONLY)")
+                logger.warning(f"[BOOTSTRAP] Email: {admin_email}")
+                logger.warning(f"[BOOTSTRAP] Password: {pwd}")
+                logger.warning("[BOOTSTRAP] Please change this password immediately in production settings!")
+                logger.warning("==================================================================")
+                
+                # Write to artifacts directory so our report can read and display it
+                artifacts_dir = Path("C:/Users/HP/.gemini/antigravity-ide/brain/19a93036-5576-4401-8a01-827787595b36")
+                if artifacts_dir.exists():
+                    creds_file = artifacts_dir / "bootstrap_credentials.json"
+                    with open(creds_file, "w") as f:
+                        json.dump({
+                            "email": admin_email,
+                            "password": pwd,
+                            "role": "admin"
+                        }, f)
+        except Exception as e:
+            logger.error(f"[BOOTSTRAP] Failed to bootstrap administrator: {str(e)}", exc_info=True)
+
     yield
     
     # Shutdown tasks

@@ -110,3 +110,46 @@ def extract_chunks_from_text(text: str, filename: str, doc_type: str) -> List[Di
         
     logger.info(f"Successfully processed Text file '{filename}'. Generated {len(chunks_output)} chunks.")
     return chunks_output
+
+
+def extract_chunks_from_docx(file_bytes: bytes, filename: str) -> List[Dict[str, Any]]:
+    """
+    Parses a DOCX file, extracts text, chunks it, and returns metadata.
+    """
+    logger.info(f"Starting DOCX parsing for file: '{filename}'")
+    import zipfile
+    import xml.etree.ElementTree as ET
+    
+    try:
+        from io import BytesIO
+        with zipfile.ZipFile(BytesIO(file_bytes)) as z:
+            xml_content = z.read("word/document.xml")
+            root = ET.fromstring(xml_content)
+            
+            namespaces = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+            texts = []
+            for elem in root.findall(".//w:t", namespaces):
+                if elem.text:
+                    texts.append(elem.text)
+            text_content = " ".join(texts)
+    except Exception as e:
+        logger.error(f"Failed to read DOCX structure: {str(e)}")
+        raise ValueError(f"Unable to read DOCX structure: {str(e)}")
+
+    if not text_content or not text_content.strip():
+        logger.error(f"Ingestion rejected: No readable text extracted from '{filename}'")
+        raise ValueError("No readable text could be extracted from this DOCX document.")
+
+    chunks = chunk_text(text_content)
+    chunks_output = []
+    for chunk in chunks:
+        chunks_output.append({
+            "content": chunk,
+            "metadata": {
+                "source": filename,
+                "page": 1,
+                "type": "docx"
+            }
+        })
+    logger.info(f"Successfully processed DOCX '{filename}'. Generated {len(chunks_output)} chunks.")
+    return chunks_output

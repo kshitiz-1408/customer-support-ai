@@ -239,7 +239,7 @@ class ConversationMemory:
             return []
 
     @classmethod
-    def add_message(cls, conversation_id: str, role: str, content: str, intent: Optional[str] = None, agent: Optional[str] = None, sources: Optional[List[dict]] = None, user_id: Optional[str] = None) -> dict:
+    def add_message(cls, conversation_id: str, role: str, content: str, intent: Optional[str] = None, agent: Optional[str] = None, sources: Optional[List[dict]] = None, user_id: Optional[str] = None, confidence_score: Optional[float] = None) -> dict:
         """Persist a message and update the parent conversation's timestamp."""
         start_time = time.perf_counter()
         msg_id = uuid.uuid4().hex
@@ -270,6 +270,7 @@ class ConversationMemory:
             "intent": intent,
             "agent": agent,
             "sources": cleaned_sources if cleaned_sources else None,
+            "confidence_score": confidence_score,
             "created_at": now
         }
         

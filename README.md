@@ -8,29 +8,27 @@ This repository features a fully responsive, dark-mode-optimized Next.js fronten
 
 ---
 
-## 📌 Project Features
+### 📌 Project Features
 
-The portal serves as an interactive workplace for support agents and customers alike:
-- **Intelligent Dashboard**: Displays live ticket statuses (Open, In Progress, Resolved) and database document counts.
-- **Support Chat Portal**: Interactive multi-turn chat assistant. Automatically detects user query intents and routes them to specialized agents (FAQ, Product, Billing, Technical, Complaint).
-- **Retrieval-Augmented Generation (RAG)**: Chunks, embeds (via SentenceTransformers), and indexes PDF/TXT/MD documentation inside a local FAISS database, grounding Gemini LLM responses with relevant facts.
-- **Dynamic Connection Management**: The frontend polls the backend `/health` endpoint and renders visual connection states (`Backend Connected` vs `Backend Disconnected`) in real-time.
-- **Persistent Conversation Memory**: Message log history is stored per conversation thread in MongoDB, surviving browser reloads and backend restarts.
-- **Support Ticket CRUD**: Fully-featured ticket creation, update, listing, and deletion persist dynamically.
+The portal serves as an interactive, role-aware support ecosystem:
+- **State-of-the-Art Admin Panel**: Complete, consolidated administrator portal to monitor and audit the platform (Manage Users, Manage Tickets, Inspect Chats, Manage KB, Analytics, Audit Logs, and System Status).
+- **Intelligent Support Chat**: Interactive multi-turn chat. Automatically detects user query intents and routes them to specialized agents (FAQ, Product, Billing, Technical, Complaint), grounded using RAG.
+- **Support Ticket CRUD & Scoping**: Scoped ticket creation, update, listing, and deletion. Standard users are restricted to their own tickets, while admins have global visibility.
+- **Document Pipeline Ingestion (RAG)**: Chunks, embeds, and indexes support documents (PDF/TXT/MD/DOCX) into local FAISS vector stores.
+- **Structured Audit Logs Registry**: Automatic, append-only logging of security-critical and administrative operations.
+- **Uptime & Service Health Monitors**: Live healthchecks, CPU/Memory resource gauges, database latencies, and browser offline triggers.
 
 ---
 
 ## 🏗️ Architecture
 
-The system decouples interfaces and data layers to satisfy Clean Architecture constraints:
-
 ```
                           +------------------------+
-                          |   Next.js Frontend     |
+                          |    Next.js Client      |
                           | (React/TS/TailwindCSS) |
                           +-----------+------------+
                                       |
-                                      | HTTP Requests (Axios Client)
+                                      | HTTP Requests (Axios Client with Token Rotations)
                                       v
                           +-----------+------------+
                           |    FastAPI Backend     |
@@ -41,21 +39,24 @@ The system decouples interfaces and data layers to satisfy Clean Architecture co
                                       v                        v
                           +-----------+------------+  +--------+---------------+
                           |    API Router v1       |  |  AI Pipeline Modules  |
-                          | (tickets.py / kb.py)   |  | (agents, RAG, FAISS)   |
+                          | (tickets.py / admin.py)|  | (agents, RAG, FAISS)   |
                           +-----------+------------+  +--------+---------------+
                                       |                        |
                                       v                        v
                           +-----------+------------+  +--------+---------------+
                           |    Business Services   |  |   Database Adapter     |
-                          | (Ticket / Chat logic)  |  |  (MongoDB / Fallback)  |
+                          | (Ticket / Chat / Audit)|  |  (MongoDB / Fallback)  |
                           +------------------------+  +------------------------+
 ```
 
-1. **Frontend App**: Client-side single page portal communicating with backend APIs using Axios handlers.
-2. **API Endpoint Handlers**: Validates request parameters and coordinates payloads using Pydantic schemas.
-3. **Domain Business Services**: Orchestrates ticket processing and document keyword matching.
-4. **AI Packages**: Heuristic intent classification, SentenceTransformer vector embeddings, FAISS indices, and Gemini LLM.
-5. **Database Layer**: MongoDB connection adapter with local file-backed JSON database fallback for offline execution.
+1. **Frontend Client**: React Single Page Application utilizing Next.js App Router. Integrates route-guard layouts and dynamic token synchronization.
+2. **API Endpoint Router**: Secures paths using FastAPI dependencies and validates payloads using Pydantic validation schemas.
+3. **Core Services**: Modular services coordinating business logic (e.g., `TicketService`, `UserService`, `AuditService`).
+4. **AI Pipeline**:
+   * **Intent Detection**: Context-aware intent classifier routing queries to specialized agents.
+   * **RAG Engine**: SentenceTransformers local embedding generator combined with FAISS similarity vector indexing.
+   * **LLM Connector**: Resilience-wrapped Google Gemini LLM API client.
+5. **Data Registry Layer**: PyMongo Atlas client with persistent failover, optimized connection pools, and automatic collection indexing.
 
 ---
 
@@ -65,137 +66,134 @@ The system decouples interfaces and data layers to satisfy Clean Architecture co
 customer-support-ai/
 │
 ├── frontend/                     # Next.js client
-│   ├── public/                   # Static assets & icons
 │   ├── src/
-│   │   ├── app/                  # App Router pages & custom layout configurations
-│   │   ├── components/
-│   │   │   └── chat/             # MessageBubble, ChatInput, ChatWindow
-│   │   ├── hooks/                # useChat state manager (local history cache)
-│   │   └── services/             # Axios API base configuration
-│   ├── .env.example              # Host URL variables config
+│   │   ├── app/                  # App Router pages (admin panel, chat, tickets, settings)
+│   │   ├── components/           # UI elements (Navbar, Sidebar, Chat components)
+│   │   ├── context/              # Auth, Theme contexts (theme switcher, session recovery)
+│   │   └── services/             # Axios API client (silent token refresh queue interceptors)
 │   ├── package.json
 │   └── tsconfig.json
 │
 ├── backend/                      # FastAPI server
-│   ├── api/                      # Versioned endpoints (v1 chat, tickets, and kb routers)
-│   ├── agents/                   # Billing, Tech, FAQ, Complaint, Product Agents & router
-│   ├── rag/                      # Ingestion pipeline and PDF document parsers
-│   ├── embeddings/               # Local SentenceTransformer embedding generator
-│   ├── vectorstore/              # Local FAISS CPU vector index FlatIP adapter
-│   ├── database/                 # MongoDB Atlas connection pooling & local fallback definitions
-│   ├── models/                   # Pydantic schemas validating API inputs/outputs
-│   ├── services/                 # Business logic and LLM connector wrapper
-│   ├── config/                   # System configurations and env loader settings
-│   ├── tests/                    # Pytest automated integration test suite
-│   ├── utils/                    # Global log setups and app exception handlers
-│   ├── .env.example              # Port parameters and CORS origins settings
-│   ├── requirements.txt          # Python dependencies
-│   └── main.py                   # Bootstrapping entrypoint
+│   ├── api/                      # API endpoint handlers & security dependencies
+│   ├── agents/                   # Micro-agents implementation & intent routers
+│   ├── database/                 # MongoDB database adapter & collection setups
+│   ├── embeddings/               # SentenceTransformer embedding generators
+│   ├── models/                   # Pydantic schemas validating payloads
+│   ├── rag/                      # RAG parsing pipeline (PDF, DOCX loaders)
+│   ├── services/                 # Business logic wrappers (LLM service, Audit service)
+│   ├── tests/                    # 101 E2E automated test cases
+│   ├── utils/                    # Observability logging and error handlers
+│   └── main.py                   # Lifespan resource setup & FastAPI app startup
 │
-├── knowledge_base/               # Support articles source files & mock local database JSON
-├── docs/                         # Structural designs and system diagrams
-└── README.md                     # Project manual
+├── scripts/                      # System promote & password reset command-line tools
+├── knowledge_base/               # Knowledge Base raw documents storage
+└── compose.yaml                  # Multi-container production deployment setup
 ```
 
 ---
 
-## 🛠️ Technology Stack
+## 🔒 Authentication & RBAC
 
-- **Frontend**:
-  - Next.js (App Router)
-  - React 19
-  - TypeScript
-  - Tailwind CSS (v4)
-  - Axios (API connection client)
-- **Backend**:
-  - FastAPI
-  - Python 3.11+
-  - Uvicorn (ASGI web server)
-  - PyMongo (MongoDB connection driver)
-  - FAISS CPU (similarity vector index)
-  - Sentence-Transformers (local embedding generation)
-  - Google GenAI (Gemini API SDK client)
-- **Testing**:
-  - Pytest & HTTPX (for backend integrations)
+### JWT Lifecycle & Rotations
+* **Access Tokens**: Short-lived (15 minutes) tokens encapsulating `sub`, `email`, `role`, and `type: "access"`.
+* **Refresh Tokens**: Long-lived (7 days) tokens. Re-verifies active database sessions against the user's `refresh_token_version` on every rotation check, preventing token hijacking.
+* **Axios Interceptors**: The client intercepts `401 Unauthorized` responses and silently requests `/auth/refresh`. Multiple concurrent queries are queued during a refresh cycle to avoid duplicate rotation calls.
+
+### Role-Based Access Controls (RBAC) Matrix
+* **`user` role**: Scoped read/write capabilities. Normal registration defaults to user privileges.
+* **`admin` role**: Global read/write capabilities across the platform.
+
+| Capability / Resource | User | Admin | Endpoint Protection |
+| :--- | :---: | :---: | :--- |
+| Create Chat / Ticket | ✓ | ✓ | Scoped to authenticated user token. |
+| View Chat / Ticket history | Scoped | ✓ | Scoped ownership checks (403 if mismatch). |
+| Manage Users / Roles | ✗ | ✓ | Guarded via `get_current_admin` dependency. |
+| Manage KB / Embeddings | ✗ | ✓ | Guarded via `get_current_admin` dependency. |
+| View System Monitoring / Audit | ✗ | ✓ | Guarded via `get_current_admin` dependency. |
+
+---
+
+## 📄 Knowledge Base Ingestion Workflow
+```
+[Raw Files (.docx, .pdf, .txt, .md)] -> [File Upload API] -> [DOCX/PDF Custom Text Extraction]
+                                                                        |
+                                                                        v
+[MongoDB metadata: indexed, chunk_count, file_size] <- [DB Log] <- [Text Chunking & Embedding]
+                                                                        |
+                                                                        v
+[FAISS FlatIP Similarity Vector Storage] <------------------------- [FAISS Indexing]
+```
+1. **Extraction**: Parsed directly in-process via custom parsers (supporting `.docx` via zip-xml tree extractions).
+2. **Chunking**: Chunks document text, maps them to `SentenceTransformer` vectors, and appends them to FAISS.
+3. **Reindexing**: Administrators can trigger re-indexing on a single document or rebuild the entire vector store index.
+
+---
+
+## 📊 Analytics, Audits, & System Status
+
+### 1. Structured Audit Log Registry
+Every administrative or security-critical action triggers an append-only document write into the `audit_logs` collection:
+* **Fields persisted**: `timestamp`, `actor_user_id`, `actor_email`, `actor_role`, `action`, `resource_type`, `resource_id`, `status`, `ip_address`, `user_agent`, and differences (`previous_value`, `new_value`).
+* **Logged actions**: Login success/failure (with failure reason context), logout, user activation switches, role changes, file uploads/deletions, KB reindexings, ticket creations, updates, and chat inspections.
+
+### 2. Analytics KPIs Dashboard
+Collects usage and latency stats:
+* `/analytics/overview`: counters for active users, open/closed tickets, documents count.
+* `/analytics/usage`: daily metrics timelines.
+* `/analytics/ai`: average confidence score, Gemini api call counts, and intent classification histograms.
+* `/analytics/system`: database connection checks, CPU, memory, and FAISS vector index sizes.
+
+### 3. System Status Health Probes
+Provides real-time visibility into internal server services:
+* `/system/health`: Lightweight liveness indicator checking backend, database, Gemini API, and RAG status.
+* `/system/performance`: Measures system memory/CPU percent, requests per minute, database latency, and average response times.
+* `/system/services`: Performs checks on individual backend adapters (MongoDB Atlas ping, Gemini API connection, SentenceTransformers caching, and FAISS disk binary status).
 
 ---
 
 ## ⚙️ Installation & Configuration
 
 ### Prerequisites
-- Node.js (v18.0.0 or later)
-- Python (v3.11 or later)
-- npm or yarn
+* Node.js (v18.0.0 or later)
+* Python (v3.11 or later)
+* Docker (for multi-container deployment)
 
-### Environment Setup
+### Local Development Setup
 
-#### Backend Configuration
-Copy the environment template:
-```bash
-cd backend
-cp .env.example .env
-```
-Fill out the variables in `backend/.env` using your credentials:
-```env
-# Gemini API Key (get from Google AI Studio)
-GEMINI_API_KEY="your-gemini-api-key"
-GEMINI_MODEL_NAME="gemini-2.5-flash"
+1. **Configure Environment variables**:
+   * Create `backend/.env` using the template `backend/.env.example`.
+   * Create `frontend/.env.local` using the template `frontend/.env.example`.
+   * *Critical*: Ensure default secrets (e.g. `CHANGE_ME_SECRET_KEY_FOR_PRODUCTION`) are replaced. The backend will refuse to boot in `production` if placeholders are detected.
 
-# MongoDB Database (Atlas connection URI and Database name)
-MONGODB_URI="mongodb+srv://user:pass@cluster.mongodb.net/?appName=customer-support-ai"
-MONGODB_DB_NAME="customer_support_ai"
-```
-
-#### Frontend Configuration
-Copy the environment template:
-```bash
-cd ../frontend
-cp .env.example .env.local
-```
-Fill out the variables in `frontend/.env.local`:
-```env
-NEXT_PUBLIC_API_URL="http://localhost:8000"
-```
-
----
-
-## 🚀 Running the Project
-
-### Starting Frontend
-1. Install dependencies:
-   ```bash
-   cd frontend
-   npm install
-   ```
-2. Start Next.js Turbopack dev server:
-   ```bash
-   npm run dev
-   ```
-   Open [http://localhost:3000](http://localhost:3000) to view the client console dashboard.
-
-### Starting Backend
-1. Install Python packages:
+2. **Initialize Backend**:
    ```bash
    cd backend
    pip install -r requirements.txt
-   ```
-2. Run development server:
-   ```bash
    uvicorn main:app --reload --port 8000
    ```
-   Interactive Swagger documentation is available at [http://localhost:8000/docs](http://localhost:8000/docs).
+   *Swagger endpoints documentation is available at [http://localhost:8000/docs](http://localhost:8000/docs).*
 
-### Running Tests
-Execute the automated integration pytest suite:
-```bash
-cd backend
-python -m pytest tests/ -v
-```
+3. **Initialize Frontend**:
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
 
-### Docker Containerization & Local Compose Deployments
-You can build and start the entire multi-container stack locally using Docker Compose:
+4. **Verify Test Suite**:
+   ```bash
+   cd backend
+   python -m pytest tests/ -v
+   ```
 
-1. **Build the Stack**:
+---
+
+## 🚀 Docker Containerization & Production Deployments
+
+The application is configured to build and start the entire multi-container service stack locally:
+
+1. **Build Container Binaries**:
    ```bash
    docker compose build
    ```
@@ -207,25 +205,11 @@ You can build and start the entire multi-container stack locally using Docker Co
    ```bash
    docker compose ps
    ```
-4. **View Container Logs**:
-   ```bash
-   # Backend service logs
-   docker compose logs backend
-   # Frontend service logs
-   docker compose logs frontend
-   ```
-5. **Stop Services**:
+4. **Stop Containers**:
    ```bash
    docker compose down
    ```
 
-*Persistent Mounts*:
-- Host directory `./knowledge_base` is mounted to `/app/knowledge_base` inside the backend container to share/persist FAISS indexing binaries and search texts.
-- Host directory `./data` is mounted to `/app/data` to persist local mock database state files.
-
----
-
-## 🔍 Observability, Request Tracing, & Resilience
 
 - **Request ID Tracking**: Every API request is correlated using a unique `request_id` passed via the `X-Request-ID` HTTP header and isolated per-request via Python context variables.
 - **Structured Logging**: Clean, JSON-formatted structured logging with automatic regex-based credential redaction (`MONGODB_URI`, `GEMINI_API_KEY` placeholders).

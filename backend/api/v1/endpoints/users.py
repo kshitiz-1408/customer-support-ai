@@ -1,5 +1,5 @@
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from api.deps import get_current_user
@@ -80,6 +80,7 @@ def update_user_profile(
 @router.post("/change-password", status_code=status.HTTP_200_OK)
 def change_password(
     pwd_req: PasswordChangeRequest,
+    request: Request,
     current_user: UserInDB = Depends(get_current_user)
 ):
     """Securely change password for the authenticated user and invalidate active refresh tokens."""
@@ -105,5 +106,19 @@ def change_password(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
+        
+    from services.audit_service import AuditService
+    AuditService.log_action(
+        admin_id=current_user.id,
+        target_user_id=current_user.id,
+        action="password_changed",
+        previous_value="[REDACTED]",
+        new_value="[REDACTED]",
+        resource_type="user",
+        resource_id=current_user.id,
+        status="success",
+        ip_address=request.client.host if request.client else None,
+        user_agent=request.headers.get("user-agent")
+    )
         
     return {"message": "Password changed successfully. Existing sessions have been invalidated."}

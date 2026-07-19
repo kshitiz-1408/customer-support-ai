@@ -47,3 +47,10 @@ class ExpiredTokenException(AuthException):
         super().__init__(message, status_code=status.HTTP_401_UNAUTHORIZED)
 
 
+class ForbiddenException(AuthException):
+    """Raised when a user does not have sufficient permissions to perform an action."""
+    def __init__(self, message: str = "Not enough permissions"):
+        super().__init__(message, status_code=status.HTTP_403_FORBIDDEN)
+
+
+

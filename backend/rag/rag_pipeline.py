@@ -2,7 +2,7 @@ import os
 import logging
 from typing import List, Dict, Any
 from config.config import settings
-from rag.pdf_loader import extract_chunks_from_pdf, extract_chunks_from_text
+from rag.pdf_loader import extract_chunks_from_pdf, extract_chunks_from_text, extract_chunks_from_docx
 from embeddings.embedding_model import embed_chunks, embed_query
 from vectorstore.vector_store import LocalVectorStore
 
@@ -10,6 +10,79 @@ logger = logging.getLogger("customer_support_backend")
 
 # Global singleton VectorStore instance (automatically loads persisted files on init)
 vector_store = LocalVectorStore(dimension=384)
+
+
+def sync_kb_db_with_files(kb_dir: str, current_manifest: dict):
+    """
+    Synchronizes MongoDB knowledge_base collection with physical documents in knowledge_base directory.
+    Calculates exact chunk count for each file dynamically based on vector store metadata mappings.
+    """
+    try:
+        from database.database import get_knowledge_base_collection
+        from datetime import datetime, timezone
+        import uuid
+
+        kb_coll = get_knowledge_base_collection()
+        physical_files = set()
+
+        if os.path.exists(kb_dir):
+            for filename in os.listdir(kb_dir):
+                file_path = os.path.join(kb_dir, filename)
+                if os.path.isdir(file_path) or filename in [
+                    os.path.basename(settings.VECTOR_INDEX_PATH),
+                    os.path.basename(settings.VECTOR_METADATA_PATH)
+                ]:
+                    continue
+                ext = filename.split(".")[-1].lower() if "." in filename else ""
+                if ext not in ["pdf", "txt", "md", "docx"]:
+                    continue
+
+                physical_files.add(filename)
+
+                # Count active chunks in vector store
+                file_chunks_count = 0
+                for vid, metadata in vector_store._metadata_store.items():
+                    if metadata.get("metadata", {}).get("source") == filename:
+                        file_chunks_count += 1
+
+                stat = os.stat(file_path)
+                existing = kb_coll.find_one({"filename": filename})
+                
+                if existing:
+                    kb_coll.update_one(
+                        {"_id": existing["_id"]},
+                        {"$set": {
+                            "chunk_count": file_chunks_count,
+                            "embedding_status": "completed" if file_chunks_count > 0 else "failed",
+                            "indexed_status": "completed" if file_chunks_count > 0 else "failed",
+                            "file_size": stat.st_size,
+                            "last_indexed": datetime.now(timezone.utc)
+                        }}
+                    )
+                else:
+                    now = datetime.now(timezone.utc)
+                    kb_coll.insert_one({
+                        "_id": str(uuid.uuid4()),
+                        "filename": filename,
+                        "upload_date": now,
+                        "file_type": ext,
+                        "file_size": stat.st_size,
+                        "uploaded_by": "system",
+                        "chunk_count": file_chunks_count,
+                        "embedding_status": "completed" if file_chunks_count > 0 else "failed",
+                        "indexed_status": "completed" if file_chunks_count > 0 else "failed",
+                        "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+                        "last_indexed": now
+                    })
+
+        # Remove database references to documents no longer present on filesystem
+        db_docs = list(kb_coll.find({}))
+        for doc in db_docs:
+            if doc["filename"] not in physical_files:
+                kb_coll.delete_one({"_id": doc["_id"]})
+                
+    except Exception as e:
+        logger.error(f"Error syncing knowledge base metadata collection: {str(e)}", exc_info=True)
 
 
 def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
@@ -37,7 +110,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
             ]:
                 continue
             ext = filename.split(".")[-1].lower() if "." in filename else ""
-            if ext not in ["pdf", "txt", "md"]:
+            if ext not in ["pdf", "txt", "md", "docx"]:
                 continue
             try:
                 stat = os.stat(file_path)
@@ -55,6 +128,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     
     if has_vectors and not force_rebuild and manifests_match:
         logger.info(f"RAG pipeline initialized: active FAISS index loaded from disk ({vector_store._index.ntotal} vectors). File manifest matches, skipping rebuild.")
+        sync_kb_db_with_files(kb_dir, current_manifest)
         return
         
     if not force_rebuild and not manifests_match:
@@ -63,6 +137,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     if not os.path.exists(kb_dir):
         logger.warning(f"Knowledge base directory '{kb_dir}' missing. Creating empty directory.")
         os.makedirs(kb_dir, exist_ok=True)
+        sync_kb_db_with_files(kb_dir, current_manifest)
         return
         
     logger.info(f"Rebuilding RAG index from files under folder: '{kb_dir}'...")
@@ -81,7 +156,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
             continue
             
         ext = filename.split(".")[-1].lower() if "." in filename else ""
-        if ext not in ["pdf", "txt", "md"]:
+        if ext not in ["pdf", "txt", "md", "docx"]:
             logger.debug(f"Skipping file '{filename}' with unsupported extension.")
             continue
             
@@ -90,6 +165,10 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
                 with open(file_path, "rb") as f:
                      file_bytes = f.read()
                 file_chunks = extract_chunks_from_pdf(file_bytes, filename)
+            elif ext == "docx":
+                with open(file_path, "rb") as f:
+                     file_bytes = f.read()
+                file_chunks = extract_chunks_from_docx(file_bytes, filename)
             else:
                 with open(file_path, "r", encoding="utf-8") as f:
                      text_content = f.read()
@@ -109,6 +188,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
         with vector_store._lock:
             vector_store._metadata_store["__manifest__"] = current_manifest
             vector_store.save_to_disk()
+        sync_kb_db_with_files(kb_dir, current_manifest)
         return
         
     logger.info(f"Generating semantic vector embeddings for {len(all_chunks)} chunks...")
@@ -134,6 +214,8 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
         
     except Exception as e:
         logger.error(f"Failed to generate embeddings or index chunks during pipeline build: {str(e)}", exc_info=True)
+        
+    sync_kb_db_with_files(kb_dir, current_manifest)
 
 
 def query_kb(query: str, top_k: int = 4) -> List[Dict[str, Any]]:
