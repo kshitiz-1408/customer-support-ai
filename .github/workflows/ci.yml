@@ -2,81 +2,81 @@ name: Continuous Integration
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   backend-test:
-    name: Backend Test (Python 3.11)
+    name: Backend Test (Python 3.14)
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        cache: 'pip'
-        cache-dependency-path: 'backend/requirements.txt'
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: "pip"
+          cache-dependency-path: "backend/requirements.txt"
 
-    - name: Install Dependencies
-      working-directory: backend
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      - name: Install Dependencies
+        working-directory: backend
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    - name: Run Tests
-      working-directory: backend
-      env:
-        APP_ENV: test
-        GEMINI_API_KEY: test
-      run: |
-        python -m pytest tests/ -v
+      - name: Run Tests
+        working-directory: backend
+        env:
+          APP_ENV: test
+          GEMINI_API_KEY: test
+        run: |
+          python -m pytest tests/ -v
 
   frontend-build:
     name: Frontend Lint & Build (Node.js 20)
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up Node.js 20
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
-        cache: 'npm'
-        cache-dependency-path: 'frontend/package-lock.json'
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: "frontend/package-lock.json"
 
-    - name: Install Dependencies
-      working-directory: frontend
-      run: npm ci
+      - name: Install Dependencies
+        working-directory: frontend
+        run: npm ci
 
-    - name: Run Linter
-      working-directory: frontend
-      run: npm run lint
+      - name: Run Linter
+        working-directory: frontend
+        run: npm run lint
 
-    - name: Run Next.js Build
-      working-directory: frontend
-      env:
-        NEXT_PUBLIC_API_URL: http://localhost:8000
-      run: npm run build
+      - name: Run Next.js Build
+        working-directory: frontend
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8000
+        run: npm run build
 
   docker-validate:
     name: Docker Image Build Validation
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Build Backend Docker Image
-      run: |
-        docker build ./backend -t backend-test-image:latest
+      - name: Build Backend Docker Image
+        run: |
+          docker build ./backend -t backend-test-image:latest
 
-    - name: Build Frontend Docker Image
-      run: |
-        docker build --build-arg NEXT_PUBLIC_API_URL=http://localhost:8000 ./frontend -t frontend-test-image:latest
+      - name: Build Frontend Docker Image
+        run: |
+          docker build --build-arg NEXT_PUBLIC_API_URL=http://localhost:8000 ./frontend -t frontend-test-image:latest
