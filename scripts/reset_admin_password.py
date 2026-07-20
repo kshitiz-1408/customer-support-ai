@@ -36,7 +36,9 @@ if env_path.exists():
         sys.exit(1)
 
 # 3. Verify GEMINI_API_KEY is available in process environment
-if not os.getenv("GEMINI_API_KEY"):
+app_env = os.getenv("APP_ENV", "development")
+
+if app_env != "test" and not os.getenv("GEMINI_API_KEY"):
     print("Error: GEMINI_API_KEY environment variable is missing.")
     sys.exit(1)
 
