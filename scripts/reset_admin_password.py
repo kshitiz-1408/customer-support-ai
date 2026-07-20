@@ -7,42 +7,37 @@ from pathlib import Path
 
 # 1. Determine Project Root and locate backend/.env
 current_dir = Path(__file__).resolve().parent
-env_path = None
 project_root = None
 
-# Check current directory
-if (current_dir / "backend" / ".env").exists():
-    env_path = current_dir / "backend" / ".env"
+if (current_dir / "backend").exists():
     project_root = current_dir
-# Check parent directory (if running from scripts/)
-elif (current_dir.parent / "backend" / ".env").exists():
-    env_path = current_dir.parent / "backend" / ".env"
+elif (current_dir.parent / "backend").exists():
     project_root = current_dir.parent
-# General parent lookup fallback
 else:
     p = current_dir
     for _ in range(4):
-        if (p / "backend" / ".env").exists():
-            env_path = p / "backend" / ".env"
+        if (p / "backend").exists():
             project_root = p
             break
         p = p.parent
 
-if not env_path or not project_root:
-    print("Could not locate backend/.env")
-    sys.exit(1)
+if not project_root:
+    project_root = current_dir.parent
 
-# 2. Load backend/.env using python-dotenv before importing config/Settings
-try:
-    from dotenv import load_dotenv
-    load_dotenv(dotenv_path=env_path)
-except ImportError:
-    print("Error: python-dotenv is not installed.")
-    sys.exit(1)
+env_path = project_root / "backend" / ".env"
 
-# 3. Verify GEMINI_API_KEY is available
+# 2. If backend/.env exists, load it using python-dotenv
+if env_path.exists():
+    try:
+        from dotenv import load_dotenv
+        load_dotenv(dotenv_path=env_path)
+    except ImportError:
+        print("Error: python-dotenv is not installed.")
+        sys.exit(1)
+
+# 3. Verify GEMINI_API_KEY is available in process environment
 if not os.getenv("GEMINI_API_KEY"):
-    print("backend/.env was found but GEMINI_API_KEY is missing.")
+    print("Error: GEMINI_API_KEY environment variable is missing.")
     sys.exit(1)
 
 # 4. Setup Python path to include backend
