@@ -87,8 +87,8 @@ def sync_kb_db_with_files(kb_dir: str, current_manifest: dict):
 
 def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     """
-    Scans the configured knowledge base folder, processes document files,
-    embeds document segments, and indexes them into the local FAISS index.
+    Scans configured knowledge base articles and raw document files,
+    processes document segments, embeds segments, and indexes them into the local vector store.
     Saves updates to disk.
     """
     logger.info("Initializing RAG ingestion pipeline...")
@@ -97,8 +97,35 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     kb_dir = os.path.join(project_root, "knowledge_base")
     
+    # Load Knowledge Base Articles from MongoDB / KBService
+    from services.kb_service import KBService
+    try:
+        articles = KBService.get_all()
+    except Exception as e:
+        logger.error(f"Failed to load articles from KBService: {e}")
+        articles = []
+    logger.info(f"Loaded {len(articles)} articles from Knowledge Base.")
+
+    # Convert KB articles into chunk payloads
+    article_chunks = []
+    for art in articles:
+        try:
+            full_text = f"Title: {art.title}\nCategory: {art.category}\nTags: {', '.join(art.tags or [])}\n\n{art.content}"
+            raw_chunks = extract_chunks_from_text(full_text, filename=f"article_{art.id}", doc_type="article")
+            for chunk in raw_chunks:
+                chunk["metadata"]["article_id"] = art.id
+                chunk["metadata"]["title"] = art.title
+                chunk["metadata"]["category"] = art.category
+                chunk["metadata"]["tags"] = art.tags
+                chunk["metadata"]["type"] = "kb_article"
+                chunk["metadata"]["page"] = 1
+            article_chunks.extend(raw_chunks)
+        except Exception as e:
+            logger.error(f"Error parsing article ID {art.id} '{art.title}': {e}")
+            
     # Build current files manifest to detect modifications
     current_manifest = {}
+    file_chunks = []
     if os.path.exists(kb_dir):
         for filename in os.listdir(kb_dir):
             file_path = os.path.join(kb_dir, filename)
@@ -106,8 +133,9 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
                 continue
             if filename in [
                 os.path.basename(settings.VECTOR_INDEX_PATH),
-                os.path.basename(settings.VECTOR_METADATA_PATH)
-            ]:
+                os.path.basename(settings.VECTOR_METADATA_PATH),
+                "mock_mongo.json"
+            ] or filename.endswith(".npy") or filename.endswith(".bin") or filename.endswith(".json"):
                 continue
             ext = filename.split(".")[-1].lower() if "." in filename else ""
             if ext not in ["pdf", "txt", "md", "docx"]:
@@ -127,7 +155,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     manifests_match = (current_manifest == saved_manifest)
     
     if has_vectors and not force_rebuild and manifests_match:
-        logger.info(f"RAG pipeline initialized: active FAISS index loaded from disk ({vector_store._index.ntotal} vectors). File manifest matches, skipping rebuild.")
+        logger.info(f"RAG pipeline initialized: active vector index loaded from disk ({vector_store._index.ntotal} vectors). File manifest matches, skipping rebuild.")
         sync_kb_db_with_files(kb_dir, current_manifest)
         return
         
@@ -137,52 +165,53 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
     if not os.path.exists(kb_dir):
         logger.warning(f"Knowledge base directory '{kb_dir}' missing. Creating empty directory.")
         os.makedirs(kb_dir, exist_ok=True)
-        sync_kb_db_with_files(kb_dir, current_manifest)
-        return
         
-    logger.info(f"Rebuilding RAG index from files under folder: '{kb_dir}'...")
+    logger.info(f"Rebuilding RAG index from articles ({len(articles)}) and files under folder: '{kb_dir}'...")
     
-    # Collect all support files
-    all_chunks = []
-    
-    for filename in os.listdir(kb_dir):
-        file_path = os.path.join(kb_dir, filename)
-        
-        # Skip directories or index database files themselves
-        if os.path.isdir(file_path) or filename in [
-            os.path.basename(settings.VECTOR_INDEX_PATH),
-            os.path.basename(settings.VECTOR_METADATA_PATH)
-        ]:
-            continue
+    # Collect all file chunks
+    if os.path.exists(kb_dir):
+        for filename in os.listdir(kb_dir):
+            file_path = os.path.join(kb_dir, filename)
             
-        ext = filename.split(".")[-1].lower() if "." in filename else ""
-        if ext not in ["pdf", "txt", "md", "docx"]:
-            logger.debug(f"Skipping file '{filename}' with unsupported extension.")
-            continue
-            
-        try:
-            if ext == "pdf":
-                with open(file_path, "rb") as f:
-                     file_bytes = f.read()
-                file_chunks = extract_chunks_from_pdf(file_bytes, filename)
-            elif ext == "docx":
-                with open(file_path, "rb") as f:
-                     file_bytes = f.read()
-                file_chunks = extract_chunks_from_docx(file_bytes, filename)
-            else:
-                with open(file_path, "r", encoding="utf-8") as f:
-                     text_content = f.read()
-                file_chunks = extract_chunks_from_text(text_content, filename, ext)
+            # Skip directories or index database files themselves
+            if os.path.isdir(file_path) or filename in [
+                os.path.basename(settings.VECTOR_INDEX_PATH),
+                os.path.basename(settings.VECTOR_METADATA_PATH),
+                "mock_mongo.json"
+            ] or filename.endswith(".npy") or filename.endswith(".bin") or filename.endswith(".json"):
+                continue
                 
-            all_chunks.extend(file_chunks)
-            logger.info(f"Parsed {len(file_chunks)} chunks from '{filename}'.")
-            
-        except Exception as e:
-            logger.error(f"Error parsing file '{filename}' during RAG indexing: {str(e)}")
-            continue
+            ext = filename.split(".")[-1].lower() if "." in filename else ""
+            if ext not in ["pdf", "txt", "md", "docx"]:
+                logger.debug(f"Skipping file '{filename}' with unsupported extension.")
+                continue
+                
+            try:
+                if ext == "pdf":
+                    with open(file_path, "rb") as f:
+                         file_bytes = f.read()
+                    chunks = extract_chunks_from_pdf(file_bytes, filename)
+                elif ext == "docx":
+                    with open(file_path, "rb") as f:
+                         file_bytes = f.read()
+                    chunks = extract_chunks_from_docx(file_bytes, filename)
+                else:
+                    with open(file_path, "r", encoding="utf-8") as f:
+                         text_content = f.read()
+                    chunks = extract_chunks_from_text(text_content, filename, ext)
+                    
+                file_chunks.extend(chunks)
+                logger.info(f"Parsed {len(chunks)} chunks from '{filename}'.")
+                
+            except Exception as e:
+                logger.error(f"Error parsing file '{filename}' during RAG indexing: {str(e)}")
+                continue
+
+    all_chunks = article_chunks + file_chunks
+    logger.info(f"Generated {len(all_chunks)} chunks in total ({len(article_chunks)} from articles, {len(file_chunks)} from files).")
             
     if not all_chunks:
-        logger.warning("No documentation files found or no chunks could be extracted. FAISS index left empty.")
+        logger.warning("No documentation files or articles found or no chunks could be extracted. Vector index left empty.")
         # Ensure we clear memory
         vector_store.clear()
         with vector_store._lock:
@@ -198,6 +227,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
         
         # Compute high-dimensional numerical vectors (normalized unit lengths)
         embeddings = embed_chunks(texts)
+        logger.info(f"Generated {len(embeddings)} embeddings successfully.")
         
         # Re-initialize index cleanly to prevent duplicate appends on force rebuild
         vector_store.clear()
@@ -210,7 +240,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
             vector_store._metadata_store["__manifest__"] = current_manifest
             vector_store.save_to_disk()
             
-        logger.info(f"Ingested RAG pipeline complete. Total indexed chunks: {vector_store._index.ntotal}")
+        logger.info(f"Wrote {vector_store._index.ntotal} vectors to vector index. Ingested RAG pipeline complete.")
         
     except Exception as e:
         logger.error(f"Failed to generate embeddings or index chunks during pipeline build: {str(e)}", exc_info=True)
@@ -220,7 +250,7 @@ def initialize_rag_pipeline(force_rebuild: bool = False) -> None:
 
 def query_kb(query: str, top_k: int = 4) -> List[Dict[str, Any]]:
     """
-    Translates user query string into a vector, queries the FAISS vector store,
+    Translates user query string into a vector, queries the vector store,
     and returns similarity matches as search results.
     """
     import time
@@ -238,6 +268,7 @@ def query_kb(query: str, top_k: int = 4) -> List[Dict[str, Any]]:
             "duration_ms": 0,
             "detail": "empty query"
         })
+        logger.info(f"Returned 0 search results for query: '{query}'")
         return []
         
     try:
@@ -270,6 +301,7 @@ def query_kb(query: str, top_k: int = 4) -> List[Dict[str, Any]]:
             "sources": source_names,
             "duration_ms": int(duration_ms)
         })
+        logger.info(f"Returned {len(results)} search results for query: '{query}'")
         return results
     except Exception as e:
         duration_ms = (time.perf_counter() - start_time) * 1000.0
@@ -279,4 +311,5 @@ def query_kb(query: str, top_k: int = 4) -> List[Dict[str, Any]]:
             "error_detail": str(e),
             "duration_ms": int(duration_ms)
         })
+        logger.info(f"Returned 0 search results for query: '{query}'")
         return []

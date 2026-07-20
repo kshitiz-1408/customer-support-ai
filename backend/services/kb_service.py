@@ -24,10 +24,47 @@ class KBService:
             updated_at=now
         )
         cls._db.append(article)
+
+        try:
+            from database.database import db_connected, get_db
+            if db_connected:
+                coll = get_db()["knowledge_base_articles"]
+                coll.insert_one({
+                    "id": article.id,
+                    "title": article.title,
+                    "content": article.content,
+                    "category": article.category,
+                    "tags": article.tags,
+                    "created_at": now,
+                    "updated_at": now
+                })
+        except Exception:
+            pass
+
         return article
 
     @classmethod
     def get(cls, article_id: int) -> Optional[KBArticle]:
+        try:
+            from database.database import db_connected, get_db
+            if db_connected:
+                coll = get_db()["knowledge_base_articles"]
+                doc = coll.find_one({"id": article_id})
+                if not doc:
+                    doc = coll.find_one({"_id": str(article_id)})
+                if doc and "title" in doc and "content" in doc:
+                    return KBArticle(
+                        id=doc.get("id", article_id),
+                        title=doc["title"],
+                        content=doc["content"],
+                        category=doc.get("category", "General"),
+                        tags=doc.get("tags", []),
+                        created_at=doc.get("created_at", datetime.now(timezone.utc)),
+                        updated_at=doc.get("updated_at", datetime.now(timezone.utc))
+                    )
+        except Exception:
+            pass
+
         for article in cls._db:
             if article.id == article_id:
                 return article
@@ -35,9 +72,60 @@ class KBService:
 
     @classmethod
     def get_all(cls, category: Optional[str] = None) -> List[KBArticle]:
-        if category:
-            return [a for a in cls._db if a.category.lower() == category.lower()]
-        return cls._db
+        articles = []
+        try:
+            from database.database import db_connected, get_db
+            if db_connected:
+                db = get_db()
+                for coll_name in ["knowledge_base_articles", "knowledge_base"]:
+                    if coll_name in db.list_collection_names():
+                        query = {"category": category} if category else {}
+                        cursor = db[coll_name].find(query)
+                        for doc in cursor:
+                            if "title" in doc and "content" in doc:
+                                try:
+                                    art_id = doc.get("id")
+                                    if art_id is None:
+                                        art_id = len(articles) + 1
+                                    art = KBArticle(
+                                        id=art_id,
+                                        title=doc["title"],
+                                        content=doc["content"],
+                                        category=doc.get("category", "General"),
+                                        tags=doc.get("tags", []),
+                                        created_at=doc.get("created_at", datetime.now(timezone.utc)),
+                                        updated_at=doc.get("updated_at", datetime.now(timezone.utc))
+                                    )
+                                    articles.append(art)
+                                except Exception:
+                                    pass
+                        if articles:
+                            break
+
+                # If MongoDB connected but collection empty, seed with initial _db articles
+                if not articles and cls._db:
+                    coll = db["knowledge_base_articles"]
+                    for a in cls._db:
+                        coll.insert_one({
+                            "id": a.id,
+                            "title": a.title,
+                            "content": a.content,
+                            "category": a.category,
+                            "tags": a.tags,
+                            "created_at": a.created_at,
+                            "updated_at": a.updated_at
+                        })
+                    articles = list(cls._db)
+        except Exception:
+            pass
+
+        if not articles:
+            if category:
+                articles = [a for a in cls._db if a.category.lower() == category.lower()]
+            else:
+                articles = list(cls._db)
+
+        return articles
 
     @classmethod
     def update(cls, article_id: int, article_update: KBArticleUpdate) -> Optional[KBArticle]:
@@ -50,6 +138,18 @@ class KBService:
             setattr(article, key, value)
             
         article.updated_at = datetime.now(timezone.utc)
+
+        try:
+            from database.database import db_connected, get_db
+            if db_connected:
+                coll = get_db()["knowledge_base_articles"]
+                coll.update_one(
+                    {"$or": [{"id": article_id}, {"_id": str(article_id)}]},
+                    {"$set": update_data}
+                )
+        except Exception:
+            pass
+
         return article
 
     @classmethod
@@ -57,7 +157,17 @@ class KBService:
         article = cls.get(article_id)
         if not article:
             return False
-        cls._db.remove(article)
+        if article in cls._db:
+            cls._db.remove(article)
+
+        try:
+            from database.database import db_connected, get_db
+            if db_connected:
+                coll = get_db()["knowledge_base_articles"]
+                coll.delete_one({"$or": [{"id": article_id}, {"_id": str(article_id)}]})
+        except Exception:
+            pass
+
         return True
 
     @classmethod

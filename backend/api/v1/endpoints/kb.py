@@ -111,6 +111,7 @@ def search_knowledge_base(payload: KBSearchQuery):
     logger.info(f"RAG search query: '{payload.query}' (top_k={payload.top_k})")
     try:
         results = query_kb(payload.query, top_k=payload.top_k)
+        logger.info(f"Knowledge Base search returned {len(results)} results for query: '{payload.query}'")
         return results
     except Exception as e:
         logger.error(f"Error executing vector similarity search: {str(e)}", exc_info=True)

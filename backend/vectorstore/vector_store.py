@@ -4,15 +4,64 @@ import logging
 import threading
 from typing import List, Dict, Any, Optional
 import numpy as np
-import faiss
-from config.config import settings
 
 logger = logging.getLogger("customer_support_backend")
+
+try:
+    import faiss
+    HAS_FAISS = True
+except Exception as e:
+    logger.warning(f"FAISS import failed ({e}). Falling back to NumPy inner product vector index.")
+    HAS_FAISS = False
+    faiss = None
+
+from config.config import settings
+
+
+class NumpyIndexFlatIP:
+    """Fallback NumPy vector index mimicking faiss.IndexFlatIP."""
+    def __init__(self, dimension: int):
+        self.d = dimension
+        self.vectors = np.empty((0, dimension), dtype=np.float32)
+
+    @property
+    def ntotal(self) -> int:
+        return self.vectors.shape[0]
+
+    def add(self, x: np.ndarray) -> None:
+        x_f32 = x.astype(np.float32)
+        if self.vectors.shape[0] == 0:
+            self.vectors = x_f32
+        else:
+            self.vectors = np.vstack([self.vectors, x_f32])
+
+    def search(self, x: np.ndarray, k: int):
+        if self.vectors.shape[0] == 0:
+            return np.array([[]], dtype=np.float32), np.array([[]], dtype=np.int64)
+        x_f32 = x.astype(np.float32)
+        if x_f32.ndim == 1:
+            x_f32 = np.expand_dims(x_f32, axis=0)
+        # Inner product matrix multiplication
+        scores = np.dot(x_f32, self.vectors.T)
+        distances = []
+        indices = []
+        for row in scores:
+            top_k_idx = np.argsort(-row)[:k]
+            top_k_dist = row[top_k_idx]
+            distances.append(top_k_dist)
+            indices.append(top_k_idx)
+        return np.array(distances, dtype=np.float32), np.array(indices, dtype=np.int64)
+
+
+def create_empty_index(dimension: int):
+    if HAS_FAISS:
+        return faiss.IndexFlatIP(dimension)
+    return NumpyIndexFlatIP(dimension)
 
 
 class LocalVectorStore:
     """
-    Manages a local FAISS CPU Index with companion JSON metadata mapping.
+    Manages a local FAISS / NumPy CPU Index with companion JSON metadata mapping.
     Uses Inner Product (IndexFlatIP) search strategy, which is mathematically
     equivalent to Cosine Similarity when input vectors are L2-normalized.
     """
@@ -27,7 +76,7 @@ class LocalVectorStore:
         self.metadata_path = os.path.join(project_root, settings.VECTOR_METADATA_PATH)
         
         # Initialize empty defaults
-        self._index: faiss.Index = faiss.IndexFlatIP(self.dimension)
+        self._index = create_empty_index(self.dimension)
         # Maps vector indices (int) to chunk dict payloads
         self._metadata_store: Dict[str, Dict[str, Any]] = {}
         
@@ -119,16 +168,16 @@ class LocalVectorStore:
 
     def clear(self) -> None:
         """
-        Resets the FAISS index and metadata store in-memory.
+        Resets the FAISS / NumPy index and metadata store in-memory.
         """
         with self._lock:
-            logger.info("Clearing in-memory FAISS index and metadata store.")
-            self._index = faiss.IndexFlatIP(self.dimension)
+            logger.info("Clearing in-memory vector index and metadata store.")
+            self._index = create_empty_index(self.dimension)
             self._metadata_store = {}
 
     def save_to_disk(self) -> None:
         """
-        Serializes the active FAISS index binary and json metadata mapper to settings paths.
+        Serializes the active index binary / numpy array and json metadata mapper to settings paths.
         """
         with self._lock:
             try:
@@ -137,16 +186,24 @@ class LocalVectorStore:
                 if index_dir:
                     os.makedirs(index_dir, exist_ok=True)
                     
-                # Write FAISS index
-                faiss.write_index(self._index, self.index_path)
+                # Write index
+                if HAS_FAISS and hasattr(self._index, "ntotal") and type(self._index).__module__.startswith("faiss"):
+                    faiss.write_index(self._index, self.index_path)
+                else:
+                    vectors = getattr(self._index, "vectors", np.empty((0, self.dimension), dtype=np.float32))
+                    np.save(self.index_path + ".npy", vectors)
+                    # Create empty dummy index_path file if missing to satisfy path checks
+                    if not os.path.exists(self.index_path):
+                        with open(self.index_path, "wb") as f:
+                            f.write(b"NPY_INDEX")
                 
                 # Write metadata json mapping
                 with open(self.metadata_path, "w", encoding="utf-8") as f:
                     json.dump(self._metadata_store, f, indent=2, ensure_ascii=False)
                     
-                logger.info(f"Successfully saved FAISS index and metadata to disk.")
+                logger.info(f"Successfully saved vector index and metadata to disk.")
             except Exception as e:
-                logger.error(f"Error saving FAISS index to disk: {str(e)}", exc_info=True)
+                logger.error(f"Error saving vector index to disk: {str(e)}", exc_info=True)
                 raise RuntimeError(f"Failed to persist index files to disk: {str(e)}")
 
     def load_from_disk(self) -> None:
@@ -156,15 +213,33 @@ class LocalVectorStore:
         """
         with self._lock:
             # If files are missing, initialize fresh
-            if not os.path.exists(self.index_path) or not os.path.exists(self.metadata_path):
-                logger.info("Local persisted index or metadata files missing. Initializing empty FAISS index.")
-                self._index = faiss.IndexFlatIP(self.dimension)
+            npy_path = self.index_path + ".npy"
+            has_index_file = os.path.exists(self.index_path) or os.path.exists(npy_path)
+            if not has_index_file or not os.path.exists(self.metadata_path):
+                logger.info("Local persisted index or metadata files missing. Initializing empty vector index.")
+                self._index = create_empty_index(self.dimension)
                 self._metadata_store = {}
                 return
                 
             try:
-                # Read index binary
-                loaded_index = faiss.read_index(self.index_path)
+                # Read index binary / numpy array
+                if HAS_FAISS and os.path.exists(self.index_path):
+                    try:
+                        loaded_index = faiss.read_index(self.index_path)
+                    except Exception:
+                        if os.path.exists(npy_path):
+                            loaded_vectors = np.load(npy_path)
+                            loaded_index = NumpyIndexFlatIP(self.dimension)
+                            if loaded_vectors.size > 0:
+                                loaded_index.add(loaded_vectors)
+                        else:
+                            raise
+                else:
+                    read_path = npy_path if os.path.exists(npy_path) else self.index_path
+                    loaded_vectors = np.load(read_path)
+                    loaded_index = NumpyIndexFlatIP(self.dimension)
+                    if loaded_vectors.size > 0:
+                        loaded_index.add(loaded_vectors)
                 
                 # Validate loaded dimension matches configured model output
                 if loaded_index.d != self.dimension:
@@ -182,13 +257,13 @@ class LocalVectorStore:
                     
                 self._index = loaded_index
                 self._metadata_store = loaded_metadata
-                logger.info(f"Successfully loaded persisted FAISS index containing {self._index.ntotal} vectors.")
+                logger.info(f"Successfully loaded persisted vector index containing {self._index.ntotal} vectors.")
                 
             except Exception as e:
-                logger.critical(f"Failed to load persisted FAISS index: {str(e)}. Moving corrupt files to .corrupt...", exc_info=True)
+                logger.critical(f"Failed to load persisted vector index: {str(e)}. Moving corrupt files to .corrupt...", exc_info=True)
                 
                 # Safeguard backup for corrupted files
-                for path in [self.index_path, self.metadata_path]:
+                for path in [self.index_path, self.metadata_path, self.index_path + ".npy"]:
                     if os.path.exists(path):
                         try:
                             corrupt_path = path + ".corrupt"
@@ -200,5 +275,5 @@ class LocalVectorStore:
                             logger.error(f"Failed to move corrupt file '{path}': {str(move_err)}")
 
                 # Fallback to empty initialized state
-                self._index = faiss.IndexFlatIP(self.dimension)
+                self._index = create_empty_index(self.dimension)
                 self._metadata_store = {}
