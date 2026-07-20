@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
@@ -9,8 +9,8 @@ import { api } from "@/services/api";
 import axios from "axios";
 import { 
   Search, ChevronDown, ChevronUp, MessageSquare, PlusCircle, FileText, 
-  Mail, ShieldAlert, Cpu, Database, Brain, Network, Key, Layers,
-  RefreshCw, CheckCircle2, AlertTriangle, Send, Loader2, Info
+  Mail, Cpu, Database, Brain, Network, Key, Layers,
+  RefreshCw, CheckCircle2, AlertTriangle, Send, Loader2
 } from "lucide-react";
 
 interface FAQItem {
@@ -88,7 +88,7 @@ export default function HelpPage() {
   ];
 
   // Fetch Health Statuses
-  const checkHealth = async () => {
+  const checkHealth = useCallback(async () => {
     setStatus({
       backend: "loading",
       mongodb: "loading",
@@ -124,9 +124,9 @@ export default function HelpPage() {
           docker: "healthy"
         });
       }
-    } catch (err: any) {
-      // 503 returns errors detail
-      const responseErrors = err.response?.data?.detail?.errors || {};
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: { errors?: Record<string, boolean> } } } };
+      const responseErrors = errorObj.response?.data?.detail?.errors || {};
       
       setStatus({
         backend: "healthy", // If we hit 503 from backend, backend itself is alive
@@ -137,11 +137,14 @@ export default function HelpPage() {
         docker: "healthy"
       });
     }
-  };
+  }, [currentUser]);
 
   useEffect(() => {
-    checkHealth();
-  }, [currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      checkHealth();
+    })();
+  }, [checkHealth]);
 
   const handleFAQToggle = (idx: number) => {
     setOpenFAQIndex(openFAQIndex === idx ? null : idx);
@@ -180,8 +183,9 @@ export default function HelpPage() {
       setSubmitSuccess("Ticket created successfully! Our support agents will notify you shortly.");
       setSubject("");
       setMessage("");
-    } catch (err: any) {
-      setSubmitError(err.response?.data?.detail || err.message || "Failed to submit support ticket.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setSubmitError(errorObj.response?.data?.detail || errorObj.message || "Failed to submit support ticket.");
     } finally {
       setSubmitLoading(false);
     }

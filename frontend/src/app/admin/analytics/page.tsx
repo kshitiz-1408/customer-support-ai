@@ -1,16 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import {
-  TrendingUp, Users, MessageSquare, Clipboard, BookOpen, Cpu, HardDrive,
-  Activity, ArrowUpRight, ArrowDownRight, RefreshCw, Calendar, Sparkles,
-  CheckCircle, AlertTriangle, ShieldAlert, Clock, BarChart3, Database,
-  ArrowRight, ShieldCheck, Compass
+  TrendingUp, Users, MessageSquare, Clipboard, BookOpen, Cpu,
+  Activity, RefreshCw, Sparkles,
+  BarChart3, Database, ShieldCheck, Compass, ShieldAlert, Clock
 } from "lucide-react";
 
 // Types
@@ -59,6 +58,90 @@ interface SystemStats {
   cpu_usage?: number;
 }
 
+// Custom SVG line chart component (Declared outside render)
+const SvgLineChart = ({ data, title, color = "indigo" }: { data: DailyCount[]; title: string; color?: string }) => {
+  if (!data || data.length === 0) return <div className="text-center text-zinc-500 py-10">No data points in range</div>;
+
+  const maxVal = Math.max(...data.map(d => d.count), 5);
+  const height = 150;
+  const width = 500;
+  const padding = 25;
+
+  const points = data.map((d, index) => {
+    const x = padding + (index / (data.length - 1 || 1)) * (width - padding * 2);
+    const y = height - padding - (d.count / maxVal) * (height - padding * 2);
+    return { x, y, date: d.date, count: d.count };
+  });
+
+  const pathData = points.reduce((acc, p, index) => {
+    return index === 0 ? `M ${p.x} ${p.y}` : `${acc} L ${p.x} ${p.y}`;
+  }, "");
+
+  const areaPath = points.length > 0 
+    ? `${pathData} L ${points[points.length - 1].x} ${height - padding} L ${points[0].x} ${height - padding} Z`
+    : "";
+
+  const strokeColors: Record<string, string> = {
+    violet: "stroke-violet-500",
+    indigo: "stroke-indigo-500",
+    emerald: "stroke-emerald-500",
+    amber: "stroke-amber-500"
+  };
+
+  const fillColors: Record<string, string> = {
+    violet: "fill-violet-500/10",
+    indigo: "fill-indigo-500/10",
+    emerald: "fill-emerald-500/10",
+    amber: "fill-amber-500/10"
+  };
+
+  const dotColors: Record<string, string> = {
+    violet: "fill-violet-600 stroke-white",
+    indigo: "fill-indigo-600 stroke-white",
+    emerald: "fill-emerald-600 stroke-white",
+    amber: "fill-amber-600 stroke-white"
+  };
+
+  return (
+    <div className="bg-slate-55 dark:bg-slate-950 p-4 rounded-xl border border-slate-200/50 dark:border-slate-800 flex flex-col justify-between">
+      <div className="flex justify-between items-center mb-4">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{title}</span>
+        <span className="text-sm font-extrabold text-slate-700 dark:text-slate-200">
+          Total: {data.reduce((sum, d) => sum + d.count, 0)}
+        </span>
+      </div>
+
+      <svg viewBox={`0 0 ${width} ${height}`} className="w-full overflow-visible">
+        {/* Grid lines */}
+        <line x1={padding} y1={padding} x2={width - padding} y2={padding} stroke="var(--color-slate-200)" className="stroke-slate-200 dark:stroke-slate-850" strokeDasharray="3 3" />
+        <line x1={padding} y1={height / 2} x2={width - padding} y2={height / 2} stroke="var(--color-slate-200)" className="stroke-slate-200 dark:stroke-slate-850" strokeDasharray="3 3" />
+        <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="var(--color-slate-200)" className="stroke-slate-200 dark:stroke-slate-800" />
+
+        {/* Area fill */}
+        {areaPath && <path d={areaPath} className={fillColors[color] || "fill-indigo-500/10"} />}
+        
+        {/* Stroke path */}
+        {pathData && <path d={pathData} fill="none" className={`${strokeColors[color] || "stroke-indigo-500"} stroke-[2.5]`} />}
+
+        {/* Dots & labels */}
+        {points.map((p, i) => (
+          <g key={i} className="group cursor-pointer">
+            <circle cx={p.x} cy={p.y} r="4.5" className={`${dotColors[color] || "fill-indigo-600 stroke-white"} stroke-2 hover:r-6 transition-all`} />
+            
+            {/* Tooltip Overlay */}
+            <g className="opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150">
+              <rect x={Math.max(10, p.x - 45)} y={p.y - 35} width="90" height="25" rx="5" className="fill-slate-900 dark:fill-slate-100" />
+              <text x={p.x} y={p.y - 18} textAnchor="middle" className="text-[10px] font-bold fill-white dark:fill-slate-950">
+                {p.count} ({p.date.split("-").slice(1).join("/")})
+              </text>
+            </g>
+          </g>
+        ))}
+      </svg>
+    </div>
+  );
+};
+
 export default function AdminAnalyticsPage() {
   const { currentUser, loading: authLoading } = useAuth();
   const router = useRouter();
@@ -84,9 +167,9 @@ export default function AdminAnalyticsPage() {
 
   // Auto-refresh state
   const [autoRefresh, setAutoRefresh] = useState(false);
-  const [refreshIntervalId, setRefreshIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const autoRefreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const fetchAnalyticsData = async () => {
+  const fetchAnalyticsData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -106,126 +189,48 @@ export default function AdminAnalyticsPage() {
       setUsage(resUsage.data);
       setAi(resAi.data);
       setSystem(resSystem.data);
-    } catch (err: any) {
-      setError(err.response?.data?.detail || err.message || "Failed to load analytics records.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setError(errorObj.response?.data?.detail || errorObj.message || "Failed to load analytics records.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [range, startDate, endDate]);
 
   useEffect(() => {
     if (currentUser && currentUser.role === "admin") {
-      fetchAnalyticsData();
+      void (async () => {
+        await Promise.resolve();
+        fetchAnalyticsData();
+      })();
     }
-  }, [range, startDate, endDate, currentUser]);
+  }, [currentUser, fetchAnalyticsData]);
 
   // Handle auto refresh toggle
   useEffect(() => {
     if (autoRefresh) {
-      const id = setInterval(() => {
+      autoRefreshIntervalRef.current = setInterval(() => {
         fetchAnalyticsData();
-      }, 30000); // 30 seconds interval
-      setRefreshIntervalId(id);
+      }, 30000);
     } else {
-      if (refreshIntervalId) {
-        clearInterval(refreshIntervalId);
-        setRefreshIntervalId(null);
+      if (autoRefreshIntervalRef.current) {
+        clearInterval(autoRefreshIntervalRef.current);
+        autoRefreshIntervalRef.current = null;
       }
     }
     return () => {
-      if (refreshIntervalId) clearInterval(refreshIntervalId);
+      if (autoRefreshIntervalRef.current) {
+        clearInterval(autoRefreshIntervalRef.current);
+        autoRefreshIntervalRef.current = null;
+      }
     };
-  }, [autoRefresh]);
+  }, [autoRefresh, fetchAnalyticsData]);
 
   const handleCustomRangeApply = (e: React.FormEvent) => {
     e.preventDefault();
     if (startDate && endDate) {
       fetchAnalyticsData();
     }
-  };
-
-  // Custom SVG line chart component
-  const SvgLineChart = ({ data, title, color = "indigo" }: { data: DailyCount[]; title: string; color?: string }) => {
-    if (!data || data.length === 0) return <div className="text-center text-zinc-500 py-10">No data points in range</div>;
-
-    const maxVal = Math.max(...data.map(d => d.count), 5);
-    const height = 150;
-    const width = 500;
-    const padding = 25;
-
-    const points = data.map((d, index) => {
-      const x = padding + (index / (data.length - 1 || 1)) * (width - padding * 2);
-      const y = height - padding - (d.count / maxVal) * (height - padding * 2);
-      return { x, y, date: d.date, count: d.count };
-    });
-
-    const pathData = points.reduce((acc, p, index) => {
-      return index === 0 ? `M ${p.x} ${p.y}` : `${acc} L ${p.x} ${p.y}`;
-    }, "");
-
-    const areaPath = points.length > 0 
-      ? `${pathData} L ${points[points.length - 1].x} ${height - padding} L ${points[0].x} ${height - padding} Z`
-      : "";
-
-    const strokeColors: Record<string, string> = {
-      violet: "stroke-violet-500",
-      indigo: "stroke-indigo-500",
-      emerald: "stroke-emerald-500",
-      amber: "stroke-amber-500"
-    };
-
-    const fillColors: Record<string, string> = {
-      violet: "fill-violet-500/10",
-      indigo: "fill-indigo-500/10",
-      emerald: "fill-emerald-500/10",
-      amber: "fill-amber-500/10"
-    };
-
-    const dotColors: Record<string, string> = {
-      violet: "fill-violet-600 stroke-white",
-      indigo: "fill-indigo-600 stroke-white",
-      emerald: "fill-emerald-600 stroke-white",
-      amber: "fill-amber-600 stroke-white"
-    };
-
-    return (
-      <div className="bg-slate-55 dark:bg-slate-950 p-4 rounded-xl border border-slate-200/50 dark:border-slate-800 flex flex-col justify-between">
-        <div className="flex justify-between items-center mb-4">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">{title}</span>
-          <span className="text-sm font-extrabold text-slate-700 dark:text-slate-200">
-            Total: {data.reduce((sum, d) => sum + d.count, 0)}
-          </span>
-        </div>
-
-        <svg viewBox={`0 0 ${width} ${height}`} className="w-full overflow-visible">
-          {/* Grid lines */}
-          <line x1={padding} y1={padding} x2={width - padding} y2={padding} stroke="var(--color-slate-200)" className="stroke-slate-200 dark:stroke-slate-850" strokeDasharray="3 3" />
-          <line x1={padding} y1={height / 2} x2={width - padding} y2={height / 2} stroke="var(--color-slate-200)" className="stroke-slate-200 dark:stroke-slate-850" strokeDasharray="3 3" />
-          <line x1={padding} y1={height - padding} x2={width - padding} y2={height - padding} stroke="var(--color-slate-200)" className="stroke-slate-200 dark:stroke-slate-800" />
-
-          {/* Area fill */}
-          {areaPath && <path d={areaPath} className={fillColors[color] || "fill-indigo-500/10"} />}
-          
-          {/* Stroke path */}
-          {pathData && <path d={pathData} fill="none" className={`${strokeColors[color] || "stroke-indigo-500"} stroke-[2.5]`} />}
-
-          {/* Dots & labels */}
-          {points.map((p, i) => (
-            <g key={i} className="group cursor-pointer">
-              <circle cx={p.x} cy={p.y} r="4.5" className={`${dotColors[color] || "fill-indigo-600 stroke-white"} stroke-2 hover:r-6 transition-all`} />
-              
-              {/* Tooltip Overlay */}
-              <g className="opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-150">
-                <rect x={Math.max(10, p.x - 45)} y={p.y - 35} width="90" height="25" rx="5" className="fill-slate-900 dark:fill-slate-100" />
-                <text x={p.x} y={p.y - 18} textAnchor="middle" className="text-[10px] font-bold fill-white dark:fill-slate-950">
-                  {p.count} ({p.date.split("-").slice(1).join("/")})
-                </text>
-              </g>
-            </g>
-          ))}
-        </svg>
-      </div>
-    );
   };
 
   const formatUptime = (seconds: number): string => {

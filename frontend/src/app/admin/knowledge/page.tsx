@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
-  Search, Filter, ChevronLeft, ChevronRight, X, FileText, 
-  Upload, Trash2, RefreshCw, Calendar, CheckCircle2, AlertCircle, 
-  ShieldAlert, BookOpen, HardDrive, Compass, Info, ArrowUpRight, HelpCircle
+  Search, ChevronLeft, ChevronRight, X, FileText, 
+  Upload, Trash2, RefreshCw, Calendar, CheckCircle2, 
+  ShieldAlert, BookOpen, Info
 } from "lucide-react";
 
 interface KBDocument {
@@ -69,7 +69,7 @@ export default function AdminKnowledgeBasePage() {
   const [drawerError, setDrawerError] = useState<string | null>(null);
 
   // Fetch Knowledge Base Documents
-  const fetchDocuments = async () => {
+  const fetchDocuments = useCallback(async () => {
     if (!currentUser || currentUser.role !== "admin") return;
     setLoading(true);
     setError(null);
@@ -84,16 +84,20 @@ export default function AdminKnowledgeBasePage() {
       const res = await api.get(url);
       setDocuments(res.data.documents);
       setTotal(res.data.total);
-    } catch (err: any) {
-      setError(err.message || "Failed to load knowledge base document logs.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Failed to load knowledge base document logs.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, page, limit, search, extensionFilter, statusFilter, startDate, endDate]);
 
   useEffect(() => {
-    fetchDocuments();
-  }, [page, extensionFilter, statusFilter, startDate, endDate, currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      fetchDocuments();
+    })();
+  }, [fetchDocuments]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,8 +114,9 @@ export default function AdminKnowledgeBasePage() {
     try {
       const res = await api.get(`/admin/knowledge/${id}`);
       setSelectedDoc(res.data);
-    } catch (err: any) {
-      setDrawerError(err.message || "Failed to retrieve document specifications.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setDrawerError(errorObj.message || "Failed to retrieve document specifications.");
     } finally {
       setDrawerLoading(false);
     }
@@ -160,8 +165,9 @@ export default function AdminKnowledgeBasePage() {
       setSuccessMsg(`File "${file.name}" uploaded and indexed successfully.`);
       setPage(1);
       fetchDocuments();
-    } catch (err: any) {
-      setUploadError(err.response?.data?.detail || err.message || "File upload failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setUploadError(errorObj.response?.data?.detail || errorObj.message || "File upload failed.");
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -180,8 +186,9 @@ export default function AdminKnowledgeBasePage() {
       if (selectedDocId === id) {
         handleOpenDrawer(id);
       }
-    } catch (err: any) {
-      setError(err.message || "Re-indexing failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Re-indexing failed.");
     } finally {
       setActionLoading(false);
     }
@@ -197,8 +204,9 @@ export default function AdminKnowledgeBasePage() {
       await api.post("/admin/knowledge/reindex-all");
       setSuccessMsg("Entire knowledge base successfully re-indexed.");
       fetchDocuments();
-    } catch (err: any) {
-      setError(err.message || "Re-indexing failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Re-indexing failed.");
     } finally {
       setActionLoading(false);
     }
@@ -215,8 +223,9 @@ export default function AdminKnowledgeBasePage() {
       setSuccessMsg(`Document "${name}" deleted and vector embeddings removed.`);
       handleCloseDrawer();
       fetchDocuments();
-    } catch (err: any) {
-      setError(err.message || "Deletion failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Deletion failed.");
     } finally {
       setActionLoading(false);
     }

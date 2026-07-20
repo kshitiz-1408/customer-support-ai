@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
-  Search, Filter, ChevronLeft, ChevronRight, X, ShieldAlert,
+  Search, ChevronLeft, ChevronRight, X, ShieldAlert,
   Calendar, CheckCircle2, AlertCircle, Info, RefreshCw, Eye
 } from "lucide-react";
 
@@ -25,9 +25,9 @@ interface AuditLog {
   status: string;
   ip_address?: string;
   user_agent?: string;
-  previous_value?: any;
-  new_value?: any;
-  additional_metadata?: Record<string, any>;
+  previous_value?: unknown;
+  new_value?: unknown;
+  additional_metadata?: Record<string, unknown>;
 }
 
 export default function AdminAuditLogsPage() {
@@ -65,7 +65,7 @@ export default function AdminAuditLogsPage() {
   const [drawerLoading, setDrawerLoading] = useState(false);
   const [drawerError, setDrawerError] = useState<string | null>(null);
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     if (!currentUser || currentUser.role !== "admin") return;
     setLoading(true);
     setError(null);
@@ -87,16 +87,20 @@ export default function AdminAuditLogsPage() {
       const res = await api.get(url);
       setLogs(res.data.logs);
       setTotal(res.data.total);
-    } catch (err: any) {
-      setError(err.message || "Failed to load audit logs.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Failed to load audit logs.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, page, limit, search, actionFilter, actorFilter, targetFilter, statusFilter, startDate, endDate]);
 
   useEffect(() => {
-    fetchLogs();
-  }, [page, actionFilter, statusFilter, startDate, endDate, currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      fetchLogs();
+    })();
+  }, [fetchLogs]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,8 +127,9 @@ export default function AdminAuditLogsPage() {
     try {
       const res = await api.get(`/admin/audit/${logId}`);
       setSelectedLog(res.data);
-    } catch (err: any) {
-      setDrawerError(err.message || "Failed to retrieve audit log specs details.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setDrawerError(errorObj.message || "Failed to retrieve audit log specs details.");
     } finally {
       setDrawerLoading(false);
     }

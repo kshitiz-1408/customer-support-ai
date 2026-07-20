@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
-  Search, Filter, ChevronLeft, ChevronRight, X, ShieldAlert,
-  CheckCircle, AlertTriangle, RefreshCw, Eye, ShieldCheck, Mail, Calendar, Key, AlertCircle,
-  Clock, PlusCircle, User, MessageSquare, Clipboard, Activity, Send
+  Search, Filter, ChevronLeft, ChevronRight, X,
+  CheckCircle, AlertTriangle, RefreshCw, Eye, Mail, Calendar, AlertCircle,
+  Clock, MessageSquare, Clipboard, Activity, Send
 } from "lucide-react";
 
 interface TicketItem {
@@ -100,8 +100,8 @@ export default function AdminTicketsPage() {
   const [priorityFilter, setPriorityFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("");
   const [agentFilter, setAgentFilter] = useState("");
-  const [sortBy, setSortBy] = useState("created_at");
-  const [sortOrder, setSortOrder] = useState("desc");
+  const [sortBy] = useState("created_at");
+  const [sortOrder] = useState("desc");
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -109,7 +109,6 @@ export default function AdminTicketsPage() {
 
   // Metrics State
   const [metrics, setMetrics] = useState<TicketMetrics | null>(null);
-  const [metricsLoading, setMetricsLoading] = useState(false);
 
   // Drawer States
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
@@ -125,30 +124,27 @@ export default function AdminTicketsPage() {
   const [adminsList, setAdminsList] = useState<AdminUser[]>([]);
 
   // Load ticket metrics
-  const fetchMetrics = async () => {
-    setMetricsLoading(true);
+  const fetchMetrics = useCallback(async () => {
     try {
       const res = await api.get("/admin/tickets/metrics");
       setMetrics(res.data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to load metrics:", err);
-    } finally {
-      setMetricsLoading(false);
     }
-  };
+  }, []);
 
   // Load active admin list
-  const fetchAdmins = async () => {
+  const fetchAdmins = useCallback(async () => {
     try {
       const res = await api.get("/admin/users?role=admin&limit=100");
       setAdminsList(res.data.users);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to resolve admin list:", err);
     }
-  };
+  }, []);
 
   // Load ticket items
-  const fetchTickets = async () => {
+  const fetchTickets = useCallback(async () => {
     if (!currentUser || currentUser.role !== "admin") return;
     setLoading(true);
     setError(null);
@@ -166,18 +162,22 @@ export default function AdminTicketsPage() {
       const res = await api.get(url);
       setTickets(res.data.tickets);
       setTotal(res.data.total);
-    } catch (err: any) {
-      setError(err.message || "Failed to load support ticket directory.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Failed to load support ticket directory.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, page, limit, sortBy, sortOrder, search, statusFilter, priorityFilter, categoryFilter, agentFilter]);
 
   useEffect(() => {
-    fetchTickets();
-    fetchMetrics();
-    fetchAdmins();
-  }, [page, search, statusFilter, priorityFilter, categoryFilter, agentFilter, sortBy, sortOrder, currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      fetchTickets();
+      fetchMetrics();
+      fetchAdmins();
+    })();
+  }, [fetchTickets, fetchMetrics, fetchAdmins]);
 
   // Load Drawer Details
   const fetchDetails = async (idStr: string) => {
@@ -186,8 +186,9 @@ export default function AdminTicketsPage() {
     try {
       const res = await api.get(`/admin/tickets/${idStr}`);
       setTicketDetails(res.data);
-    } catch (err: any) {
-      setDrawerError(err.message || "Failed to resolve detailed ticket logs.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setDrawerError(errorObj.message || "Failed to resolve detailed ticket logs.");
     } finally {
       setDrawerLoading(false);
     }
@@ -222,8 +223,9 @@ export default function AdminTicketsPage() {
       if (selectedTicketId === ticket.ticket_id) {
         fetchDetails(ticket.ticket_id);
       }
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Assignment change failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Assignment change failed.");
     } finally {
       setActionLoading(false);
     }
@@ -244,8 +246,9 @@ export default function AdminTicketsPage() {
       if (selectedTicketId === ticket.ticket_id) {
         fetchDetails(ticket.ticket_id);
       }
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Status change failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Status change failed.");
     } finally {
       setActionLoading(false);
     }
@@ -266,8 +269,9 @@ export default function AdminTicketsPage() {
       if (selectedTicketId === ticket.ticket_id) {
         fetchDetails(ticket.ticket_id);
       }
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Priority change failed.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Priority change failed.");
     } finally {
       setActionLoading(false);
     }
@@ -285,8 +289,9 @@ export default function AdminTicketsPage() {
       
       setNewNoteContent("");
       fetchDetails(selectedTicketId);
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Failed to add internal compliance note.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Failed to add internal compliance note.");
     } finally {
       setActionLoading(false);
     }

@@ -7,7 +7,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
   Loader2, CheckCircle2, AlertCircle, Save, Lock, User, Shield, 
-  Bell, Eye, Bot, Trash2, HelpCircle, Laptop, Sun, Moon 
+  Bell, Eye, Bot, Trash2, Laptop, Sun, Moon 
 } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
@@ -86,8 +86,9 @@ export default function SettingsPage() {
           window.location.reload();
         }, 1500);
       }
-    } catch (err: any) {
-      setInfoError(err.response?.data?.detail || err.message || "Failed to update profile name.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setInfoError(errorObj.response?.data?.detail || errorObj.message || "Failed to update profile name.");
     } finally {
       setInfoLoading(false);
     }
@@ -152,8 +153,9 @@ export default function SettingsPage() {
         await logout();
       }, 2500);
 
-    } catch (err: any) {
-      setSecError(err.response?.data?.detail || err.message || "Incorrect current password or invalid new password.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setSecError(errorObj.response?.data?.detail || errorObj.message || "Incorrect current password or invalid new password.");
       setSecLoading(false);
     }
   };

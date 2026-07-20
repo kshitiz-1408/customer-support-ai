@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
-  Activity, Database, Cpu, HardDrive, Wifi, WifiOff, RefreshCw, 
-  AlertCircle, CheckCircle2, ShieldAlert, Clock, Sparkles, Server, Network
+  Activity, Database, Cpu, HardDrive, WifiOff, RefreshCw, 
+  AlertCircle, CheckCircle2, Clock, Sparkles, Server, Network
 } from "lucide-react";
 
 interface ServiceStatus {
@@ -68,14 +68,13 @@ export default function AdminMonitoringPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
-  const [isOnline, setIsOnline] = useState(true);
+  const [isOnline, setIsOnline] = useState(() => typeof window !== "undefined" ? navigator.onLine : true);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const autoRefreshIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Network connection status
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setIsOnline(navigator.onLine);
       const handleOnline = () => setIsOnline(true);
       const handleOffline = () => setIsOnline(false);
       window.addEventListener("online", handleOnline);
@@ -87,7 +86,7 @@ export default function AdminMonitoringPage() {
     }
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (!currentUser || currentUser.role !== "admin") return;
     setLoading(true);
     setError(null);
@@ -101,16 +100,20 @@ export default function AdminMonitoringPage() {
       setPerformance(resPerf.data);
       setServices(resServ.data);
       setLastUpdated(new Date());
-    } catch (err: any) {
-      setError(err.message || "Failed to load system diagnostics.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Failed to load system diagnostics.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser]);
 
   useEffect(() => {
-    fetchData();
-  }, [currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      fetchData();
+    })();
+  }, [fetchData]);
 
   // Auto-refresh configuration (every 30 seconds)
   useEffect(() => {
@@ -124,7 +127,7 @@ export default function AdminMonitoringPage() {
         clearInterval(autoRefreshIntervalRef.current);
       }
     };
-  }, [autoRefresh, currentUser]);
+  }, [autoRefresh, currentUser, fetchData]);
 
   const handleManualRefresh = () => {
     fetchData();

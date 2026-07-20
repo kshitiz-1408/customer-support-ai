@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
@@ -8,7 +8,7 @@ import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
   Search, Filter, ChevronLeft, ChevronRight, X, ShieldAlert,
-  User, CheckCircle, AlertTriangle, RefreshCw, Eye, ShieldCheck, Mail, Calendar, Key, AlertCircle
+  User, CheckCircle, AlertTriangle, RefreshCw, Eye, ShieldCheck, Calendar, Key, AlertCircle
 } from "lucide-react";
 
 interface UserItem {
@@ -73,7 +73,7 @@ export default function AdminUsersPage() {
   const [actionLoading, setActionLoading] = useState(false);
 
   // Load User List
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     if (!currentUser || currentUser.role !== "admin") return;
     setLoading(true);
     setError(null);
@@ -89,16 +89,20 @@ export default function AdminUsersPage() {
       const res = await api.get(url);
       setUsers(res.data.users);
       setTotal(res.data.total);
-    } catch (err: any) {
-      setError(err.message || "Failed to load user directories.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Failed to load user directories.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, page, limit, sortBy, sortOrder, search, roleFilter, statusFilter]);
 
   useEffect(() => {
-    fetchUsers();
-  }, [page, search, roleFilter, statusFilter, sortBy, sortOrder, currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      fetchUsers();
+    })();
+  }, [fetchUsers]);
 
   // Load Drawer Details
   const fetchDetails = async (id: string) => {
@@ -110,8 +114,9 @@ export default function AdminUsersPage() {
 
       const logsRes = await api.get(`/admin/users/${id}/audit-logs`);
       setAuditLogs(logsRes.data);
-    } catch (err: any) {
-      setDrawerError(err.message || "Failed to load user specifications.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setDrawerError(errorObj.message || "Failed to load user specifications.");
     } finally {
       setDrawerLoading(false);
     }
@@ -137,7 +142,7 @@ export default function AdminUsersPage() {
     setDrawerError(null);
     try {
       const endpoint = user.is_active ? "deactivate" : "activate";
-      const res = await api.patch(`/admin/users/${user.id}/${endpoint}`);
+      await api.patch(`/admin/users/${user.id}/${endpoint}`);
       
       setSuccessMsg(`User status updated to ${user.is_active ? "Inactive" : "Active"}.`);
       fetchUsers();
@@ -145,8 +150,9 @@ export default function AdminUsersPage() {
       if (selectedUserId === user.id) {
         fetchDetails(user.id);
       }
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Action rejected.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Action rejected.");
     } finally {
       setActionLoading(false);
     }
@@ -158,15 +164,16 @@ export default function AdminUsersPage() {
     setDrawerError(null);
     try {
       const endpoint = user.is_verified ? "unverify" : "verify";
-      const res = await api.patch(`/admin/users/${user.id}/${endpoint}`);
+      await api.patch(`/admin/users/${user.id}/${endpoint}`);
       
       setSuccessMsg(`User verification status updated successfully.`);
       fetchUsers();
       if (selectedUserId === user.id) {
         fetchDetails(user.id);
       }
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Action rejected.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Action rejected.");
     } finally {
       setActionLoading(false);
     }
@@ -184,8 +191,9 @@ export default function AdminUsersPage() {
       if (selectedUserId === user.id) {
         fetchDetails(user.id);
       }
-    } catch (err: any) {
-      setDrawerError(err.response?.data?.detail || err.message || "Action rejected.");
+    } catch (err: unknown) {
+      const errorObj = err as { response?: { data?: { detail?: string } }; message?: string };
+      setDrawerError(errorObj.response?.data?.detail || errorObj.message || "Action rejected.");
     } finally {
       setActionLoading(false);
     }

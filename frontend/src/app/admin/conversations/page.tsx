@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import Navbar from "@/components/layout/Navbar";
 import Sidebar from "@/components/layout/Sidebar";
 import { api } from "@/services/api";
 import { 
-  Search, Filter, ChevronLeft, ChevronRight, X, MessageSquare, 
-  User, Mail, Calendar, Eye, FileText, Bot, Compass, CheckCircle2,
-  AlertCircle, ShieldAlert, Tag, ShieldCheck, RefreshCw, Layers
+  Search, ChevronLeft, ChevronRight, X, MessageSquare, 
+  User, Mail, Calendar, Eye, FileText, Bot, Compass,
+  ShieldAlert, Tag, ShieldCheck, RefreshCw, Layers
 } from "lucide-react";
 
 interface ConversationItem {
@@ -97,7 +97,7 @@ export default function AdminConversationsPage() {
   const [drawerError, setDrawerError] = useState<string | null>(null);
 
   // Fetch Conversation List
-  const fetchConversations = async () => {
+  const fetchConversations = useCallback(async () => {
     if (!currentUser || currentUser.role !== "admin") return;
     setLoading(true);
     setError(null);
@@ -119,16 +119,20 @@ export default function AdminConversationsPage() {
       const res = await api.get(url);
       setConversations(res.data.conversations);
       setTotal(res.data.total);
-    } catch (err: any) {
-      setError(err.message || "Failed to load conversation logs.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setError(errorObj.message || "Failed to load conversation logs.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentUser, page, limit, search, statusFilter, startDate, endDate]);
 
   useEffect(() => {
-    fetchConversations();
-  }, [page, statusFilter, startDate, endDate, currentUser]);
+    void (async () => {
+      await Promise.resolve();
+      fetchConversations();
+    })();
+  }, [fetchConversations]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -143,8 +147,9 @@ export default function AdminConversationsPage() {
     try {
       const res = await api.get(`/admin/conversations/${id}`);
       setDetails(res.data);
-    } catch (err: any) {
-      setDrawerError(err.message || "Failed to retrieve conversation details.");
+    } catch (err: unknown) {
+      const errorObj = err as { message?: string };
+      setDrawerError(errorObj.message || "Failed to retrieve conversation details.");
     } finally {
       setDrawerLoading(false);
     }
