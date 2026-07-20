@@ -1,5 +1,5 @@
 # Use an explicit supported Python base image
-FROM python:3.11-slim
+FROM python:3.14-slim
 
 # Set Python container best practices
 ENV PYTHONDONTWRITEBYTECODE=1 \
